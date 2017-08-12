@@ -7,13 +7,13 @@
     <Name>ygo.database.scripts</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{c372bb86-39f2-4cb3-83e5-e821f5117d4e}</ProjectGuid>
+    <ProjectGuid>{41016865-06cc-40c2-9e9f-19e779668f77}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>ygo.Database.Scripts</RootNamespace>
-    <AssemblyName>ygo.Database.Scripts</AssemblyName>
+    <RootNamespace>ygo.database.scripts</RootNamespace>
+    <AssemblyName>ygo.database.scripts</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -23,7 +23,6 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <TargetDatabase>ygo.database.scripts</TargetDatabase>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
