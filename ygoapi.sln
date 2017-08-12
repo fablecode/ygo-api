@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Database", "4. Database"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.api", "src\Presentation\ygo.api\ygo.api.csproj", "{7FD76C03-84CB-43ED-AC93-90D4E6D99B7D}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ygo.Database.Scripts", "src\Database\ygo.Database.Scripts\ygo.Database.Scripts.sqlproj", "{C372BB86-39F2-4CB3-83E5-E821F5117D4E}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ygo.Database.Scripts", "src\Database\ygo.Database.Scripts\ygo.database.scripts.sqlproj", "{C372BB86-39F2-4CB3-83E5-E821F5117D4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
