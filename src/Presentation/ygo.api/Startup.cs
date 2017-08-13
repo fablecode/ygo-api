@@ -1,7 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.Owin;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Owin;
 
 [assembly: OwinStartup(typeof(ygo.api.Startup))]
@@ -14,6 +13,12 @@ namespace ygo.api
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            app.Run(context =>
+            {
+                context.Response.Redirect("swagger");
+                return Task.CompletedTask;
+            });
         }
     }
 }
