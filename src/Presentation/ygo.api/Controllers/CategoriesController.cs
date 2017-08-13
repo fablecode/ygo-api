@@ -8,7 +8,7 @@ namespace ygo.api.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            return Ok();
+            return Ok(new []{"Spell", "Trap", "Monster"});
         }
     }
 }
