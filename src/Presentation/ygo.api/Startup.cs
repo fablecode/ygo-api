@@ -13,12 +13,6 @@ namespace ygo.api
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            app.Run(context =>
-            {
-                context.Response.Redirect("swagger");
-                return Task.CompletedTask;
-            });
         }
     }
 }
