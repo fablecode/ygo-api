@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Microsoft.Owin;
 using Owin;
 
@@ -13,6 +12,7 @@ namespace ygo.api
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            //SwaggerConfig.Register();
         }
     }
 }
