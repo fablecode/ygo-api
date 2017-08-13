@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.Application;
 
 namespace ygo.api
 {
@@ -14,11 +15,20 @@ namespace ygo.api
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            // Redirect root to Swagger UI
+            config.Routes.MapHttpRoute(
+                name: "Swagger UI",
+                routeTemplate: "",
+                defaults: null,
+                constraints: null,
+                handler: new RedirectHandler(message => message.RequestUri.ToString().TrimEnd('/'), "swagger/ui/index"));
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
 
             var jsonSerializerSettings = config.Formatters.JsonFormatter.SerializerSettings;
 
