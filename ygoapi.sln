@@ -1,19 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation", "1. Presentation", "{6FE3573E-2A8E-46B0-AB61-FAFCC1DD1A4C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{0668F4BC-A2BA-4476-BBEE-54D9D010E5A6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Repository", "3. Repository", "{C374DFFD-A98D-4B79-9718-11130CBDBD39}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Database", "4. Database", "{687FD829-BD22-4E0F-B171-2EC864884C02}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ygo.database.scripts", "src\Database\ygo.database.scripts\ygo.database.scripts.sqlproj", "{41016865-06CC-40C2-9E9F-19E779668F77}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application", "2. Application", "{6FE3573E-2A8E-46B0-AB61-FAFCC1DD1A4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.api", "src\Presentation\ygo.api\ygo.api.csproj", "{236519A7-27B3-428B-A7C2-F9353B10DE75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{911EF67A-A73E-4612-B3F1-1D95FB022192}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infrastructure", "3. Infrastructure", "{C7D49CE2-DF31-46E9-A1F6-48E40D55AF7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{A8FD6C9C-49C1-4093-BE22-94552E6A443E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{74C56C18-0F90-4EF4-B044-B8A564F2CF27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. User Interface", "5. User Interface", "{8BF36B06-F579-4670-A08C-E8A4137346F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.domain", "src\Domain\ygo.domain\ygo.domain.csproj", "{60588E88-078E-4531-93EF-2E59103E19DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.application", "src\Application\ygo.application\ygo.application.csproj", "{A308E4AD-2BFF-4F64-A087-C0F40155D427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.infrastructure", "src\Infrastructure\ygo.infrastructure\ygo.infrastructure.csproj", "{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,22 +29,34 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{41016865-06CC-40C2-9E9F-19E779668F77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41016865-06CC-40C2-9E9F-19E779668F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41016865-06CC-40C2-9E9F-19E779668F77}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{41016865-06CC-40C2-9E9F-19E779668F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41016865-06CC-40C2-9E9F-19E779668F77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41016865-06CC-40C2-9E9F-19E779668F77}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{236519A7-27B3-428B-A7C2-F9353B10DE75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{236519A7-27B3-428B-A7C2-F9353B10DE75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{236519A7-27B3-428B-A7C2-F9353B10DE75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{236519A7-27B3-428B-A7C2-F9353B10DE75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60588E88-078E-4531-93EF-2E59103E19DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60588E88-078E-4531-93EF-2E59103E19DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60588E88-078E-4531-93EF-2E59103E19DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60588E88-078E-4531-93EF-2E59103E19DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A308E4AD-2BFF-4F64-A087-C0F40155D427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A308E4AD-2BFF-4F64-A087-C0F40155D427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A308E4AD-2BFF-4F64-A087-C0F40155D427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A308E4AD-2BFF-4F64-A087-C0F40155D427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{41016865-06CC-40C2-9E9F-19E779668F77} = {687FD829-BD22-4E0F-B171-2EC864884C02}
-		{236519A7-27B3-428B-A7C2-F9353B10DE75} = {6FE3573E-2A8E-46B0-AB61-FAFCC1DD1A4C}
+		{236519A7-27B3-428B-A7C2-F9353B10DE75} = {8BF36B06-F579-4670-A08C-E8A4137346F9}
+		{74C56C18-0F90-4EF4-B044-B8A564F2CF27} = {A8FD6C9C-49C1-4093-BE22-94552E6A443E}
+		{60588E88-078E-4531-93EF-2E59103E19DA} = {911EF67A-A73E-4612-B3F1-1D95FB022192}
+		{A308E4AD-2BFF-4F64-A087-C0F40155D427} = {6FE3573E-2A8E-46B0-AB61-FAFCC1DD1A4C}
+		{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7} = {C7D49CE2-DF31-46E9-A1F6-48E40D55AF7D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C664D76D-586F-4F48-9AF7-0436F764967A}
 	EndGlobalSection
 EndGlobal
