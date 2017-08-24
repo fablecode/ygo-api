@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infrastructure", "3. Infrastructure", "{C7D49CE2-DF31-46E9-A1F6-48E40D55AF7D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{A8FD6C9C-49C1-4093-BE22-94552E6A443E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Tests", "5. Tests", "{A8FD6C9C-49C1-4093-BE22-94552E6A443E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{74C56C18-0F90-4EF4-B044-B8A564F2CF27}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. User Interface", "5. User Interface", "{8BF36B06-F579-4670-A08C-E8A4137346F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Presentation", "4. Presentation", "{8BF36B06-F579-4670-A08C-E8A4137346F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.domain", "src\Domain\ygo.domain\ygo.domain.csproj", "{60588E88-078E-4531-93EF-2E59103E19DA}"
 EndProject
