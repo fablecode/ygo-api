@@ -1,14 +1,24 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ygo.application.Repository;
+using ygo.infrastructure.Database;
 using ygo.infrastructure.Repository;
 
 namespace ygo.infrastructure.Ioc
 {
     public static class InfrastructureInstaller
     {
+        public static IServiceCollection AddYgoDatabase(this IServiceCollection services, string connectionString)
+        {
+            services.AddTransient<IYgoDbContext, YgoDbContext>();
+            services.AddRepositories();
+
+            return services;
+        }
+
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

@@ -1,14 +1,19 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ygo.api.Controllers
 {
-    [RoutePrefix("api/categories")]
-    public class CategoriesController : ApiController
+    [Route("api/[controller]")]
+    public class CategoriesController : Controller
     {
+        /// <summary>
+        /// Get all categories
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public IHttpActionResult Get()
+        public IEnumerable<string> Get()
         {
-            return Ok(new []{"Spell", "Trap", "Monster"});
+            return new string[] { "value1", "value2" };
         }
     }
 }

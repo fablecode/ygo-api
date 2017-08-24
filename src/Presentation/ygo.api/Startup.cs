@@ -1,14 +1,54 @@
-﻿using Microsoft.Owin;
-using Owin;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using ygo.application.Ioc;
+using ygo.infrastructure.Ioc;
 
-[assembly: OwinStartup(typeof(ygo.api.Startup))]
 namespace ygo.api
 {
-    public partial class Startup
+    public class Startup
     {
-        public void Configuration(IAppBuilder app)
+        public Startup(IConfiguration configuration)
         {
-            Configure(app);
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Ygo API", Version = "v1" });
+
+                var fileName = this.GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
+            });
+
+            services.AddYgoDatabase(Configuration.GetConnectionString("ygo"));
+            services.AddCqrs();
+        }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
+            });
         }
     }
 }
