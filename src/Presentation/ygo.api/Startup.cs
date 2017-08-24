@@ -28,7 +28,7 @@ namespace ygo.api
             {
                 c.SwaggerDoc("v1", new Info { Title = "Ygo API", Version = "v1" });
 
-                var fileName = this.GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
+                var fileName = GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
             });
 
