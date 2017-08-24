@@ -26,5 +26,9 @@
     <ProjectReference Include="..\..\Application\ygo.application\ygo.application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ygo.infrastructure\ygo.infrastructure.csproj" />
   </ItemGroup>
-
+  <Target Name="CopyDocumentationFile" AfterTargets="ComputeFilesToPublish">
+    <ItemGroup>
+      <ResolvedFileToPublish Include="@(FinalDocFile)" RelativePath="@(FinalDocFile->'%(Filename)%(Extension)')" />
+    </ItemGroup>
+  </Target>
 </Project>
