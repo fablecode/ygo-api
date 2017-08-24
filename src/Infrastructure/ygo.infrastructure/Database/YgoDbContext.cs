@@ -1,9 +1,10 @@
-﻿using ygo.domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ygo.domain.Models;
 
 namespace ygo.infrastructure.Database
 {
-    public class YgoDbContext
+    public class YgoDbContext : DbContext, IYgoDbContext
     {
-        //public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
