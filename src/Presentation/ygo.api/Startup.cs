@@ -3,12 +3,9 @@ using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using ygo.application.Ioc;
-using ygo.infrastructure.Ioc;
 
 namespace ygo.api
 {
@@ -50,9 +47,6 @@ namespace ygo.api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
             });
-
-            app.UseRewriter(new RewriteOptions()
-                .AddRedirect("/", "swagger"));
         }
     }
 }
