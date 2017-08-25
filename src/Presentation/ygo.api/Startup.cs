@@ -32,8 +32,8 @@ namespace ygo.api
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
             });
 
-            services.AddYgoDatabase(Configuration.GetConnectionString("ygo"));
-            services.AddCqrs();
+            //services.AddYgoDatabase(Configuration.GetConnectionString("ygo"));
+            //services.AddCqrs();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
