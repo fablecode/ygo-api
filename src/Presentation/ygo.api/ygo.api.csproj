@@ -7,6 +7,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
+    <DocumentationFile>bin\Debug\netcoreapp2.0\ygo.api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,9 +27,10 @@
     <ProjectReference Include="..\..\Application\ygo.application\ygo.application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ygo.infrastructure\ygo.infrastructure.csproj" />
   </ItemGroup>
+
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <ItemGroup>
-      <DocFile Include="bin\**\**\ygo.api.xml" />
+      <DocFile Include="bin\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(TargetName).xml" />
     </ItemGroup>
     <Copy SourceFiles="@(DocFile)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
   </Target>
