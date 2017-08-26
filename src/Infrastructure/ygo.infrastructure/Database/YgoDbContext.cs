@@ -5,6 +5,11 @@ namespace ygo.infrastructure.Database
 {
     public class YgoDbContext : DbContext, IYgoDbContext
     {
-        public DbSet<Category> Categories { get; set; }
+        public YgoDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Category> Category { get; set; }
     }
 }

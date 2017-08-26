@@ -11,6 +11,7 @@ namespace ygo.infrastructure.Ioc
         public static IServiceCollection AddYgoDatabase(this IServiceCollection services, string connectionString)
         {
             services.AddDbContextPool<YgoDbContext>(c => c.UseSqlServer(connectionString));
+
             services.AddRepositories();
 
             return services;

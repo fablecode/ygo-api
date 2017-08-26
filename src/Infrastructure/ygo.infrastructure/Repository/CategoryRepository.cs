@@ -10,18 +10,23 @@ namespace ygo.infrastructure.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly IYgoDbContext _dbContext;
+        private readonly YgoDbContext _dbContext;
 
-        public CategoryRepository(IYgoDbContext dbContext)
+        public CategoryRepository(YgoDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public Task<List<Category>> GetAllCategories()
         {
-            var orderedQueryable = from c in _dbContext.Categories orderby c.Name select c;
+            var orderedQueryable = from c in _dbContext.Category orderby c.Name select c;
 
-            return await orderedQueryable.ToListAsync();
+            return orderedQueryable.ToListAsync();
+        }
+
+        public Task<Category> GetCategoryById(int id)
+        {
+            return _dbContext.Category.SingleOrDefaultAsync(c => c.Id == id);
         }
     }
 }

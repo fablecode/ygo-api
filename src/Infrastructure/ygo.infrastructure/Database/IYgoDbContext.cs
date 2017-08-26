@@ -6,7 +6,7 @@ namespace ygo.infrastructure.Database
 {
     public interface IYgoDbContext
     {
-        DbSet<Category> Categories { get; set; }
+        DbSet<Category> Category { get; set; }
         DatabaseFacade Database { get; }
         int SaveChanges();
     }

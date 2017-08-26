@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using ygo.application.Ioc;
+using ygo.infrastructure.Ioc;
 
 namespace ygo.api
 {
@@ -32,8 +34,8 @@ namespace ygo.api
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
             });
 
-            //services.AddYgoDatabase(Configuration.GetConnectionString("ygo"));
-            //services.AddCqrs();
+            services.AddYgoDatabase(Configuration.GetConnectionString("ygo"));
+            services.AddCqrs();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
