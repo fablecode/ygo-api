@@ -51,8 +51,7 @@ namespace ygo.api
             });
 
             app.UseRewriter(new RewriteOptions()
-                .AddRedirect(@"/", "swagger", (int)HttpStatusCode.Redirect));
-
+                .AddRedirect(@"^$", "swagger", (int)HttpStatusCode.Redirect));
         }
     }
 }
