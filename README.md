@@ -1,9 +1,9 @@
 ![alt text](https://fablecode.visualstudio.com/_apis/public/build/definitions/22ebd0cf-e8a2-4659-997b-95d960acfe61/3/badge?maxAge=0 "Visual studio team services build status") 
 
 # Ygo-api
-A C# .NET Core 2 api for ([Yu-Gi-Oh](http://www.yugioh-card.com/uk/)) data such as Card Images, descriptions, Tips and Trivia.
+A C# .NET Core 2 api for [Yu-Gi-Oh](http://www.yugioh-card.com/uk/) data such as Card Images, descriptions, Tips and Trivia.
 
-# Why?
+## Why?
 To provide access to the latest ([Yu-Gi-Oh](http://www.yugioh-card.com/uk/))  banlist & card errata in a simple JSON format.
 
 ## Prerequisite
