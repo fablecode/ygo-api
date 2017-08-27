@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -7,7 +8,7 @@ using ygo.domain.Models;
 
 namespace ygo.application.Commands.AddCategory
 {
-    public class AddCategoryCommandHandler : IAsyncRequestHandler<AddCategoryCommand, Category>
+    public class AddCategoryCommandHandler : IAsyncRequestHandler<AddCategoryCommand, CommandResult>
     {
         private readonly ICategoryRepository _repository;
         private readonly IValidator<AddCategoryCommand> _validator;
@@ -18,14 +19,27 @@ namespace ygo.application.Commands.AddCategory
             _validator = validator;
         }
 
-        public Task<Category> Handle(AddCategoryCommand message)
+        public async Task<CommandResult> Handle(AddCategoryCommand message)
         {
+            var response = new CommandResult();
+
             var validationResults = _validator.Validate(message);
 
             if (validationResults.IsValid)
-                return _repository.Add(new Category {Name = message.Name, Created = DateTime.UtcNow, Updated = DateTime.UtcNow});
+            {
+                response.Data =
+                    await _repository.Add(new Category
+                    {
+                        Name = message.Name,
+                        Created = DateTime.UtcNow,
+                        Updated = DateTime.UtcNow
+                    });
+                response.IsSuccessful = true;
+            }
+            else
+                response.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
 
-            throw new ValidationException(validationResults.Errors);
+            return response;
         }
     }
 }
