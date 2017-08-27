@@ -45,7 +45,7 @@ namespace ygo.application.unit.tests.Commands
                 .Add(Arg.Any<Category>())
                 .Returns(new Category());
 
-            var command = new AddCategoryCommand{ Name = "category"};
+            var command = new AddCategoryCommand();
 
             // Act
             await  _sut.Handle(command);
