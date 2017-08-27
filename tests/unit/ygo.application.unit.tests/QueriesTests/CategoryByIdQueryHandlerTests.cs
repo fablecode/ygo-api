@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
-using FluentValidation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Queries.CategoryById;
@@ -25,16 +23,16 @@ namespace ygo.application.unit.tests.QueriesTests
         }
 
         [TestMethod]
-        public void Given_An_Invalid_Query_Should_Throw_ValidationException()
+        public void Given_An_Invalid_Query_Should_Return_Null()
         {
             // Arrange
             var query = new CategoryByIdQuery();
 
             // Act
-            Action act = () => _sut.Handle(query);
+            var result = _sut.Handle(query);
 
             // Assert
-            act.ShouldThrow<ValidationException>();
+            result.Should().BeNull();
         }
 
         [TestMethod]

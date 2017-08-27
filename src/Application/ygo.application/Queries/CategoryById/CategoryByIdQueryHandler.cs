@@ -21,10 +21,7 @@ namespace ygo.application.Queries.CategoryById
         {
             var validationResult = _queryValidator.Validate(message);
 
-            if (!validationResult.IsValid)
-                throw new ValidationException(validationResult.Errors);
-
-            return _repository.GetCategoryById(message.Id);
+            return validationResult.IsValid ? _repository.GetCategoryById(message.Id) : null;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ygo.application.Queries.AllCategories;
+using ygo.application.Queries.CategoryById;
 
 namespace ygo.api.Controllers
 {
@@ -16,7 +17,7 @@ namespace ygo.api.Controllers
             _mediator = mediator;
         }
         /// <summary>
-        /// Get all Yugioh card categories
+        /// Get all categories
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -24,6 +25,24 @@ namespace ygo.api.Controllers
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(new AllCategoriesQuery());
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get category by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _mediator.Send(new CategoryByIdQuery {Id = id});
+
+            if (result == null)
+                return NotFound($"Category with id '{id}' not found.");
 
             return Ok(result);
         }

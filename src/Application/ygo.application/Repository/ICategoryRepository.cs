@@ -8,5 +8,6 @@ namespace ygo.application.Repository
     {
         Task<List<Category>> GetAllCategories();
         Task<Category> GetCategoryById(int id);
+        Task<Category> Add(Category category);
     }
 }

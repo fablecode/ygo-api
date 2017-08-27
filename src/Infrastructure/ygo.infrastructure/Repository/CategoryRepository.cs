@@ -28,5 +28,13 @@ namespace ygo.infrastructure.Repository
         {
             return _dbContext.Category.SingleOrDefaultAsync(c => c.Id == id);
         }
+
+        public async Task<Category> Add(Category category)
+        {
+            await _dbContext.Category.AddAsync(category);
+            await _dbContext.SaveChangesAsync();
+
+            return category;
+        }
     }
 }

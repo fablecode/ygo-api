@@ -1,8 +1,9 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ygo.application.Queries.CategoryById;
 
-namespace ygo.application.unit.tests.ValidatorsTests
+namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
     [TestClass]
     public class CategoryByIdQueryValidatorTests
@@ -24,10 +25,24 @@ namespace ygo.application.unit.tests.ValidatorsTests
             var query = new CategoryByIdQuery() { Id = categoryId};
 
             // Act
-            var result = _sut.Validate(query);
+            Action act = () => _sut.ShouldHaveValidationErrorFor(parameter => parameter.Id, query);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            act.Invoke();
         }
+
+        [TestMethod]
+        public void Given_A_Valid_Category_Id_Validation_Should_Pass()
+        {
+            // Arrange
+            var query = new CategoryByIdQuery() { Id = 232 };
+
+            // Act
+            Action act = () => _sut.ShouldNotHaveValidationErrorFor(parameter => parameter.Id, query);
+
+            // Assert
+            act.Invoke();
+        }
+
     }
 }
