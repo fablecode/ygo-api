@@ -6,7 +6,10 @@ namespace ygo.application.Commands.AddCategory
     {
         public AddCategoryCommandValidator()
         {
-            DefaultValidatorExtensions.NotNull(RuleFor(category => category.Name))
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+
+            RuleFor(category => category.Name)
+                .NotNull()
                 .NotEmpty()
                 .Length(3, 255);
         }

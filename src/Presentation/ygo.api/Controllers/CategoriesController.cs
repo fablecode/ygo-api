@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ygo.application.Commands.AddCategory;
 using ygo.application.Queries.AllCategories;
 using ygo.application.Queries.CategoryById;
+using ygo.domain.Models;
 
 namespace ygo.api.Controllers
 {
@@ -17,7 +19,7 @@ namespace ygo.api.Controllers
             _mediator = mediator;
         }
         /// <summary>
-        /// Get all categories
+        /// All categories ordered alphabetically
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -30,7 +32,7 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Get category by id
+        /// Category by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -45,6 +47,24 @@ namespace ygo.api.Controllers
                 return NotFound($"Category with id '{id}' not found.");
 
             return Ok(result);
+        }
+
+        /// <summary>
+        /// New category
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Post([FromBody] AddCategoryCommand category)
+        {
+            var result = await _mediator.Send(category);
+
+            if (result.IsSuccessful)
+                return CreatedAtRoute("Get", new { id = ((Category)result.Data).Id }, result.Data);
+
+            return BadRequest(result.Errors);
         }
     }
 }

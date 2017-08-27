@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using ygo.application.Commands.AddCategory;
 using ygo.application.Queries.CategoryById;
 
 namespace ygo.application.Ioc
@@ -12,9 +13,16 @@ namespace ygo.application.Ioc
         {
             services.AddMediatR(typeof(ApplicationInstaller).GetTypeInfo().Assembly);
 
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
             services.AddTransient<IValidator<CategoryByIdQuery>, CategoryByIdQueryValidator>();
+            services.AddTransient<IValidator<AddCategoryCommand>, AddCategoryCommandValidator>();
 
             return services;
         }
+
     }
 }

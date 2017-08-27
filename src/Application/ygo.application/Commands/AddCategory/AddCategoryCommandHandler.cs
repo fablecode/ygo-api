@@ -27,13 +27,14 @@ namespace ygo.application.Commands.AddCategory
 
             if (validationResults.IsValid)
             {
-                response.Data =
-                    await _repository.Add(new Category
-                    {
-                        Name = message.Name,
-                        Created = DateTime.UtcNow,
-                        Updated = DateTime.UtcNow
-                    });
+                var responseData = await _repository.Add(new Category
+                {
+                    Name = message.Name,
+                    Created = DateTime.UtcNow,
+                    Updated = DateTime.UtcNow
+                });
+
+                response.Data = responseData;
                 response.IsSuccessful = true;
             }
             else
