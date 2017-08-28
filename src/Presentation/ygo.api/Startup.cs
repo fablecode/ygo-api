@@ -2,12 +2,24 @@
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.WindowsAzure.Storage;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using ygo.api.Auth;
 using ygo.application.Ioc;
 using ygo.infrastructure.Ioc;
 
@@ -24,6 +36,8 @@ namespace ygo.api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var ygoDbConnectionString = Configuration.GetConnectionString("ygo");
+
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
@@ -34,7 +48,33 @@ namespace ygo.api
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
             });
 
-            services.AddYgoDatabase(Configuration.GetConnectionString("ygo"));
+            #region Authentication / Authorization
+
+            services.AddDbContext<ApplicationAuthContext>(options =>
+                options.UseSqlServer(ygoDbConnectionString));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationAuthContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+
+                });
+
+            #endregion
+
+            services.AddYgoDatabase(ygoDbConnectionString);
             services.AddCqrs();
             services.AddValidators();
         }
@@ -57,4 +97,26 @@ namespace ygo.api
                 .AddRedirect(@"^$", "swagger", (int)HttpStatusCode.Redirect));
         }
     }
+
+    public class YgoUser : IdentityUser
+    {
+        public DateTime JoinDate { get; set; }
+        public DateTime JobTitle { get; set; }
+        public string Contract { get; set; }
+    }
+
+    public class YgoRole : IdentityRole
+    {
+        public string Description { get; set; }
+    }
+
+    public class SecurityContext : IdentityDbContext<YgoUser>
+    {
+        public SecurityContext(DbContextOptions<SecurityContext> options)
+            : base(options)
+        {
+        }
+    }
+
+
 }
