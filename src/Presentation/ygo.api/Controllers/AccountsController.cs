@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ygo.api.Auth;
+using ygo.api.Auth.Models;
 
 namespace ygo.api.Controllers
 {
@@ -28,6 +28,11 @@ namespace ygo.api.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// User registration
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -40,17 +45,17 @@ namespace ygo.api.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
-                    return CreatedAtRoute("Users", new {model.Email}, model);
+                    return CreatedAtRoute("UserByEmail", new {model.Email}, model.Email);
                 }
 
-                return BadRequest("User not registered.");
+                return BadRequest(result.Errors);
             }
 
             return BadRequest(ModelState);
         }
 
         /// <summary>
-        /// Token authentication using your email and password
+        /// Token authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -93,45 +98,7 @@ namespace ygo.api.Controllers
             }
 
             return BadRequest("Could not create token");
-
         }
 
-    }
-
-    public class LoginModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-    }
-
-    public class RegisterModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-    }
-
-    [Authorize]
-    [Route("api/[controller]")]
-    public class UsersController : Controller
-    {
-        
     }
 }

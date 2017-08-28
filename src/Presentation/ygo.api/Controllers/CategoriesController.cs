@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ygo.application.Commands.AddCategory;
 using ygo.application.Queries.AllCategories;
@@ -36,7 +38,7 @@ namespace ygo.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "CategoryById")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int id)
@@ -54,15 +56,17 @@ namespace ygo.api.Controllers
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
+        [Authorize(Roles = "User")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddCategoryCommand category)
         {
             var result = await _mediator.Send(category);
 
             if (result.IsSuccessful)
-                return CreatedAtRoute("Get", new { id = ((Category)result.Data).Id }, result.Data);
+                return CreatedAtRoute("CategoryById", new { id = ((Category)result.Data).Id }, result.Data);
 
             return BadRequest(result.Errors);
         }

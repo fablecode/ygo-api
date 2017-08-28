@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,25 @@ namespace ygo.api
 
         public IConfiguration Configuration { get; }
 
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseAuthentication();
+            app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
+            });
+
+            app.UseRewriter(new RewriteOptions()
+                .AddRedirect(@"^$", "swagger", (int)HttpStatusCode.Redirect));
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             var ygoDbConnectionString = Configuration.GetConnectionString("ygo");
@@ -44,21 +64,29 @@ namespace ygo.api
 
             #region Authentication / Authorization
 
+            // Application DbContext
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(ygoDbConnectionString));
 
+            // Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication()
+            // Token authentication only
+            services.AddAuthentication(auth =>
+                {
+                    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(cfg =>
                 {
                     cfg.RequireHttpsMetadata = false;
                     cfg.SaveToken = true;
-
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
+                        RoleClaimType = System.Security.Claims.ClaimTypes.Role,
                         ValidIssuer = Configuration["Tokens:Issuer"],
                         ValidAudience = Configuration["Tokens:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
@@ -73,23 +101,6 @@ namespace ygo.api
             services.AddValidators();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
-            });
-
-            app.UseRewriter(new RewriteOptions()
-                .AddRedirect(@"^$", "swagger", (int)HttpStatusCode.Redirect));
-        }
     }
 
     public class YgoUser : IdentityUser
