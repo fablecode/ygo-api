@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ using ygo.api.Auth;
 
 namespace ygo.api.Controllers
 {
-    [Authorize]
     [Route("[controller]/[action]")]
     public class AccountsController : Controller
     {
@@ -29,7 +29,8 @@ namespace ygo.api.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -49,12 +50,14 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Token authenticate using your email and password
+        /// Token authentication using your email and password
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Token([FromBody] LoginModel model)
         {
             if (ModelState.IsValid)
