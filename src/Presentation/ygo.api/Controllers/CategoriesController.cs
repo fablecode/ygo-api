@@ -21,7 +21,7 @@ namespace ygo.api.Controllers
             _mediator = mediator;
         }
         /// <summary>
-        /// All categories ordered alphabetically
+        /// All categories
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -37,7 +37,7 @@ namespace ygo.api.Controllers
         /// Category by id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns></returns> 
         [HttpGet("{id}", Name = "CategoryById")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]

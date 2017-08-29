@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ygo.domain.Models
 {
-    public class Category
+    public class Attribute
     {
-        public Category()
+        public Attribute()
         {
-            SubCategory = new HashSet<SubCategory>();
+            CardAttribute = new HashSet<CardAttribute>();
         }
 
         public long Id { get; set; }
@@ -15,6 +15,6 @@ namespace ygo.domain.Models
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 
-        public ICollection<SubCategory> SubCategory { get; set; }
+        public ICollection<CardAttribute> CardAttribute { get; set; }
     }
 }

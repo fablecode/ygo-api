@@ -14,4 +14,10 @@
     <ProjectReference Include="..\..\Application\ygo.application\ygo.application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+  </ItemGroup>
+
 </Project>

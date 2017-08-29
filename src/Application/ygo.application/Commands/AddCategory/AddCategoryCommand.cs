@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using ygo.domain.Models;
 
 namespace ygo.application.Commands.AddCategory
 {
