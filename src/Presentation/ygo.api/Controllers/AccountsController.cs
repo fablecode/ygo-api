@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,12 @@ namespace ygo.api.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _config;
 
-        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration config)
+        public AccountsController
+        (
+            UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, 
+            IConfiguration config
+        )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -74,19 +80,24 @@ namespace ygo.api.Controllers
                     var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
                     if (result.Succeeded)
                     {
-
-                        var claims = new[]
+                        // Basic Claims
+                        var claims = new List<Claim>
                         {
                             new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Jti, user.Id),
                         };
+                        
+                        // Role Claims
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
+                        // Token generation
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                         var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                             _config["Tokens:Issuer"],
-                            claims,
+                            claims.ToArray(),
                             expires: DateTime.Now.AddDays(30),
                             signingCredentials: creds);
 
@@ -97,7 +108,7 @@ namespace ygo.api.Controllers
                 return NotFound();
             }
 
-            return BadRequest("Could not create token");
+            return BadRequest(ModelState);
         }
 
     }

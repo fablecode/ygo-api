@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ygo.api.Auth;
 using ygo.application.Commands.AddCategory;
 using ygo.application.Queries.AllCategories;
 using ygo.application.Queries.CategoryById;
@@ -11,7 +11,7 @@ using ygo.domain.Models;
 
 namespace ygo.api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class CategoriesController : Controller
     {
         private readonly IMediator _mediator;
@@ -56,8 +56,8 @@ namespace ygo.api.Controllers
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        [Authorize(Roles = "User")]
         [HttpPost]
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
