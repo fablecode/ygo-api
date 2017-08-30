@@ -1,5 +1,4 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 using ygo.domain.Models;
 
 namespace ygo.application.Queries.CategoryById

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCategory;
-using ygo.application.Queries.AllCategories;
+using ygo.application.Queries.Categories.AllCategories;
 using ygo.application.Queries.CategoryById;
 using ygo.domain.Models;
 
