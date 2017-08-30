@@ -6,8 +6,8 @@ namespace ygo.application.Repository
 {
     public interface ICategoryRepository
     {
-        Task<List<Category>> GetAllCategories();
-        Task<Category> GetCategoryById(int id);
+        Task<List<Category>> AllCategories();
+        Task<Category> CategoryById(int id);
         Task<Category> Add(Category category);
     }
 }

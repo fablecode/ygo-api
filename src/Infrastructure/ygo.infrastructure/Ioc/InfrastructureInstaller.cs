@@ -20,6 +20,7 @@ namespace ygo.infrastructure.Ioc
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
 
             return services;
         }

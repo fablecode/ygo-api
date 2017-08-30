@@ -17,14 +17,14 @@ namespace ygo.infrastructure.Repository
             _dbContext = dbContext;
         }
 
-        public Task<List<Category>> GetAllCategories()
+        public Task<List<Category>> AllCategories()
         {
             var orderedQueryable = from c in _dbContext.Category orderby c.Name select c;
 
             return orderedQueryable.ToListAsync();
         }
 
-        public Task<Category> GetCategoryById(int id)
+        public Task<Category> CategoryById(int id)
         {
             return _dbContext.Category.SingleOrDefaultAsync(c => c.Id == id);
         }

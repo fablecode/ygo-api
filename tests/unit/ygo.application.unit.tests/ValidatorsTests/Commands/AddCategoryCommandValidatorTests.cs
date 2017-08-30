@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ygo.application.Commands.AddCategory;
@@ -60,5 +61,16 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
+        [TestMethod]
+        public void Given_A_Invalid_Category_Name_Validation_Should_StopOnFirstFailure()
+        {
+            // Arrange
+
+            // Act
+            var result = _sut.Validate(new AddCategoryCommand());
+
+            // Assert
+            result.Errors.Should().HaveCount(1);
+        }
     }
 }

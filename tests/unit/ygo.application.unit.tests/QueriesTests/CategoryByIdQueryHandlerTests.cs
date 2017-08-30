@@ -36,11 +36,11 @@ namespace ygo.application.unit.tests.QueriesTests
         }
 
         [TestMethod]
-        public async Task Given_A_Valid_Query_Should_Execute_GetCategoryById()
+        public async Task Given_A_Valid_Query_Should_Execute_CategoryById()
         {
             // Arrange
             _categoryRepository
-                .GetCategoryById(Arg.Any<int>())
+                .CategoryById(Arg.Any<int>())
                 .Returns(new Category());
 
             var query = new CategoryByIdQuery{ Id = 4};
@@ -49,7 +49,7 @@ namespace ygo.application.unit.tests.QueriesTests
             await _sut.Handle(query);
 
             // Assert
-            await _categoryRepository.Received(1).GetCategoryById(Arg.Any<int>());
+            await _categoryRepository.Received(1).CategoryById(Arg.Any<int>());
         }
 
     }

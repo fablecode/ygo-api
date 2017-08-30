@@ -18,7 +18,7 @@ namespace ygo.application.Queries.AllCategories
 
         public async Task<IEnumerable<Category>> Handle(AllCategoriesQuery message)
         {
-            return await _repository.GetAllCategories();
+            return await _repository.AllCategories();
         }
     }
 }
