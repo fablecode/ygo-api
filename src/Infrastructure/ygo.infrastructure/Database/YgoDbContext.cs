@@ -24,6 +24,7 @@ namespace ygo.infrastructure.Database
         public virtual DbSet<BanlistCard> BanlistCard { get; set; }
         public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<CardAttribute> CardAttribute { get; set; }
+        public virtual DbSet<CardLinkArrow> CardLinkArrow { get; set; }
         public virtual DbSet<CardRuling> CardRuling { get; set; }
         public virtual DbSet<CardSubCategory> CardSubCategory { get; set; }
         public virtual DbSet<CardTip> CardTip { get; set; }
@@ -32,6 +33,7 @@ namespace ygo.infrastructure.Database
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Format> Format { get; set; }
         public virtual DbSet<Limit> Limit { get; set; }
+        public virtual DbSet<LinkArrow> LinkArrow { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<Type> Type { get; set; }
 
@@ -234,6 +236,23 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardAttributes_CardId");
             });
 
+            modelBuilder.Entity<CardLinkArrow>(entity =>
+            {
+                entity.HasKey(e => new { e.LinkArrowId, e.CardId });
+
+                entity.HasOne(d => d.Card)
+                    .WithMany(p => p.CardLinkArrow)
+                    .HasForeignKey(d => d.CardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CardLinkArrow_Card");
+
+                entity.HasOne(d => d.LinkArrow)
+                    .WithMany(p => p.CardLinkArrow)
+                    .HasForeignKey(d => d.LinkArrowId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CardLinkArrow_LinkArrow");
+            });
+
             modelBuilder.Entity<CardRuling>(entity =>
             {
                 entity.Property(e => e.Ruling).IsRequired();
@@ -323,6 +342,13 @@ namespace ygo.infrastructure.Database
             {
                 entity.Property(e => e.Description).IsRequired();
 
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<LinkArrow>(entity =>
+            {
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);

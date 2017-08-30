@@ -10,6 +10,7 @@ namespace ygo.domain.Models
             ArchetypeCard = new HashSet<ArchetypeCard>();
             BanlistCard = new HashSet<BanlistCard>();
             CardAttribute = new HashSet<CardAttribute>();
+            CardLinkArrow = new HashSet<CardLinkArrow>();
             CardRuling = new HashSet<CardRuling>();
             CardSubCategory = new HashSet<CardSubCategory>();
             CardTip = new HashSet<CardTip>();
@@ -31,6 +32,7 @@ namespace ygo.domain.Models
         public ICollection<ArchetypeCard> ArchetypeCard { get; set; }
         public ICollection<BanlistCard> BanlistCard { get; set; }
         public ICollection<CardAttribute> CardAttribute { get; set; }
+        public ICollection<CardLinkArrow> CardLinkArrow { get; set; }
         public ICollection<CardRuling> CardRuling { get; set; }
         public ICollection<CardSubCategory> CardSubCategory { get; set; }
         public ICollection<CardTip> CardTip { get; set; }

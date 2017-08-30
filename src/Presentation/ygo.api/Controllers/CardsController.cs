@@ -2,17 +2,32 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ygo.application.Commands.AddCard;
+using ygo.application.Queries.CardByName;
 
 namespace ygo.api.Controllers
 {
     [Route("[controller]")]
     public class CardsController : Controller
     {
-        [HttpGet("{name}")]
-        public Task<IActionResult> Get(string name)
+        private readonly IMediator _mediator;
+
+        public CardsController(IMediator mediator)
         {
-            throw new NotImplementedException();
+            _mediator = mediator;
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> Get(string name)
+        {
+            var result = await _mediator.Send(new CardByNameQuery {Name = name});
+
+            if (result != null)
+                return Ok(result);
+
+            return NotFound($"Card '{name}' not found.");
         }
 
         [HttpGet]
@@ -58,10 +73,24 @@ namespace ygo.api.Controllers
         }
 
         [HttpPut("{id}/trivia")]
-        public Task<IActionResult> PatchPut([FromBody] UpdateCardTriviaCommand command)
+        public Task<IActionResult> PutTrivia([FromBody] UpdateCardTriviaCommand command)
         {
             throw new NotImplementedException();
         }
+
+
+        [HttpGet("{id}/linkarrows")]
+        public Task<IActionResult> GetLinkArrows()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPut("{id}/linkarrows")]
+        public Task<IActionResult> PutLinkArrows([FromBody] UpdateCardLinkArrowsCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
 
         [HttpGet("{id}/image")]
         public Task<IActionResult> GetImage()
@@ -75,6 +104,12 @@ namespace ygo.api.Controllers
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class UpdateCardLinkArrowsCommand
+    {
+        public long Id { get; set; }
+        public List<string> LinkArrows { get; set; }
     }
 
     public class CardSearchQuery
@@ -118,16 +153,5 @@ namespace ygo.api.Controllers
     {
         public long Id { get; set; }
         public List<string> Tips { get; set; }
-    }
-
-    public class AddCardCommand
-    {
-        public string CardNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int? CardLevel { get; set; }
-        public int? CardRank { get; set; }
-        public int? Atk { get; set; }
-        public int? Def { get; set; }
     }
 }

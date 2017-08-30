@@ -1,11 +1,11 @@
 ﻿namespace ygo.domain.Models
 {
-    public class CardType
+    public class CardLinkArrow
     {
-        public long TypeId { get; set; }
+        public long LinkArrowId { get; set; }
         public long CardId { get; set; }
 
         public Card Card { get; set; }
-        public Type Type { get; set; }
+        public LinkArrow LinkArrow { get; set; }
     }
 }
