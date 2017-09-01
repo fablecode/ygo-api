@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Commands;
 using ygo.application.Commands.AddCard;
-using ygo.application.Repository;
-using ygo.application.unit.tests.ValidatorsTests.Commands;
+using ygo.domain.Enums;
+using ygo.domain.Models;
 
 namespace ygo.application.unit.tests.Commands
 {
@@ -15,68 +15,80 @@ namespace ygo.application.unit.tests.Commands
     public class AddCardCommandHandlerTests
     {
         private AddCardCommandHandler _sut;
+        private IMediator _mediator;
 
         [TestInitialize]
         public void Setup()
         {
-            var repository = Substitute.For<ICardRepository>();
-            IValidator<AddCardCommand> validator = new AddCardCommandValidator();
+            _mediator = Substitute.For<IMediator>();
 
-            _sut = new AddCardCommandHandler(repository, validator);
+            _sut = new AddCardCommandHandler(_mediator);
         }
-
-        [TestMethod]
-        public async Task Given_An_Invalid_AddCardCommand_The_Command_Execution_Should_Be_Not_Successful()
-        {
-            // Arrange
-            var command = new AddCardCommand();
-
-            // Act
-            var result = await _sut.Handle(command);
-
-            // Assert
-            result.IsSuccessful.Should().BeFalse();
-        }
-
-        [TestMethod]
-        public async Task Given_An_Invalid_AddCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
-        {
-            // Arrange
-            var command = new AddCardCommand();
-
-            // Act
-            var result = await _sut.Handle(command);
-
-            // Assert
-            result.Errors.Should().NotBeEmpty();
-        }
-
-
     }
 
     public class AddCardCommandHandler : IAsyncRequestHandler<AddCardCommand, CommandResult>
     {
-        private readonly ICardRepository _repository;
-        private readonly IValidator<AddCardCommand> _validator;
+        private readonly IMediator _mediator;
 
-        public AddCardCommandHandler(ICardRepository repository, IValidator<AddCardCommand> validator)
+        public AddCardCommandHandler(IMediator mediator)
         {
-            _repository = repository;
-            _validator = validator;
+            _mediator = mediator;
         }
 
         public Task<CommandResult> Handle(AddCardCommand message)
         {
-            var response = new CommandResult();
-
-
-            var validationResults = _validator.Validate(message);
-            if (validationResults.IsValid)
-            {
-                
-            }
-
-            return Task.FromResult(response);
+            throw new NotImplementedException();
         }
+
+        private Task<Card> GetCardType(YgoCardType cardType, AddCardCommand message)
+        {
+            switch (cardType)
+            {
+                case YgoCardType.Monster:
+                    return _mediator.Send(new AddMonsterCardCommand());
+                case YgoCardType.Spell:
+                    return _mediator.Send(new AddSpellCardCommand());
+                case YgoCardType.Trap:
+                    return _mediator.Send(new AddTrapCardCommand());
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cardType));
+            }
+        }
+    }
+
+    public class AddMonsterCardCommand : IRequest<Card>
+    {
+        public string CardNumber { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int? CardLevel { get; set; }
+        public int? CardRank { get; set; }
+        public int? Atk { get; set; }
+        public int? Def { get; set; }
+        public int AttributeId { get; set; }
+        public List<int> SubCategoryIds { get; set; }
+        public List<int> TypeIds { get; set; }
+        public List<int> LinkArrowIds { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+    }
+
+    public class AddTrapCardCommand : IRequest<Card>
+    {
+        public string CardNumber { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+    }
+
+    public class AddSpellCardCommand : IRequest<Card>
+    {
+        public string CardNumber { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+
     }
 }

@@ -19,5 +19,10 @@ namespace ygo.infrastructure.Repository
         {
             return _context.Card.SingleOrDefaultAsync(c => c.Name == name);
         }
+
+        public Task<Card> Add(Card newCard)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

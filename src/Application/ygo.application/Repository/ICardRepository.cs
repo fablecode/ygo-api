@@ -6,5 +6,6 @@ namespace ygo.application.Repository
     public interface ICardRepository
     {
         Task<Card> CardByName(string name);
+        Task<Card> Add(Card newCard);
     }
 }

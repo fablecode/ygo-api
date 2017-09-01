@@ -31,78 +31,112 @@ namespace ygo.api.Controllers
         }
 
         [HttpGet]
-        public Task<IActionResult> Get([FromRoute] CardSearchQuery query)
+        public IActionResult Get([FromRoute] CardSearchQuery query)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
         [HttpPost]
-        public Task<IActionResult> Post([FromBody] AddCardCommand command)
+        public IActionResult Post([FromBody] AddCardCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
-        [HttpGet("{id}/tips")]
-        public Task<IActionResult> GetTips()
+        [HttpPut]
+        public IActionResult Put([FromBody] UpdateCardCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
+        }
+
+
+        [HttpGet("{id}/tips")]
+        public IActionResult GetTips()
+        {
+            return StatusCode(501);
         }
 
         [HttpPut("{id}/tips")]
-        public Task<IActionResult> PutTips([FromBody] UpdateCardTipsCommand command)
+        public IActionResult PutTips([FromBody] UpdateCardTipsCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
         [HttpGet("{id}/rulings")]
-        public Task<IActionResult> GetRulings()
+        public IActionResult GetRulings()
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
         [HttpPut("{id}/rulings")]
-        public Task<IActionResult> PutRulings([FromBody] UpdateCardRulingsCommand command)
+        public IActionResult PutRulings([FromBody] UpdateCardRulingsCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
         [HttpGet("{id}/trivia")]
-        public Task<IActionResult> GetTrivia()
+        public IActionResult GetTrivia()
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
         [HttpPut("{id}/trivia")]
-        public Task<IActionResult> PutTrivia([FromBody] UpdateCardTriviaCommand command)
+        public IActionResult PutTrivia([FromBody] UpdateCardTriviaCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
 
         [HttpGet("{id}/linkarrows")]
-        public Task<IActionResult> GetLinkArrows()
+        public IActionResult GetLinkArrows()
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
         [HttpPut("{id}/linkarrows")]
-        public Task<IActionResult> PutLinkArrows([FromBody] UpdateCardLinkArrowsCommand command)
+        public IActionResult PutLinkArrows([FromBody] UpdateCardLinkArrowsCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
+        }
+    }
+
+    public class UpdateCardCommand
+    {
+        public long Id { get; set; }
+        public string CardNumber { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int? CardLevel { get; set; }
+        public int? CardRank { get; set; }
+        public int? Atk { get; set; }
+        public int? Def { get; set; }
+
+        public Uri ImageUrl { get; set; }
+
+        public List<string> SubCategories { get; set; }
+        public List<string> Types { get; set; }
+        public List<string> LinkArrows { get; set; }
+    }
+
+    [Route("[controller]")]
+    public class ImagesController : Controller
+    {
+        [HttpGet("{id}/image")]
+        public IActionResult GetImage()
+        {
+            return StatusCode(501);
         }
 
-
-        [HttpGet("{id}/image")]
-        public Task<IActionResult> GetImage()
+        [HttpPost("{id}/image")]
+        public IActionResult PostImage([FromBody] UpdateCardImageCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
 
 
         [HttpPut("{id}/image")]
-        public Task<IActionResult> PutImage([FromBody] UpdateCardImageCommand command)
+        public IActionResult PutImage([FromBody] UpdateCardImageCommand command)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
     }
 

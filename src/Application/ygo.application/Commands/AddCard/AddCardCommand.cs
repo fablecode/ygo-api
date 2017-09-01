@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MediatR;
+using ygo.domain.Enums;
 
 namespace ygo.application.Commands.AddCard
 {
     public class AddCardCommand : IRequest<CommandResult>
     {
+        public YgoCardType CardType { get; set; }
         public string CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -12,14 +15,10 @@ namespace ygo.application.Commands.AddCard
         public int? CardRank { get; set; }
         public int? Atk { get; set; }
         public int? Def { get; set; }
-
-        public List<string> SubCategories { get; set; }
-        public List<string> Types { get; set; }
-        public List<string> LinkArrows { get; set; }
-
-        public List<string> Tips { get; set; }
-        public List<string> Rulings { get; set; }
-        public List<string> Trivia { get; set; }
-
+        public Uri ImageUrl { get; set; }
+        public int AttributeId { get; set; }
+        public List<int> SubCategoryIds { get; set; }
+        public List<int> TypeIds { get; set; }
+        public List<int> LinkArrowIds { get; set; }
     }
 }
