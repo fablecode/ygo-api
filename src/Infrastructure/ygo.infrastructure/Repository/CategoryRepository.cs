@@ -19,9 +19,9 @@ namespace ygo.infrastructure.Repository
 
         public Task<List<Category>> AllCategories()
         {
-            var orderedQueryable = from c in _dbContext.Category orderby c.Name select c;
+            var orderedQuerable = from c in _dbContext.Category orderby c.Name select c;
 
-            return orderedQueryable.ToListAsync();
+            return orderedQuerable.ToListAsync();
         }
 
         public Task<Category> CategoryById(int id)

@@ -69,8 +69,6 @@ namespace ygo.application.unit.tests.Commands
         public List<int> SubCategoryIds { get; set; }
         public List<int> TypeIds { get; set; }
         public List<int> LinkArrowIds { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
     }
 
     public class AddTrapCardCommand : IRequest<Card>
@@ -78,8 +76,6 @@ namespace ygo.application.unit.tests.Commands
         public string CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
     }
 
     public class AddSpellCardCommand : IRequest<Card>
@@ -87,8 +83,5 @@ namespace ygo.application.unit.tests.Commands
         public string CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-
     }
 }

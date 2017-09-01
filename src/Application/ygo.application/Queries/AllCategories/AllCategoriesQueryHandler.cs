@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
-using ygo.application.Queries.Categories.AllCategories;
 using ygo.application.Repository;
 using ygo.domain.Models;
 
