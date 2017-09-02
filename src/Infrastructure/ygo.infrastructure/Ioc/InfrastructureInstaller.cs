@@ -21,6 +21,7 @@ namespace ygo.infrastructure.Ioc
         {
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICardRepository, CardRepository>();
+            services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
 
             return services;
         }

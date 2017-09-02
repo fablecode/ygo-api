@@ -17,9 +17,22 @@ namespace ygo.infrastructure.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<List<SubCategory>> AllSubCategories()
+        public Task<List<SubCategory>> AllSubCategories()
         {
-            return await _dbContext.SubCategory.OrderBy(c => c.Name).ToListAsync();
+            return _dbContext
+                        .SubCategory
+                        .Include(sc => sc.Category)
+                        .Select(sc => new SubCategory
+                        {
+                            Id = sc.Id,
+                            CategoryId = sc.Category.Id,
+                            Category = sc.Category,
+                            Name = sc.Name,
+                            Created = sc.Created,
+                            Updated = sc.Updated
+                        })
+                        .OrderBy(sc => sc.Name)
+                        .ToListAsync();
 
         }
     }
