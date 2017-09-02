@@ -36,7 +36,7 @@ To provide access to the latest [Yu-Gi-Oh](http://www.yugioh-card.com/uk/)  banl
 ## Dependency graph
  The basic principle of Onion Architecture is to follow the boundaries of these layers – the inner layer can’t depend on its outer layer but can depend on layers beneath.
  
-![ygo-api Dependencies Graph](/assets/images/ygo-api Dependencies Graph.png?raw=true "ygo-api Dependencies Graph")
+![ygo-api Dependencies Graph](/assets/images/ygo-api%20Dependencies%20Graph.png?raw=true "ygo-api Dependencies Graph")
  
  As you see from the diagram, all the dependency directions are downwards, towards domain.
 
