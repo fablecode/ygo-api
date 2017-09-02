@@ -33,5 +33,18 @@ To provide access to the latest [Yu-Gi-Oh](http://www.yugioh-card.com/uk/)  banl
 * [MSTest](https://www.nuget.org/packages/MSTest.TestFramework)
 * [Visual Studio Team Services](https://www.visualstudio.com/team-services/release-management/) for CI and deployment.
 
+## Dependency graph
+ The basic principle of Onion Architecture is to follow the boundaries of these layers – the inner layer can’t depend on its outer layer but can depend on layers beneath.
+ 
+![ygo-api Dependencies Graph](/assets/images/ygo-api%20Dependencies%20Graph.png?raw=true "ygo-api Dependencies Graph")
+ 
+ As you see from the diagram, all the dependency directions are downwards, towards domain.
+
+### Key tenets of Onion Architecture:
+1. The application is built around an independent object model
+2. Inner layers define interfaces.  Outer layers implement interfaces
+3. Direction of coupling is toward the center
+4. All application core code can be compiled and run separate from infrastructure
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
