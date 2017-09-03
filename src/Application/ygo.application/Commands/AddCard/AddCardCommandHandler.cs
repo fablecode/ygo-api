@@ -1,0 +1,42 @@
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using FluentValidation;
+using MediatR;
+
+namespace ygo.application.Commands.AddCard
+{
+    public class AddCardCommandHandler : IAsyncRequestHandler<AddCardCommand, CommandResult>
+    {
+        private readonly IMediator _mediator;
+        private readonly IValidator<AddCardCommand> _validator;
+
+        public AddCardCommandHandler(IMediator mediator, IValidator<AddCardCommand> validator)
+        {
+            _mediator = mediator;
+            _validator = validator;
+        }
+
+        public Task<CommandResult> Handle(AddCardCommand message)
+        {
+            var validationResults = _validator.Validate(message);
+
+            if (validationResults.IsValid)
+            {
+                switch (message.CardType)
+                {
+                    //case YgoCardType.Monster:
+                    //    return _mediator.Send(new AddMonsterCardCommand());
+                    //case YgoCardType.Spell:
+                    //    return _mediator.Send(new AddSpellCardCommand());
+                    //case YgoCardType.Trap:
+                    //    return _mediator.Send(new AddTrapCardCommand());
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(message.CardType));
+                }
+            }
+
+            return Task.FromResult(new CommandResult{ Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList()});
+        }
+    }
+}

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using FluentValidation;
 using MediatR;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Commands;
 using ygo.application.Commands.AddCard;
-using ygo.domain.Enums;
-using ygo.domain.Models;
+using ygo.domain.Validation;
 
 namespace ygo.application.unit.tests.Commands
 {
@@ -22,41 +22,58 @@ namespace ygo.application.unit.tests.Commands
         {
             _mediator = Substitute.For<IMediator>();
 
-            _sut = new AddCardCommandHandler(_mediator);
+            _sut = new AddCardCommandHandler(_mediator, new AddCardCommandValidator());
         }
+
+        // Negative Tests
+        [TestMethod]
+        public async Task Given_An_Invalid_AddCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
+        {
+            // Arrange
+            var command = new AddCardCommand();
+
+            // Act
+            var result = await _sut.Handle(command);
+
+            // Assert
+            result.Errors.Should().NotBeEmpty();
+        }
+
+
+        // Positive Tests
     }
 
-    public class AddCardCommandHandler : IAsyncRequestHandler<AddCardCommand, CommandResult>
+    public class AddMonsterCardCommandValidator : AbstractValidator<AddMonsterCardCommand>
     {
-        private readonly IMediator _mediator;
-
-        public AddCardCommandHandler(IMediator mediator)
+        public AddMonsterCardCommandValidator()
         {
-            _mediator = mediator;
-        }
-
-        public Task<CommandResult> Handle(AddCardCommand message)
-        {
-            throw new NotImplementedException();
-        }
-
-        private Task<Card> GetCardType(YgoCardType cardType, AddCardCommand message)
-        {
-            switch (cardType)
-            {
-                case YgoCardType.Monster:
-                    return _mediator.Send(new AddMonsterCardCommand());
-                case YgoCardType.Spell:
-                    return _mediator.Send(new AddSpellCardCommand());
-                case YgoCardType.Trap:
-                    return _mediator.Send(new AddTrapCardCommand());
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(cardType));
-            }
+            RuleFor(c => c.Name)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .CardNameValidator();
         }
     }
 
-    public class AddMonsterCardCommand : IRequest<Card>
+    public class AddSpellCardCommandValidator : AbstractValidator<AddSpellCardCommand>
+    {
+        public AddSpellCardCommandValidator()
+        {
+            RuleFor(c => c.Name)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .CardNameValidator();
+        }
+    }
+
+    public class AddTrapCardCommandValidator : AbstractValidator<AddTrapCardCommand>
+    {
+        public AddTrapCardCommandValidator()
+        {
+            RuleFor(c => c.Name)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .CardNameValidator();
+        }
+    }
+
+    public class AddMonsterCardCommand : IRequest<CommandResult>
     {
         public string CardNumber { get; set; }
         public string Name { get; set; }
@@ -71,17 +88,19 @@ namespace ygo.application.unit.tests.Commands
         public List<int> LinkArrowIds { get; set; }
     }
 
-    public class AddTrapCardCommand : IRequest<Card>
+    public class AddTrapCardCommand : IRequest<CommandResult>
     {
         public string CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<int> SubCategoryIds { get; set; }
     }
 
-    public class AddSpellCardCommand : IRequest<Card>
+    public class AddSpellCardCommand : IRequest<CommandResult>
     {
         public string CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<int> SubCategoryIds { get; set; }
     }
 }

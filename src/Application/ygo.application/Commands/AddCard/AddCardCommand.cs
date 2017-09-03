@@ -7,7 +7,7 @@ namespace ygo.application.Commands.AddCard
 {
     public class AddCardCommand : IRequest<CommandResult>
     {
-        public YgoCardType CardType { get; set; }
+        public YgoCardType? CardType { get; set; }
         public string CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
