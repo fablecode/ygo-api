@@ -43,15 +43,6 @@ namespace ygo.application.unit.tests.Commands
         // Positive Tests
     }
 
-    public class AddMonsterCardCommandValidator : AbstractValidator<AddMonsterCardCommand>
-    {
-        public AddMonsterCardCommandValidator()
-        {
-            RuleFor(c => c.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .CardNameValidator();
-        }
-    }
 
     public class AddSpellCardCommandValidator : AbstractValidator<AddSpellCardCommand>
     {
@@ -73,20 +64,6 @@ namespace ygo.application.unit.tests.Commands
         }
     }
 
-    public class AddMonsterCardCommand : IRequest<CommandResult>
-    {
-        public string CardNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int? CardLevel { get; set; }
-        public int? CardRank { get; set; }
-        public int? Atk { get; set; }
-        public int? Def { get; set; }
-        public int AttributeId { get; set; }
-        public List<int> SubCategoryIds { get; set; }
-        public List<int> TypeIds { get; set; }
-        public List<int> LinkArrowIds { get; set; }
-    }
 
     public class AddTrapCardCommand : IRequest<CommandResult>
     {

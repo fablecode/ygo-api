@@ -1,4 +1,4 @@
-﻿namespace ygo.domain.Enums
+﻿namespace ygo.application.Enums
 {
     public enum YgoCardType
     {
