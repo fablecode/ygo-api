@@ -36,7 +36,8 @@ namespace ygo.application.Commands.AddMonsterCard
             RuleFor(c => c.AttributeId)
                 .GreaterThan(0);
 
-            RuleFor(c => c.SubCategoryIds).NotNull()
+            RuleFor(c => c.SubCategoryIds)
+                .NotNull()
                 .NotEmpty();
 
             RuleFor(c => c.CardNumber)

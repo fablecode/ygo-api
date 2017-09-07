@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using ygo.application.Enums;
 
 namespace ygo.application.Commands.AddCard
 {

@@ -13,8 +13,8 @@ namespace ygo.application.Commands.AddMonsterCard
         public int? Atk { get; set; }
         public int? Def { get; set; }
         public int AttributeId { get; set; }
-        public List<int> SubCategoryIds { get; set; }
-        public List<int> TypeIds { get; set; }
-        public List<int> LinkArrowIds { get; set; }
+        public List<int> SubCategoryIds { get; set; } = new List<int>();
+        public List<int> TypeIds { get; set; } = new List<int>();
+        public List<int> LinkArrowIds { get; set; } = new List<int>();
     }
 }
