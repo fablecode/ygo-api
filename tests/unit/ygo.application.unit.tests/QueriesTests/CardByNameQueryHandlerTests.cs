@@ -23,13 +23,13 @@ namespace ygo.application.unit.tests.QueriesTests
         }
 
         [TestMethod]
-        public void Given_An_Invalid_Card_Name_Should_Return_Null()
+        public async Task Given_An_Invalid_Card_Name_Should_Return_Null()
         {
             // Arrange
             var query = new CardByNameQuery();
 
             // Act
-            var result = _sut.Handle(query);
+            var result = await _sut.Handle(query);
 
             // Assert
             result.Should().BeNull();

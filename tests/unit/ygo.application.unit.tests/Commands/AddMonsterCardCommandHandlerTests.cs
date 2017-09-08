@@ -40,7 +40,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Invalid_AddMonsterCardCommand_Should_Not_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddMonsterCardCommand();
 
             // Act
@@ -54,7 +54,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddMonsterCardCommand_Should_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddMonsterCardCommand
             {
                 Name = "Blue-Eyes White Dragon",
@@ -85,7 +85,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddMonsterCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddMonsterCardCommand
             {
                 Name = "Blue-Eyes White Dragon",

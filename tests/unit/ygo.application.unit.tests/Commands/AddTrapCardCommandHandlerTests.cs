@@ -40,7 +40,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Invalid_AddTrapCardCommand_Should_Not_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddTrapCardCommand();
 
             // Act
@@ -54,7 +54,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddTrapCardCommand_Should_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = GetValidTrapCard();
 
             // Act
@@ -68,7 +68,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddTrapCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = GetValidTrapCard();
 
             // Act

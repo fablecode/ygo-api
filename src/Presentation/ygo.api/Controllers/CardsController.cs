@@ -56,8 +56,6 @@ namespace ygo.api.Controllers
             return NotFound(name);
         }
 
-
-
         [HttpGet]
         public IActionResult Get([FromRoute] CardSearchQuery query)
         {
@@ -97,6 +95,11 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Put([FromBody] UpdateCardCommand command)
         {
+            var existingCard = await _mediator.Send(new CardByIdQuery {Id = command.Id});
+
+            if (existingCard == null)
+                return NotFound(command.Id);
+
             var result = await _mediator.Send(command);
 
             if (result.IsSuccessful)

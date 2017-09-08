@@ -40,7 +40,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Invalid_AddSpellCardCommand_Should_Not_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddSpellCardCommand();
 
             // Act
@@ -54,7 +54,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddSpellCardCommand_Should_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddSpellCardCommand
             {
                 Name = "Monster Reborn",
@@ -77,7 +77,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddSpellCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(new Card());
+            _repository.Add(Arg.Any<Card>()).Returns(0);
             var command = new AddSpellCardCommand
             {
                 Name = "Monster Reborn",
