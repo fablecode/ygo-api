@@ -36,9 +36,8 @@ namespace ygo.api
             });
 
             services.AddTokenAuthenticationServices(Configuration);
-            services.AddYgoDatabase(Configuration.GetConnectionString(AuthConfig.YgoDatabase));
-            services.AddCqrs();
-            services.AddValidators();
+            services.AddInfrastructureServices(Configuration.GetConnectionString(AuthConfig.YgoDatabase));
+            services.AddApplicationServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

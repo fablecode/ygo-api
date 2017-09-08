@@ -16,10 +16,36 @@ namespace ygo.application.Ioc
 {
     public static class ApplicationInstaller
     {
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddCqrs();
+            services.AddValidators();
+            services.AddAutoMapper();
+
+            return services;
+        }
+
         public static IServiceCollection AddCqrs(this IServiceCollection services)
         {
             services.AddMediatR(typeof(ApplicationInstaller).GetTypeInfo().Assembly);
 
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<CategoryByIdQuery>, CategoryByIdQueryValidator>();
+            services.AddTransient<IValidator<AddCategoryCommand>, AddCategoryCommandValidator>();
+            services.AddTransient<IValidator<AddCardCommand>, AddCardCommandValidator>();
+            services.AddTransient<IValidator<AddMonsterCardCommand>, AddMonsterCardCommandValidator>();
+            services.AddTransient<IValidator<AddSpellCardCommand>, AddSpellCardCommandValidator>();
+            services.AddTransient<IValidator<AddTrapCardCommand>, AddTrapCardCommandValidator>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        {
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Category, CategoryDto>();
@@ -43,19 +69,6 @@ namespace ygo.application.Ioc
 
             return services;
         }
-
-        public static IServiceCollection AddValidators(this IServiceCollection services)
-        {
-            services.AddTransient<IValidator<CategoryByIdQuery>, CategoryByIdQueryValidator>();
-            services.AddTransient<IValidator<AddCategoryCommand>, AddCategoryCommandValidator>();
-            services.AddTransient<IValidator<AddCardCommand>, AddCardCommandValidator>();
-            services.AddTransient<IValidator<AddMonsterCardCommand>, AddMonsterCardCommandValidator>();
-            services.AddTransient<IValidator<AddSpellCardCommand>, AddSpellCardCommandValidator>();
-            services.AddTransient<IValidator<AddTrapCardCommand>, AddTrapCardCommandValidator>();
-
-            return services;
-        }
-
     }
 
     public class LinkArrowDto

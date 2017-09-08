@@ -8,11 +8,17 @@ namespace ygo.infrastructure.Ioc
 {
     public static class InfrastructureInstaller
     {
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString)
+        {
+            services.AddYgoDatabase(connectionString);
+            services.AddRepositories();
+
+            return services;
+        }
+
         public static IServiceCollection AddYgoDatabase(this IServiceCollection services, string connectionString)
         {
             services.AddDbContextPool<YgoDbContext>(c => c.UseSqlServer(connectionString));
-
-            services.AddRepositories();
 
             return services;
         }
