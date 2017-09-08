@@ -25,7 +25,6 @@ namespace ygo.infrastructure.Repository
                         .Select(sc => new SubCategory
                         {
                             Id = sc.Id,
-                            CategoryId = sc.Category.Id,
                             Category = sc.Category,
                             Name = sc.Name,
                             Created = sc.Created,

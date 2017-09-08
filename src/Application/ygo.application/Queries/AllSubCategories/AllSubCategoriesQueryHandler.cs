@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using ygo.application.Ioc;
 using ygo.application.Repository;
-using ygo.domain.Models;
 
 namespace ygo.application.Queries.AllSubCategories
 {
-    public class AllSubCategoriesQueryHandler : IAsyncRequestHandler<AllSubCategoriesQuery, IEnumerable<SubCategory>>
+    public class AllSubCategoriesQueryHandler : IAsyncRequestHandler<AllSubCategoriesQuery, IEnumerable<SubCategoryDto>>
     {
         private readonly ISubCategoryRepository _repository;
 
@@ -15,9 +16,11 @@ namespace ygo.application.Queries.AllSubCategories
             _repository = repository;
         }
 
-        public async Task<IEnumerable<SubCategory>> Handle(AllSubCategoriesQuery message)
+        public async Task<IEnumerable<SubCategoryDto>> Handle(AllSubCategoriesQuery message)
         {
-            return await _repository.AllSubCategories();
+            var subCategories = await _repository.AllSubCategories();
+
+            return Mapper.Map<IEnumerable<SubCategoryDto>>(subCategories);
         }
     }
 }

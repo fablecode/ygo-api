@@ -3,6 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using ygo.application.Commands.AddMonsterCard;
+using ygo.application.Commands.AddSpellCard;
+using ygo.application.Commands.AddTrapCard;
+using ygo.application.Enums;
 
 namespace ygo.application.Commands.AddCard
 {
@@ -25,12 +29,12 @@ namespace ygo.application.Commands.AddCard
             {
                 switch (message.CardType)
                 {
-                    //case YgoCardType.Monster:
-                    //    return _mediator.Send(new AddMonsterCardCommand());
-                    //case YgoCardType.Spell:
-                    //    return _mediator.Send(new AddSpellCardCommand());
-                    //case YgoCardType.Trap:
-                    //    return _mediator.Send(new AddTrapCardCommand());
+                    case YgoCardType.Monster:
+                        return _mediator.Send(new AddMonsterCardCommand());
+                    case YgoCardType.Spell:
+                        return _mediator.Send(new AddSpellCardCommand());
+                    case YgoCardType.Trap:
+                        return _mediator.Send(new AddTrapCardCommand());
                     default:
                         throw new ArgumentOutOfRangeException(nameof(message.CardType));
                 }

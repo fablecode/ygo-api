@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using ygo.application.Ioc;
 using ygo.application.Repository;
-using ygo.domain.Models;
 
 namespace ygo.application.Queries.AllCategories
 {
-    public class AllCategoriesQueryHandler : IAsyncRequestHandler<AllCategoriesQuery, IEnumerable<Category>>
+    public class AllCategoriesQueryHandler : IAsyncRequestHandler<AllCategoriesQuery, IEnumerable<CategoryDto>>
     {
         private readonly ICategoryRepository _repository;
 
@@ -15,9 +16,11 @@ namespace ygo.application.Queries.AllCategories
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Category>> Handle(AllCategoriesQuery message)
+        public async Task<IEnumerable<CategoryDto>> Handle(AllCategoriesQuery message)
         {
-            return await _repository.AllCategories();
+            var allCategories = await _repository.AllCategories();
+
+            return Mapper.Map<IEnumerable<CategoryDto>>(allCategories);
         }
     }
 }

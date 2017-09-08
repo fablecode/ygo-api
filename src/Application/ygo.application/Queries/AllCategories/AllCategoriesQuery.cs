@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using MediatR;
-using ygo.domain.Models;
+using ygo.application.Ioc;
 
 namespace ygo.application.Queries.AllCategories
 {
-    public class AllCategoriesQuery : IRequest<IEnumerable<Category>>
+    public class AllCategoriesQuery : IRequest<IEnumerable<CategoryDto>>
     {
         
     }
