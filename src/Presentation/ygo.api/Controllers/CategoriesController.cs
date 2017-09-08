@@ -54,16 +54,16 @@ namespace ygo.api.Controllers
         /// <summary>
         /// New category
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> Post([FromBody] AddCategoryCommand category)
+        public async Task<IActionResult> Post([FromBody] AddCategoryCommand command)
         {
-            var result = await _mediator.Send(category);
+            var result = await _mediator.Send(command);
 
             if (result.IsSuccessful)
                 return CreatedAtRoute("CategoryById", new { id = ((Category)result.Data).Id }, result.Data);

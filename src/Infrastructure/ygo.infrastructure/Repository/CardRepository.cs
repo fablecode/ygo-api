@@ -24,5 +24,10 @@ namespace ygo.infrastructure.Repository
         {
             throw new System.NotImplementedException();
         }
+
+        public Task<Card> CardById(long id)
+        {
+            return _context.Card.SingleOrDefaultAsync(c => c.Id == id);
+        }
     }
 }

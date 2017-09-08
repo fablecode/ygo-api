@@ -16,8 +16,4 @@
     <ProjectReference Include="..\..\Domain\ygo.domain\ygo.domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dto\" />
-  </ItemGroup>
-
 </Project>

@@ -9,6 +9,8 @@ using ygo.application.Commands.AddCategory;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
+using ygo.application.Queries.CardById;
+using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CategoryById;
 using ygo.domain.Models;
 
@@ -40,6 +42,8 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<AddMonsterCardCommand>, AddMonsterCardCommandValidator>();
             services.AddTransient<IValidator<AddSpellCardCommand>, AddSpellCardCommandValidator>();
             services.AddTransient<IValidator<AddTrapCardCommand>, AddTrapCardCommandValidator>();
+            services.AddTransient<IValidator<CardByIdQuery>, CardByIdQueryValidator>();
+            services.AddTransient<IValidator<CardByNameQuery>, CardByNameQueryValidator>();
 
             return services;
         }
@@ -51,7 +55,7 @@ namespace ygo.application.Ioc
                 cfg.CreateMap<Category, CategoryDto>();
 
                 cfg.CreateMap<SubCategory, SubCategoryDto>()
-                    .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
+                    .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
 
                 cfg.CreateMap<Type, TypeDto>();
 
@@ -109,8 +113,8 @@ namespace ygo.application.Ioc
     public class SubCategoryDto
     {
         public long Id { get; set; }
+        public long CategoryId { get; set; }
         public string Name { get; set; }
-        public CategoryDto Category { get; set; }
     }
 
     public class CategoryDto

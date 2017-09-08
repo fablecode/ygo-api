@@ -5,26 +5,26 @@ using MediatR;
 using ygo.application.Dto;
 using ygo.application.Repository;
 
-namespace ygo.application.Queries.CardByName
+namespace ygo.application.Queries.CardById
 {
-    public class CardByNameQueryHandler : IAsyncRequestHandler<CardByNameQuery, CardDto>
+    public class CardByIdQueryHandler : IAsyncRequestHandler<CardByIdQuery, CardDto>
     {
         private readonly ICardRepository _repository;
-        private readonly IValidator<CardByNameQuery> _validator;
+        private readonly IValidator<CardByIdQuery> _validator;
 
-        public CardByNameQueryHandler(ICardRepository repository, IValidator<CardByNameQuery> validator)
+        public CardByIdQueryHandler(ICardRepository repository, IValidator<CardByIdQuery> validator)
         {
             _repository = repository;
             _validator = validator;
         }
 
-        public async Task<CardDto> Handle(CardByNameQuery message)
+        public async Task<CardDto> Handle(CardByIdQuery message)
         {
             var validationResults = _validator.Validate(message);
 
             if (validationResults.IsValid)
             {
-                var result = await _repository.CardByName(message.Name);
+                var result = await  _repository.CardById(message.Id);
 
                 return Mapper.Map<CardDto>(result);
             }

@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ygo.api.Auth;
 using ygo.application.Commands.AddCard;
+using ygo.application.Commands.UpdateCard;
+using ygo.application.Ioc;
+using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 
 namespace ygo.api.Controllers
@@ -19,6 +24,27 @@ namespace ygo.api.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Card by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id:long}", Name = "CardById")]
+        public async Task<IActionResult> Get(long id)
+        {
+            var result = await _mediator.Send(new CardByIdQuery { Id = id });
+
+            if (result != null)
+                return Ok(result);
+
+            return NotFound(id);
+        }
+
+        /// <summary>
+        /// Card by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)
         {
@@ -27,8 +53,10 @@ namespace ygo.api.Controllers
             if (result != null)
                 return Ok(result);
 
-            return NotFound($"Card '{name}' not found.");
+            return NotFound(name);
         }
+
+
 
         [HttpGet]
         public IActionResult Get([FromRoute] CardSearchQuery query)
@@ -36,18 +64,46 @@ namespace ygo.api.Controllers
             return StatusCode(501);
         }
 
+        /// <summary>
+        /// Add new card
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] AddCardCommand command)
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> Post([FromBody] AddCardCommand command)
         {
-            return StatusCode(501);
+            var result = await _mediator.Send(command);
+
+            if (result.IsSuccessful)
+                return CreatedAtRoute("CardById", new { id = ((CategoryDto)result.Data).Id }, result.Data);
+
+            return BadRequest(result.Errors);
         }
 
+        /// <summary>
+        /// Update existing card
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut]
-        public IActionResult Put([FromBody] UpdateCardCommand command)
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> Put([FromBody] UpdateCardCommand command)
         {
-            return StatusCode(501);
-        }
+            var result = await _mediator.Send(command);
 
+            if (result.IsSuccessful)
+                return Ok(result.Data);
+
+            return BadRequest(result.Errors);
+        }
 
         [HttpGet("{id}/tips")]
         public IActionResult GetTips()
@@ -73,18 +129,17 @@ namespace ygo.api.Controllers
             return StatusCode(501);
         }
 
-        [HttpGet("{id}/trivia")]
+        [HttpGet("{id}/trivias")]
         public IActionResult GetTrivia()
         {
             return StatusCode(501);
         }
 
-        [HttpPut("{id}/trivia")]
+        [HttpPut("{id}/trivias")]
         public IActionResult PutTrivia([FromBody] UpdateCardTriviaCommand command)
         {
             return StatusCode(501);
         }
-
 
         [HttpGet("{id}/linkarrows")]
         public IActionResult GetLinkArrows()
@@ -97,24 +152,6 @@ namespace ygo.api.Controllers
         {
             return StatusCode(501);
         }
-    }
-
-    public class UpdateCardCommand
-    {
-        public long Id { get; set; }
-        public string CardNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int? CardLevel { get; set; }
-        public int? CardRank { get; set; }
-        public int? Atk { get; set; }
-        public int? Def { get; set; }
-
-        public Uri ImageUrl { get; set; }
-
-        public List<string> SubCategories { get; set; }
-        public List<string> Types { get; set; }
-        public List<string> LinkArrows { get; set; }
     }
 
     [Route("[controller]")]
