@@ -43,17 +43,6 @@ namespace ygo.application.unit.tests.Commands
         // Positive Tests
     }
 
-
-    public class AddSpellCardCommandValidator : AbstractValidator<AddSpellCardCommand>
-    {
-        public AddSpellCardCommandValidator()
-        {
-            RuleFor(c => c.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .CardNameValidator();
-        }
-    }
-
     public class AddTrapCardCommandValidator : AbstractValidator<AddTrapCardCommand>
     {
         public AddTrapCardCommandValidator()
@@ -66,14 +55,6 @@ namespace ygo.application.unit.tests.Commands
 
 
     public class AddTrapCardCommand : IRequest<CommandResult>
-    {
-        public string CardNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<int> SubCategoryIds { get; set; }
-    }
-
-    public class AddSpellCardCommand : IRequest<CommandResult>
     {
         public string CardNumber { get; set; }
         public string Name { get; set; }

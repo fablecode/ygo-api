@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ygo.application.Commands.AddMonsterCard;
+using ygo.application.Commands.AddSpellCard;
 using ygo.domain.Models;
 
 namespace ygo.application.Commands
@@ -17,6 +19,8 @@ namespace ygo.application.Commands
                 CardRank = command.CardRank,
                 Atk = command.Atk,
                 Def = command.Def,
+                Created = DateTime.UtcNow,
+                Updated = DateTime.UtcNow
             };
 
             newMonsterCard.CardAttribute.Add(new CardAttribute { AttributeId = command.AttributeId });
@@ -40,6 +44,27 @@ namespace ygo.application.Commands
             }
 
             return newMonsterCard;
+        }
+
+        public static Card MapToCard(this AddSpellCardCommand command)
+        {
+            var newSpellCard = new Card
+            {
+                Name = command.Name,
+                CardNumber = command.CardNumber.ToString(),
+                Description = command.Description,
+                Created = DateTime.UtcNow,
+                Updated = DateTime.UtcNow
+            };
+
+
+            if (command.SubCategoryIds.Any())
+            {
+                foreach (var sbIds in command.SubCategoryIds)
+                    newSpellCard.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds });
+            }
+
+            return newSpellCard;
         }
     }
 }

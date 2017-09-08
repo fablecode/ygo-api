@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 using ygo.application.Repository;
 
@@ -32,7 +31,7 @@ namespace ygo.application.Commands.AddMonsterCard
                 commandResult.IsSuccessful = true;
             }
             else
-                commandResult.Errors = Enumerable.Select<ValidationFailure, string>(validateResults.Errors, err => err.ErrorMessage).ToList();
+                commandResult.Errors = validateResults.Errors.Select(err => err.ErrorMessage).ToList();
 
             return commandResult;
         }
