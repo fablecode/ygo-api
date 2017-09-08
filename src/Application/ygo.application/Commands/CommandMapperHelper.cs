@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
+using ygo.application.Commands.AddTrapCard;
 using ygo.domain.Models;
 
 namespace ygo.application.Commands
@@ -12,7 +14,7 @@ namespace ygo.application.Commands
         {
             var newMonsterCard = new Card
             {
-                CardNumber = command.CardNumber.ToString(),
+                CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null,
                 Name = command.Name,
                 Description = command.Description,
                 CardLevel = command.CardLevel,
@@ -48,23 +50,37 @@ namespace ygo.application.Commands
 
         public static Card MapToCard(this AddSpellCardCommand command)
         {
-            var newSpellCard = new Card
+            var newSpellCard = MapToSpellOrTrapCard(command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
+
+            return newSpellCard;
+        }
+
+        public static Card MapToCard(this AddTrapCardCommand command)
+        {
+            var newTrapCard = MapToSpellOrTrapCard(command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
+
+            return newTrapCard;
+        }
+
+        public static Card MapToSpellOrTrapCard(int? cardNumber, string name, string description, IList<int> subCategoryIds)
+        {
+            var newCard = new Card
             {
-                Name = command.Name,
-                CardNumber = command.CardNumber.ToString(),
-                Description = command.Description,
+                Name = name,
+                CardNumber = cardNumber.HasValue ? cardNumber.ToString() : null,
+                Description = description,
                 Created = DateTime.UtcNow,
                 Updated = DateTime.UtcNow
             };
 
 
-            if (command.SubCategoryIds.Any())
+            if (subCategoryIds.Any())
             {
-                foreach (var sbIds in command.SubCategoryIds)
-                    newSpellCard.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds });
+                foreach (var scId in subCategoryIds)
+                    newCard.CardSubCategory.Add(new CardSubCategory { SubCategoryId = scId });
             }
 
-            return newSpellCard;
+            return newCard;
         }
     }
 }

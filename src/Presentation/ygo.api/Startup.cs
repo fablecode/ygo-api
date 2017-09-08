@@ -23,6 +23,24 @@ namespace ygo.api
 
         public IConfiguration Configuration { get; }
 
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Ygo API", Version = "v1" });
+
+                var fileName = GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
+            });
+
+            services.AddTokenAuthenticationServices(Configuration);
+            services.AddYgoDatabase(Configuration.GetConnectionString(AuthConfig.YgoDatabase));
+            services.AddCqrs();
+            services.AddValidators();
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -40,24 +58,6 @@ namespace ygo.api
 
             app.UseRewriter(new RewriteOptions()
                 .AddRedirect(@"^$", "swagger", (int)HttpStatusCode.Redirect));
-        }
-
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Ygo API", Version = "v1" });
-                
-                var fileName = GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
-            });
-
-            services.AddTokenAuthenticationServices(Configuration);
-            services.AddYgoDatabase(Configuration.GetConnectionString(AuthConfig.YgoDatabase));
-            services.AddCqrs();
-            services.AddValidators();
         }
     }
 }
