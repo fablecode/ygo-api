@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using MediatR;
-using ygo.domain.Models;
+using ygo.application.Ioc;
 
 namespace ygo.application.Queries.AllTypes
 {
-    public class AllTypesQuery : IRequest<IEnumerable<Type>>
+    public class AllTypesQuery : IRequest<IEnumerable<TypeDto>>
     {
         
     }

@@ -27,6 +27,10 @@ namespace ygo.application.Ioc
                 cfg.CreateMap<SubCategory, SubCategoryDto>()
                     .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
 
+                cfg.CreateMap<Type, TypeDto>();
+
+                cfg.CreateMap<LinkArrow, LinkArrowDto>();
+
                 cfg.CreateMap<Card, MonsterCardDto>()
                     .ForMember(dest => dest.SubCategories, opt => opt.MapFrom(src => src.CardSubCategory));
 
@@ -52,6 +56,18 @@ namespace ygo.application.Ioc
             return services;
         }
 
+    }
+
+    public class LinkArrowDto
+    {
+        public long Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class TypeDto
+    {
+        public long Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class MonsterCardDto

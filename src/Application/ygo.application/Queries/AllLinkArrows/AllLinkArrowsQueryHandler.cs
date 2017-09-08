@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using ygo.application.Ioc;
 using ygo.application.Repository;
-using ygo.domain.Models;
 
 namespace ygo.application.Queries.AllLinkArrows
 {
-    public class AllLinkArrowsQueryHandler : IAsyncRequestHandler<AllLinkArrowsQuery, IEnumerable<LinkArrow>>
+    public class AllLinkArrowsQueryHandler : IAsyncRequestHandler<AllLinkArrowsQuery, IEnumerable<LinkArrowDto>>
     {
         private readonly ILinkArrowRepository _repository;
 
@@ -15,9 +16,11 @@ namespace ygo.application.Queries.AllLinkArrows
             _repository = repository;
         }
 
-        public async Task<IEnumerable<LinkArrow>> Handle(AllLinkArrowsQuery message)
+        public async Task<IEnumerable<LinkArrowDto>> Handle(AllLinkArrowsQuery message)
         {
-            return await _repository.AllLinkArrows();
+            var linkArrows = await _repository.AllLinkArrows();
+
+            return Mapper.Map<IEnumerable<LinkArrowDto>>(linkArrows);
         }
     }
 }
