@@ -151,6 +151,5 @@ namespace ygo.application.Commands
                     card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = scId });
             }
         }
-
     }
 }
