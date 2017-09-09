@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -27,10 +28,17 @@ namespace ygo.application.Commands.UpdateMonsterCard
             {
                 var cardToUpdate = await _repository.CardById(message.Id);
 
-                cardToUpdate.UpdateMonsterCardWith(message);
+                if (cardToUpdate != null)
+                {
+                    cardToUpdate.UpdateMonsterCardWith(message);
 
-                commandResult.Data = await _repository.Update(cardToUpdate);
-                commandResult.IsSuccessful = true;
+                    commandResult.Data = await _repository.Update(cardToUpdate);
+                    commandResult.IsSuccessful = true;
+                }
+                else
+                {
+                    commandResult.Errors = new List<string>{"Critical error: Card not found."};
+                }
             }
             else
                 commandResult.Errors = validateResults.Errors.Select(err => err.ErrorMessage).ToList();

@@ -25,9 +25,9 @@ namespace ygo.application.Commands.UpdateTrapCard
 
             if (validationResult.IsValid)
             {
-                var newTrapCard = message.MapToCard();
+                var updateTrapCard = message.MapToCard();
 
-                commandResult.Data = await _repository.Add(newTrapCard);
+                commandResult.Data = await _repository.Update(updateTrapCard);
                 commandResult.IsSuccessful = true;
             }
             else

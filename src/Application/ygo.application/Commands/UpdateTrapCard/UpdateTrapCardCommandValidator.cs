@@ -4,7 +4,7 @@ using ygo.domain.Validation;
 
 namespace ygo.application.Commands.UpdateTrapCard
 {
-    public class UpdateTrapCardCommandValidator : AbstractValidator<AddTrapCardCommand>
+    public class UpdateTrapCardCommandValidator : AbstractValidator<UpdateTrapCardCommand>
     {
         public UpdateTrapCardCommandValidator()
         {

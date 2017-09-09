@@ -47,7 +47,7 @@ namespace ygo.application.unit.tests.Commands
             await _sut.Handle(command);
 
             // Assert
-            _repository.DidNotReceive();
+            await _repository.DidNotReceive().Update(Arg.Any<Card>());
         }
 
         [TestMethod]

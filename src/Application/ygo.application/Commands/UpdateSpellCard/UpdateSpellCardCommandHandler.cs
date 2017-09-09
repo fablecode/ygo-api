@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using ygo.application.Commands.AddSpellCard;
 using ygo.application.Repository;
 
 namespace ygo.application.Commands.UpdateSpellCard
@@ -28,7 +27,7 @@ namespace ygo.application.Commands.UpdateSpellCard
             {
                 var updateSpellCard = message.MapToCard();
 
-                commandResult.Data = await _repository.Add(updateSpellCard);
+                commandResult.Data = await _repository.Update(updateSpellCard);
                 commandResult.IsSuccessful = true;
             }
             else
