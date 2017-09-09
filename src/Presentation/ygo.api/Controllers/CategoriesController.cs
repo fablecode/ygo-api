@@ -11,7 +11,7 @@ using ygo.domain.Models;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CategoriesController : Controller
     {
         private readonly IMediator _mediator;

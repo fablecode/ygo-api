@@ -13,7 +13,7 @@ using ygo.application.Queries.CardSearch;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CardsController : Controller
     {
         private readonly IMediator _mediator;

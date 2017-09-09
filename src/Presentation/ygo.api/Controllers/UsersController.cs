@@ -7,7 +7,7 @@ using ygo.api.Auth;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : Controller
     {
         /// <summary>
@@ -20,9 +20,9 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public Task<IActionResult> Get(string email)
+        public IActionResult Get(string email)
         {
-            throw new NotImplementedException();
+            return StatusCode(501);
         }
     }
 }

@@ -6,7 +6,7 @@ using ygo.application.Queries.AllTypes;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TypesController : Controller
     {
         private readonly IMediator _mediator;

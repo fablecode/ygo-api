@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ygo.api.Auth;
 using ygo.application.Commands.UpdateCardImage;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ImagesController : Controller
     {
         [HttpGet("{id}/image")]
@@ -13,6 +15,7 @@ namespace ygo.api.Controllers
         }
 
         [HttpPost("{id}/image")]
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         public IActionResult PostImage([FromBody] UpdateCardImageCommand command)
         {
             return StatusCode(501);
@@ -20,6 +23,7 @@ namespace ygo.api.Controllers
 
 
         [HttpPut("{id}/image")]
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         public IActionResult PutImage([FromBody] UpdateCardImageCommand command)
         {
             return StatusCode(501);

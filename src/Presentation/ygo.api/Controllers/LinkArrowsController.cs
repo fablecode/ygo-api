@@ -5,7 +5,7 @@ using ygo.application.Queries.AllLinkArrows;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LinkArrowsController : Controller
     {
         private readonly IMediator _mediator;

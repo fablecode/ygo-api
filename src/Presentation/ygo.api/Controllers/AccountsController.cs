@@ -15,7 +15,7 @@ using ygo.api.Auth.Models;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class AccountsController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

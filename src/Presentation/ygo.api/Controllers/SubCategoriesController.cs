@@ -6,7 +6,7 @@ using ygo.application.Queries.AllSubCategories;
 
 namespace ygo.api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SubCategoriesController : Controller
     {
         private readonly IMediator _mediator;

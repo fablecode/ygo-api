@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ygo.api.Auth;
 using ygo.application.Commands.UpdateTips;
 
 namespace ygo.api.Controllers
 {
-    [Route("cards/{cardId}/[controller]")]
+    [Route("cards/{cardId}/api/[controller]")]
     public class TipsController : Controller
     {
         [HttpGet]
@@ -13,6 +15,7 @@ namespace ygo.api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         public IActionResult PutTips([FromBody] UpdateTipsCommand command)
         {
             return StatusCode(501);
