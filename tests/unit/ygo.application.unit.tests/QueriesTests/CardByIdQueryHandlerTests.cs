@@ -20,6 +20,8 @@ namespace ygo.application.unit.tests.QueriesTests
             _cardRepository = Substitute.For<ICardRepository>();
 
             _sut = new CardByIdQueryHandler(_cardRepository, new CardByIdQueryValidator());
+
+            AutoMapperConfig.Configure();
         }
 
         [TestMethod]
@@ -40,7 +42,7 @@ namespace ygo.application.unit.tests.QueriesTests
         {
             // Arrange
             _cardRepository
-                .CardByName(Arg.Any<string>())
+                .CardById(Arg.Any<long>())
                 .Returns(new Card());
 
             var query = new CardByIdQuery { Id = 696865 };
@@ -49,7 +51,7 @@ namespace ygo.application.unit.tests.QueriesTests
             await _sut.Handle(query);
 
             // Assert
-            await _cardRepository.Received(1).CardByName(Arg.Any<string>());
+            await _cardRepository.Received(1).CardById(Arg.Any<long>());
         }
     }
 }

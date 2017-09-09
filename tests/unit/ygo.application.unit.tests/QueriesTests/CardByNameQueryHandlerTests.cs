@@ -20,6 +20,8 @@ namespace ygo.application.unit.tests.QueriesTests
             _cardRepository = Substitute.For<ICardRepository>();
 
             _sut = new CardByNameQueryHandler(_cardRepository, new CardByNameQueryValidator());
+
+            AutoMapperConfig.Configure();
         }
 
         [TestMethod]

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +11,6 @@ using ygo.application.Commands.AddTrapCard;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CategoryById;
-using ygo.domain.Models;
 
 namespace ygo.application.Ioc
 {
@@ -50,26 +48,7 @@ namespace ygo.application.Ioc
 
         public static IServiceCollection AddAutoMapper(this IServiceCollection services)
         {
-            AutoMapper.Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Category, CategoryDto>();
-
-                cfg.CreateMap<SubCategory, SubCategoryDto>()
-                    .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
-
-                cfg.CreateMap<Type, TypeDto>();
-
-                cfg.CreateMap<LinkArrow, LinkArrowDto>();
-
-                cfg.CreateMap<Card, MonsterCardDto>()
-                    .ForMember(dest => dest.SubCategories, opt => opt.MapFrom(src => src.CardSubCategory));
-
-                cfg.CreateMap<Card, SpellCardDto>()
-                    .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
-
-                cfg.CreateMap<Card, TrapCardDto>()
-                    .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
-            });
+            AutoMapperConfig.Configure();
 
             return services;
         }
