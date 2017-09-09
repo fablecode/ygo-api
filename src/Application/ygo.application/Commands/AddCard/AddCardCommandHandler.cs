@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using ygo.application.Commands.AddMonsterCard;
@@ -30,11 +31,11 @@ namespace ygo.application.Commands.AddCard
                 switch (message.CardType)
                 {
                     case YgoCardType.Monster:
-                        return _mediator.Send(new AddMonsterCardCommand());
+                        return _mediator.Send(Mapper.Map<AddMonsterCardCommand>(message));
                     case YgoCardType.Spell:
-                        return _mediator.Send(new AddSpellCardCommand());
+                        return _mediator.Send(Mapper.Map<AddSpellCardCommand>(message));
                     case YgoCardType.Trap:
-                        return _mediator.Send(new AddTrapCardCommand());
+                        return _mediator.Send(Mapper.Map<AddTrapCardCommand>(message));
                     default:
                         throw new ArgumentOutOfRangeException(nameof(message.CardType));
                 }

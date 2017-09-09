@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using ygo.application.Commands.AddCard;
+using ygo.application.Commands.AddMonsterCard;
+using ygo.application.Commands.AddSpellCard;
+using ygo.application.Commands.AddTrapCard;
 using ygo.application.Dto;
 using ygo.application.Ioc;
 using ygo.domain.Models;
@@ -30,6 +34,10 @@ namespace ygo.application
                     .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
 
                 cfg.CreateMap<Card, CardDto>();
+
+                cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
+                cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
+                cfg.CreateMap<AddCardCommand, AddTrapCardCommand>();
             });
         }
     }

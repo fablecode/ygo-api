@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Commands.AddTrapCard;
 using ygo.application.Repository;
 using ygo.domain.Models;
+using ygo.infrastructure.Database;
+using ygo.infrastructure.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
@@ -14,10 +19,17 @@ namespace ygo.application.unit.tests.Commands
     {
         private AddTrapCardCommandHandler _sut;
         private ICardRepository _repository;
+        private YgoDbContext _testContext;
 
         [TestInitialize]
         public void SetUp()
         {
+            var options = new DbContextOptionsBuilder<YgoDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+            _testContext = new YgoDbContext(options);
+
             _repository = Substitute.For<ICardRepository>();
 
             _sut = new AddTrapCardCommandHandler(_repository, new AddTrapCardCommandValidator());
@@ -40,7 +52,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Invalid_AddTrapCardCommand_Should_Not_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(0);
+            _repository.Add(Arg.Any<Card>()).Returns(new Card());
             var command = new AddTrapCardCommand();
 
             // Act
@@ -54,7 +66,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddTrapCardCommand_Should_Execute_AddCard()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(0);
+            _repository.Add(Arg.Any<Card>()).Returns(new Card());
             var command = GetValidTrapCard();
 
             // Act
@@ -68,7 +80,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Valid_AddTrapCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange
-            _repository.Add(Arg.Any<Card>()).Returns(0);
+            _repository.Add(Arg.Any<Card>()).Returns(new Card());
             var command = GetValidTrapCard();
 
             // Act
@@ -77,6 +89,24 @@ namespace ygo.application.unit.tests.Commands
             // Assert
             result.IsSuccessful.Should().BeTrue();
         }
+
+        [TestMethod]
+        public async Task Given_A_Valid_AddTrapCardCommand_Should_Save_Card_To_Database()
+        {
+            // Arrange
+            _repository = new CardRepository(_testContext);
+            _sut = new AddTrapCardCommandHandler(_repository, new AddTrapCardCommandValidator());
+
+            var command = GetValidTrapCard();
+
+            // Act
+            var result = await _sut.Handle(command);
+            var insertedCard = (Card)result.Data;
+
+            // Assert
+            _testContext.Card.Count(c => c.Id == insertedCard.Id).Should().Be(1);
+        }
+
 
         private static AddTrapCardCommand GetValidTrapCard()
         {

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ygo.application.Repository;
 using ygo.domain.Models;
@@ -21,13 +20,13 @@ namespace ygo.infrastructure.Repository
             return _context.Card.SingleOrDefaultAsync(c => c.Name == name);
         }
 
-        public async Task<int> Add(Card newCard)
+        public async Task<Card> Add(Card newCard)
         {
             _context.Card.Add(newCard);
 
-            var newCardId = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return newCardId;
+            return newCard;
         }
 
         public Task<Card> CardById(long id)
