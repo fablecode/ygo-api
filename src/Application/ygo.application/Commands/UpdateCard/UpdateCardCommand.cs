@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using MediatR;
+using ygo.application.Enums;
 
 namespace ygo.application.Commands.UpdateCard
 {
     public class UpdateCardCommand : IRequest<CommandResult>
     {
+        public YgoCardType? CardType { get; set; }
+
         public long Id { get; set; }
         public string CardNumber { get; set; }
         public string Name { get; set; }

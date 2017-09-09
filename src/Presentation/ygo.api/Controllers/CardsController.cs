@@ -9,6 +9,7 @@ using ygo.application.Commands.UpdateCard;
 using ygo.application.Ioc;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
+using ygo.application.Queries.CardExists;
 using ygo.application.Queries.CardSearch;
 
 namespace ygo.api.Controllers
@@ -94,17 +95,19 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Put([FromBody] UpdateCardCommand command)
         {
-            var existingCard = await _mediator.Send(new CardByIdQuery {Id = command.Id});
+            var cardExists = await _mediator.Send(new CardExistsQuery { Id = command.Id});
 
-            if (existingCard == null)
-                return NotFound(command.Id);
+            if (cardExists)
+            {
+                var result = await _mediator.Send(command);
 
-            var result = await _mediator.Send(command);
+                if (result.IsSuccessful)
+                    return Ok(result.Data);
 
-            if (result.IsSuccessful)
-                return Ok(result.Data);
+                return BadRequest(result.Errors);
+            }
 
-            return BadRequest(result.Errors);
+            return NotFound(command.Id);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace ygo.application.Repository
         Task<Card> Add(Card newCard);
         Task<Card> CardById(long id);
         Task<Card> Update(Card card);
+        Task<bool> CardExists(long id);
     }
 }

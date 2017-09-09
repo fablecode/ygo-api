@@ -49,5 +49,10 @@ namespace ygo.infrastructure.Repository
 
             return card;
         }
+
+        public Task<bool> CardExists(long id)
+        {
+            return _context.Card.AnyAsync(c => c.Id == id);
+        }
     }
 }
