@@ -5,11 +5,13 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using ygo.api.Auth;
+using ygo.api.Auth.Swagger;
 using ygo.application.Ioc;
 using ygo.infrastructure.Ioc;
 
@@ -26,11 +28,21 @@ namespace ygo.api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(setupAction =>
+            {
+                // 406 Not Acceptable response, if accept header not supported.
+                setupAction.ReturnHttpNotAcceptable = true;
+
+                //Formatters supported, Including Json. Json is default
+                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            });
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Ygo API", Version = "v1" });
+
+                // To add an extra token input field in the Swagger UI
+                c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
 
                 var fileName = GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));

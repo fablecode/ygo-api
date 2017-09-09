@@ -3,6 +3,10 @@ using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
+using ygo.application.Commands.UpdateCard;
+using ygo.application.Commands.UpdateMonsterCard;
+using ygo.application.Commands.UpdateSpellCard;
+using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
 using ygo.application.Ioc;
 using ygo.domain.Models;
@@ -38,6 +42,9 @@ namespace ygo.application
                 cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddTrapCardCommand>();
+                cfg.CreateMap<UpdateCardCommand, UpdateMonsterCardCommand>();
+                cfg.CreateMap<UpdateCardCommand, UpdateSpellCardCommand>();
+                cfg.CreateMap<UpdateCardCommand, UpdateTrapCardCommand>();
             });
         }
     }
