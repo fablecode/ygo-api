@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,12 @@ namespace ygo.infrastructure.Service
     {
         private static ReaderWriterLock locker = new ReaderWriterLock();
 
-        public async Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileName)
+        public Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileName)
+        {
+            return Download(new Uri(remoteFileUrl), localFileName);
+        }
+
+        public async Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localFileName)
         {
             try
             {
@@ -63,6 +69,20 @@ namespace ygo.infrastructure.Service
             finally
             {
                 locker.ReleaseWriterLock();
+            }
+        }
+
+        public string[] GetFiles(string path, string searchPattern)
+        {
+            try
+            {
+                locker.AcquireReaderLock(int.MaxValue);
+
+                return Directory.GetFiles(path, searchPattern);
+            }
+            finally
+            {
+                locker.ReleaseReaderLock();
             }
         }
     }

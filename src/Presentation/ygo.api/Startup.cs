@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using ygo.api.Auth;
 using ygo.api.Auth.Swagger;
+using ygo.application;
 using ygo.application.Ioc;
 using ygo.infrastructure.Ioc;
 
@@ -28,6 +29,7 @@ namespace ygo.api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApplicationSettings>(Configuration.GetSection("AppSettings"));
             services.AddMvc(setupAction =>
             {
                 // 406 Not Acceptable response, if accept header not supported.
