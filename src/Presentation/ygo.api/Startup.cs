@@ -33,7 +33,7 @@ namespace ygo.api
                 // 406 Not Acceptable response, if accept header not supported.
                 setupAction.ReturnHttpNotAcceptable = true;
 
-                //Formatters supported, Including Json. Json is default
+                // Xml Formatters support
                 setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
             });
 
