@@ -57,10 +57,9 @@ namespace ygo.application.Commands.AddCard
                 {
                     var insertedCard = (Card)cardTypeCommandResult.Data;
 
-                    var cardLocalImageFileName = Path.Combine(_settings.Value.CardImageFolderPath, insertedCard.Id.ToString());
-
-                    var downloadedImageFile = await _mediator.Send(new DownloadImageCommand { RemoteImageUrl = message.ImageUrl, LocalImageFileName = cardLocalImageFileName });
-                    //var renamedImageFile = await _mediator.Send(new RenameImageCommand { RemoteImageUrl = message.ImageUrl, LocalImageFileName = cardLocalImageFileName });
+                    var imageFileName = insertedCard.Id.ToString();
+                    var cardLocalImageFileName = Path.Combine(_settings.Value.CardImageFolderPath, imageFileName);
+                    var downloadedImageFile = await _mediator.Send(new DownloadImageCommand { FileName = imageFileName, RemoteImageUrl = message.ImageUrl, LocalImageFileName = cardLocalImageFileName });
                 }
             }
             else

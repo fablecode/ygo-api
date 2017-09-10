@@ -12,12 +12,12 @@ namespace ygo.infrastructure.Service
     {
         private static ReaderWriterLock locker = new ReaderWriterLock();
 
-        public Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileName)
+        public Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileFullPath)
         {
-            return Download(new Uri(remoteFileUrl), localFileName);
+            return Download(new Uri(remoteFileUrl), localFileFullPath);
         }
 
-        public async Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localFileName)
+        public async Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localFileFullPath)
         {
             try
             {
@@ -26,14 +26,14 @@ namespace ygo.infrastructure.Service
                 using (var webClient = new WebClient())
                 {
                     webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
-                    await webClient.DownloadFileTaskAsync(remoteFileUrl, localFileName);
+                    await webClient.DownloadFileTaskAsync(remoteFileUrl, localFileFullPath);
 
                     var contentType = webClient.ResponseHeaders["Content-Type"];
 
                     return new DownloadedFileDto
                     {
                         Source = remoteFileUrl,
-                        Destination = localFileName,
+                        Destination = localFileFullPath,
                         ContentType = contentType
                     };
                 }
@@ -44,13 +44,27 @@ namespace ygo.infrastructure.Service
             }
         }
 
-        public void Delete(string localFileName)
+        public void Delete(string localFileFullPath)
         {
+            int timeout = 30000;
+
             try
             {
                 locker.AcquireWriterLock(int.MaxValue);
 
-                File.Delete(localFileName);
+                using (var fw = new FileSystemWatcher(Path.GetDirectoryName(localFileFullPath), Path.GetFileName(localFileFullPath)))
+                using (var mre = new ManualResetEventSlim())
+                {
+                    fw.EnableRaisingEvents = true;
+                    fw.Deleted += (sender, e) =>
+                    {
+                        mre.Set();
+                    };
+
+                    File.Delete(localFileFullPath);
+                    mre.Wait(timeout);
+                }
+
             }
             finally
             {
@@ -58,13 +72,13 @@ namespace ygo.infrastructure.Service
             }
         }
 
-        public void Rename(string sourceFileName, string destinationFileName)
+        public void Rename(string oldNameFullPath, string newNameFullPath)
         {
             try
             {
                 locker.AcquireWriterLock(int.MaxValue);
 
-                File.Move(sourceFileName, destinationFileName);
+                File.Move(oldNameFullPath, newNameFullPath);
             }
             finally
             {

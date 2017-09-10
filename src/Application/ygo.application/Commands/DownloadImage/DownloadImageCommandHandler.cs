@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using ygo.application.Service;
+using System.IO;
 
 namespace ygo.application.Commands.DownloadImage
 {
@@ -25,6 +26,7 @@ namespace ygo.application.Commands.DownloadImage
 
             if (validationResult.IsValid)
             {
+                var existingImages = _fileSystemService.GetFiles(Path.GetDirectoryName(message.LocalImageFileName), message.FileName + ".*");
                 commandResult.Data = await _fileSystemService.Download(message.RemoteImageUrl, message.LocalImageFileName);
                 commandResult.IsSuccessful = true;
             }

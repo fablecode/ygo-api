@@ -6,10 +6,10 @@ namespace ygo.application.Service
 {
     public interface IFileSystemService
     {
-        Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileName);
-        Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localImageFileName);
-        void Delete(string localFileName);
-        void Rename(string sourceFileName, string destinationFileName);
+        Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileFullPath);
+        Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localFileFullPath);
+        void Delete(string localFileFullPath);
+        void Rename(string oldNameFullPath, string newNameFullPath);
         string[] GetFiles(string path, string searchPattern);
     }
 }
