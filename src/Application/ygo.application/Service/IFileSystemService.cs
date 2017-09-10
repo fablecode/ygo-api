@@ -1,10 +1,9 @@
-using System.IO;
 using System.Threading.Tasks;
 using ygo.application.Dto;
 
-namespace ygo.application.Manager
+namespace ygo.application.Service
 {
-    public interface IFileManager
+    public interface IFileSystemService
     {
         Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileName);
         void Delete(string localFileName);

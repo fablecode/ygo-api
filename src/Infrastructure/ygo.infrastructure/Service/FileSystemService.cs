@@ -3,11 +3,11 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.application.Manager;
+using ygo.application.Service;
 
-namespace ygo.infrastructure.Manager
+namespace ygo.infrastructure.Service
 {
-    public class FileManager : IFileManager
+    public class FileSystemService : IFileSystemService
     {
         private static ReaderWriterLock locker = new ReaderWriterLock();
 
