@@ -27,6 +27,8 @@ namespace ygo.application.Commands.DownloadImage
             if (validationResult.IsValid)
             {
                 var existingImages = _fileSystemService.GetFiles(Path.GetDirectoryName(message.LocalImageFileName), message.FileName + ".*");
+                existingImages.ToList().ForEach(_fileSystemService.Delete);
+
                 commandResult.Data = await _fileSystemService.Download(message.RemoteImageUrl, message.LocalImageFileName);
                 commandResult.IsSuccessful = true;
             }
