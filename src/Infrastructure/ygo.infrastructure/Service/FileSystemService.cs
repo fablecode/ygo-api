@@ -99,5 +99,19 @@ namespace ygo.infrastructure.Service
                 locker.ReleaseReaderLock();
             }
         }
+
+        public bool Exists(string localFileFullPath)
+        {
+            try
+            {
+                locker.AcquireReaderLock(int.MaxValue);
+
+                return File.Exists(localFileFullPath);
+            }
+            finally
+            {
+                locker.ReleaseReaderLock();
+            }
+        }
     }
 }

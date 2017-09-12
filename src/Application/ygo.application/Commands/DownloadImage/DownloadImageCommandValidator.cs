@@ -9,7 +9,7 @@ namespace ygo.application.Commands.DownloadImage
             RuleFor(i => i.RemoteImageUrl)
                 .NotNull();
 
-            RuleFor(i => i.RemoteImageUrl)
+            RuleFor(i => i.LocalImageFileName)
                 .NotNull()
                 .NotEmpty();
         }

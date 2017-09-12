@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.UpdateCard;
+using ygo.application.Dto;
 using ygo.application.Ioc;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
@@ -74,12 +75,24 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddCardCommand command)
         {
-            var result = await _mediator.Send(command);
+            var existingCard = await _mediator.Send(new CardByNameQuery { Name = command.Name });
 
-            if (result.IsSuccessful)
-                return CreatedAtRoute("CardById", new { id = ((CategoryDto)result.Data).Id }, result.Data);
+            if (existingCard == null)
+            {
+                var result = await _mediator.Send(command);
 
-            return BadRequest(result.Errors);
+                if (result.IsSuccessful)
+                {
+                    existingCard = (CardDto) result.Data;
+                }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
+
+            }
+
+            return CreatedAtRoute("CardById", new { id = existingCard.Id }, existingCard);
         }
 
         /// <summary>

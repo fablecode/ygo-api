@@ -11,5 +11,6 @@ namespace ygo.application.Service
         void Delete(string localFileFullPath);
         void Rename(string oldNameFullPath, string newNameFullPath);
         string[] GetFiles(string path, string searchPattern);
+        bool Exists(string localFileFullPath);
     }
 }

@@ -7,6 +7,5 @@ namespace ygo.application.Commands.DownloadImage
     {
         public Uri RemoteImageUrl { get; set; }
         public string LocalImageFileName { get; set; }
-        public string FileName { get; set; }
     }
 }
