@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
@@ -29,12 +30,15 @@ namespace ygo.application
                 cfg.CreateMap<LinkArrow, LinkArrowDto>();
 
                 cfg.CreateMap<Card, MonsterCardDto>()
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
                     .ForMember(dest => dest.SubCategories, opt => opt.MapFrom(src => src.CardSubCategory));
 
                 cfg.CreateMap<Card, SpellCardDto>()
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
                     .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
 
                 cfg.CreateMap<Card, TrapCardDto>()
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
                     .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
 
                 cfg.CreateMap<Card, CardDto>();
