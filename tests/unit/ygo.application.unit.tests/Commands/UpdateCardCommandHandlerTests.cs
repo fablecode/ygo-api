@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Commands.UpdateCard;
@@ -17,8 +18,9 @@ namespace ygo.application.unit.tests.Commands
         public void Setup()
         {
             _mediator = Substitute.For<IMediator>();
+            IOptions<ApplicationSettings> settings = Substitute.For<IOptions<ApplicationSettings>>();
 
-            _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator());
+            _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator(), settings);
         }
 
         [TestMethod]

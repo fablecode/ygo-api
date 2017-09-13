@@ -71,6 +71,7 @@ namespace ygo.api.Controllers
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddCardCommand command)

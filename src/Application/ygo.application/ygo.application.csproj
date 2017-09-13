@@ -17,4 +17,10 @@
     <ProjectReference Include="..\..\Domain\ygo.domain\ygo.domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Win32.Registry">
+      <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.NETCore.App\1.0.5\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

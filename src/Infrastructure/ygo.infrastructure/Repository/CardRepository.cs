@@ -17,7 +17,14 @@ namespace ygo.infrastructure.Repository
 
         public Task<Card> CardByName(string name)
         {
-            return _context.Card.SingleOrDefaultAsync(c => c.Name == name);
+            return _context
+                    .Card
+                    .Include(c => c.CardSubCategory)
+                    .Include(c => c.CardAttribute)
+                    .Include(c => c.CardType)
+                    .Include(c => c.CardLinkArrow)
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(c => c.Name == name);
         }
 
         public async Task<Card> Add(Card newCard)
@@ -43,7 +50,7 @@ namespace ygo.infrastructure.Repository
 
         public async Task<Card> Update(Card card)
         {
-            _context.Card.Add(card);
+            _context.Card.Update(card);
 
             await _context.SaveChangesAsync();
 

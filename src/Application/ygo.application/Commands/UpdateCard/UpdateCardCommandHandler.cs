@@ -1,13 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Options;
+using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Enums;
+using ygo.application.Helpers;
 
 namespace ygo.application.Commands.UpdateCard
 {
@@ -15,33 +19,59 @@ namespace ygo.application.Commands.UpdateCard
     {
         private readonly IMediator _mediator;
         private readonly IValidator<UpdateCardCommand> _validator;
+        private readonly IOptions<ApplicationSettings> _settings;
 
-        public UpdateCardCommandHandler(IMediator mediator, IValidator<UpdateCardCommand> validator)
+        public UpdateCardCommandHandler(IMediator mediator, IValidator<UpdateCardCommand> validator, IOptions<ApplicationSettings> settings)
         {
             _mediator = mediator;
             _validator = validator;
+            _settings = settings;
         }
 
-        public Task<CommandResult> Handle(UpdateCardCommand message)
+        public async Task<CommandResult> Handle(UpdateCardCommand message)
         {
+            var commandResult = new CommandResult();
+
             var validationResults = _validator.Validate(message);
 
             if (validationResults.IsValid)
             {
+                CommandResult cardTypeCommandResult;
+
                 switch (message.CardType)
                 {
                     case YgoCardType.Monster:
-                        return _mediator.Send(Mapper.Map<UpdateMonsterCardCommand>(message));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateMonsterCardCommand>(message));
+                        break;
                     case YgoCardType.Spell:
-                        return _mediator.Send(Mapper.Map<UpdateSpellCardCommand>(message));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateSpellCardCommand>(message));
+                        break;
                     case YgoCardType.Trap:
-                        return _mediator.Send(Mapper.Map<UpdateTrapCardCommand>(message));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateTrapCardCommand>(message));
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(message.CardType));
                 }
+
+                if (cardTypeCommandResult.IsSuccessful)
+                {
+                    var downloadImageCommand = new DownloadImageCommand
+                    {
+                        RemoteImageUrl = message.ImageUrl,
+                        ImageFileName = message.Name.MakeValidFileName(),
+                    };
+
+                    await _mediator.Send(downloadImageCommand);
+                }
+
+                commandResult = cardTypeCommandResult;
+            }
+            else
+            {
+                commandResult.Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList();
             }
 
-            return Task.FromResult(new CommandResult{ Errors = validationResults.Errors.Select(err => err.ErrorMessage).ToList()});
+            return commandResult;
         }
     }
 }

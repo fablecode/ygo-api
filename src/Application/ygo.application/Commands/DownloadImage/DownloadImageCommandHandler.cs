@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Options;
+using Microsoft.Win32;
 using ygo.application.Service;
 
 namespace ygo.application.Commands.DownloadImage
@@ -10,11 +13,13 @@ namespace ygo.application.Commands.DownloadImage
     {
         private readonly IFileSystemService _fileSystemService;
         private readonly IValidator<DownloadImageCommand> _validator;
+        private readonly IOptions<ApplicationSettings> _settings;
 
-        public DownloadImageCommandHandler(IFileSystemService fileSystemService, IValidator<DownloadImageCommand> validator)
+        public DownloadImageCommandHandler(IFileSystemService fileSystemService, IValidator<DownloadImageCommand> validator, IOptions<ApplicationSettings> settings)
         {
             _fileSystemService = fileSystemService;
             _validator = validator;
+            _settings = settings;
         }
 
         public async Task<CommandResult> Handle(DownloadImageCommand message)
@@ -25,10 +30,16 @@ namespace ygo.application.Commands.DownloadImage
 
             if (validationResult.IsValid)
             {
-                if(_fileSystemService.Exists(message.LocalImageFileName))
-                    _fileSystemService.Delete(message.LocalImageFileName);
+                var imageFileWithoutExtensionFullPath = Path.Combine(_settings.Value.CardImageFolderPath, message.ImageFileName);
 
-                var downloadedFileResult = await _fileSystemService.Download(message.RemoteImageUrl, message.LocalImageFileName);
+                var downloadedFileResult = await _fileSystemService.Download(message.RemoteImageUrl, imageFileWithoutExtensionFullPath);
+
+                var imageFileWithExtensionFullPath = string.Concat(imageFileWithoutExtensionFullPath, GetDefaultExtension(downloadedFileResult.ContentType));
+
+                if (_fileSystemService.Exists(imageFileWithExtensionFullPath))
+                    _fileSystemService.Delete(imageFileWithExtensionFullPath);
+
+                _fileSystemService.Rename(imageFileWithoutExtensionFullPath, imageFileWithExtensionFullPath);
 
                 commandResult.Data = downloadedFileResult;
                 commandResult.IsSuccessful = true;
@@ -39,6 +50,15 @@ namespace ygo.application.Commands.DownloadImage
             }
 
             return commandResult;
+        }
+
+        private string GetDefaultExtension(string mimeType)
+        {
+            var key = Registry.ClassesRoot.OpenSubKey(@"MIME\Database\Content Type\" + mimeType, false);
+            var value = key?.GetValue("Extension", null);
+            var result = value != null ? value.ToString() : string.Empty;
+
+            return string.IsNullOrWhiteSpace(result) ? ".png" : result;
         }
     }
 }

@@ -95,24 +95,24 @@ namespace ygo.application.Commands
             card.CardSubCategory.Clear();
             card.CardType.Clear();
 
-            card.CardAttribute.Add(new CardAttribute { AttributeId = command.AttributeId });
+            card.CardAttribute.Add(new CardAttribute { AttributeId = command.AttributeId, CardId = card.Id});
 
             if (command.SubCategoryIds.Any())
             {
                 foreach (var sbIds in command.SubCategoryIds)
-                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds });
+                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
             }
 
             if (command.TypeIds.Any())
             {
                 foreach (var typeId in command.TypeIds)
-                    card.CardType.Add(new CardType { TypeId = typeId });
+                    card.CardType.Add(new CardType { TypeId = typeId, CardId = card.Id });
             }
 
             if (command.LinkArrowIds.Any())
             {
                 foreach (var linkArrowId in command.LinkArrowIds)
-                    card.CardLinkArrow.Add(new CardLinkArrow { LinkArrowId = linkArrowId });
+                    card.CardLinkArrow.Add(new CardLinkArrow { LinkArrowId = linkArrowId, CardId = card.Id });
             }
         }
 

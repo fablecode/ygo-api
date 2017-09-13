@@ -10,7 +10,7 @@ namespace ygo.infrastructure.Service
 {
     public class FileSystemService : IFileSystemService
     {
-        private static ReaderWriterLock locker = new ReaderWriterLock();
+        private static object locker = new Object();
 
         public Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileFullPath)
         {
@@ -19,28 +19,19 @@ namespace ygo.infrastructure.Service
 
         public async Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localFileFullPath)
         {
-            try
+            using (var webClient = new WebClient())
             {
-                locker.AcquireWriterLock(int.MaxValue);
+                webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
+                await webClient.DownloadFileTaskAsync(remoteFileUrl, localFileFullPath);
 
-                using (var webClient = new WebClient())
+                var contentType = webClient.ResponseHeaders["Content-Type"];
+
+                return new DownloadedFileDto
                 {
-                    webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
-                    await webClient.DownloadFileTaskAsync(remoteFileUrl, localFileFullPath);
-
-                    var contentType = webClient.ResponseHeaders["Content-Type"];
-
-                    return new DownloadedFileDto
-                    {
-                        Source = remoteFileUrl,
-                        Destination = localFileFullPath,
-                        ContentType = contentType
-                    };
-                }
-            }
-            finally
-            {
-                locker.ReleaseWriterLock();
+                    Source = remoteFileUrl,
+                    Destination = localFileFullPath,
+                    ContentType = contentType,
+                };
             }
         }
 
@@ -48,69 +39,42 @@ namespace ygo.infrastructure.Service
         {
             int timeout = 30000;
 
-            try
+            using (var fw = new FileSystemWatcher(Path.GetDirectoryName(localFileFullPath), Path.GetFileName(localFileFullPath)))
+            using (var mre = new ManualResetEventSlim())
             {
-                locker.AcquireWriterLock(int.MaxValue);
-
-                using (var fw = new FileSystemWatcher(Path.GetDirectoryName(localFileFullPath), Path.GetFileName(localFileFullPath)))
-                using (var mre = new ManualResetEventSlim())
+                fw.EnableRaisingEvents = true;
+                fw.Deleted += (sender, e) =>
                 {
-                    fw.EnableRaisingEvents = true;
-                    fw.Deleted += (sender, e) =>
-                    {
-                        mre.Set();
-                    };
+                    mre.Set();
+                };
 
-                    File.Delete(localFileFullPath);
-                    mre.Wait(timeout);
-                }
+                File.Delete(localFileFullPath);
+                mre.Wait(timeout);
+            }
 
-            }
-            finally
-            {
-                locker.ReleaseWriterLock();
-            }
         }
 
         public void Rename(string oldNameFullPath, string newNameFullPath)
         {
-            try
+            lock (locker)
             {
-                locker.AcquireWriterLock(int.MaxValue);
-
                 File.Move(oldNameFullPath, newNameFullPath);
-            }
-            finally
-            {
-                locker.ReleaseWriterLock();
             }
         }
 
         public string[] GetFiles(string path, string searchPattern)
         {
-            try
+            lock (locker)
             {
-                locker.AcquireReaderLock(int.MaxValue);
-
                 return Directory.GetFiles(path, searchPattern);
-            }
-            finally
-            {
-                locker.ReleaseReaderLock();
             }
         }
 
         public bool Exists(string localFileFullPath)
         {
-            try
+            lock (locker)
             {
-                locker.AcquireReaderLock(int.MaxValue);
-
                 return File.Exists(localFileFullPath);
-            }
-            finally
-            {
-                locker.ReleaseReaderLock();
             }
         }
     }

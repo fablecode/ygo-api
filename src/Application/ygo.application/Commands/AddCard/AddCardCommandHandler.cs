@@ -11,7 +11,7 @@ using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Enums;
-using ygo.domain.Models;
+using ygo.application.Helpers;
 
 namespace ygo.application.Commands.AddCard
 {
@@ -56,22 +56,17 @@ namespace ygo.application.Commands.AddCard
                 if (cardTypeCommandResult.IsSuccessful)
                 {
                     var localFileNameExtension = Path.GetExtension(message.ImageUrl.AbsolutePath);
-                    var localFileName = string.Concat(message.Name.Split(Path.GetInvalidFileNameChars()), localFileNameExtension);
+                    var localFileName = string.Concat(message.Name.MakeValidFileName(), localFileNameExtension);
 
                     var imageFileNameFullPath = Path.Combine(_settings.Value.CardImageFolderPath, localFileName);
 
                     var downloadImageCommand = new DownloadImageCommand
                     {
                         RemoteImageUrl = message.ImageUrl,
-                        LocalImageFileName = imageFileNameFullPath,
+                        ImageFileName = imageFileNameFullPath,
                     };
 
-                    var downloadFileCommandResult = await _mediator.Send(downloadImageCommand);
-
-                    if (downloadFileCommandResult.IsSuccessful)
-                    {
-                        
-                    }
+                    await _mediator.Send(downloadImageCommand);
                 }
 
                 commandResult = cardTypeCommandResult;
