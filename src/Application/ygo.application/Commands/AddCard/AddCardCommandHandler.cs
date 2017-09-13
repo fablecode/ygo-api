@@ -55,10 +55,8 @@ namespace ygo.application.Commands.AddCard
 
                 if (cardTypeCommandResult.IsSuccessful)
                 {
-                    var insertedCard = (Card)cardTypeCommandResult.Data;
-
                     var localFileNameExtension = Path.GetExtension(message.ImageUrl.AbsolutePath);
-                    var localFileName = string.Concat(insertedCard.Name.Split(Path.GetInvalidFileNameChars()), localFileNameExtension);
+                    var localFileName = string.Concat(message.Name.Split(Path.GetInvalidFileNameChars()), localFileNameExtension);
 
                     var imageFileNameFullPath = Path.Combine(_settings.Value.CardImageFolderPath, localFileName);
 

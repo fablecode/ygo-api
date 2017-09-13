@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
+using ygo.application.Ioc;
 using ygo.application.Repository;
 
 namespace ygo.application.Commands.AddMonsterCard
@@ -27,7 +29,9 @@ namespace ygo.application.Commands.AddMonsterCard
             {
                 var newMonsterCard = message.MapToCard();
 
-                commandResult.Data = await _repository.Add(newMonsterCard);
+                var newMonsterCardResult = await _repository.Add(newMonsterCard);
+
+                commandResult.Data = newMonsterCardResult.Id;
                 commandResult.IsSuccessful = true;
             }
             else

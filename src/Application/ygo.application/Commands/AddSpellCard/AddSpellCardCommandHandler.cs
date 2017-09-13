@@ -25,9 +25,10 @@ namespace ygo.application.Commands.AddSpellCard
 
             if (validationResult.IsValid)
             {
-                var newspellCard = message.MapToCard();
+                var newSpellCard = message.MapToCard();
 
-                commandResult.Data = await _repository.Add(newspellCard);
+                var newSpellCardResult = await _repository.Add(newSpellCard);
+                commandResult.Data = newSpellCardResult.Id;
                 commandResult.IsSuccessful = true;
             }
             else

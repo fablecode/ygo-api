@@ -83,16 +83,13 @@ namespace ygo.api.Controllers
 
                 if (result.IsSuccessful)
                 {
-                    existingCard = (CardDto) result.Data;
-                }
-                else
-                {
-                    return BadRequest(result.Errors);
+                    return CreatedAtRoute("CardById", new { id = result.Data }, result.Data);
                 }
 
+                return BadRequest(result.Errors);
             }
 
-            return CreatedAtRoute("CardById", new { id = existingCard.Id }, existingCard);
+            return StatusCode(409, existingCard);
         }
 
         /// <summary>
