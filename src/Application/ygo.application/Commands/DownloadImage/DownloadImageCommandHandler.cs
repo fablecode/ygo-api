@@ -30,7 +30,7 @@ namespace ygo.application.Commands.DownloadImage
 
             if (validationResult.IsValid)
             {
-                var imageFileWithoutExtensionFullPath = Path.Combine(_settings.Value.CardImageFolderPath, message.ImageFileName);
+                var imageFileWithoutExtensionFullPath = Path.Combine(_settings.Value.CardImageFolderPath, Path.GetFileNameWithoutExtension(message.ImageFileName));
 
                 var downloadedFileResult = await _fileSystemService.Download(message.RemoteImageUrl, imageFileWithoutExtensionFullPath);
 
