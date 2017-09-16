@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
-using Microsoft.Win32;
+using MimeTypes;
 using ygo.application.Service;
 
 namespace ygo.application.Commands.DownloadImage
@@ -54,11 +54,7 @@ namespace ygo.application.Commands.DownloadImage
 
         private string GetDefaultExtension(string mimeType)
         {
-            var key = Registry.ClassesRoot.OpenSubKey(@"MIME\Database\Content Type\" + mimeType, false);
-            var value = key?.GetValue("Extension", null);
-            var result = value != null ? value.ToString() : string.Empty;
-
-            return string.IsNullOrWhiteSpace(result) ? ".png" : result;
+            return MimeTypeMap.GetExtension(mimeType);
         }
     }
 }

@@ -102,10 +102,10 @@ namespace ygo.application.unit.tests.Commands
 
             // Act
             var result = await _sut.Handle(command);
-            var insertedCard = (Card)result.Data;
+            var insertedCardId = (long)result.Data;
 
             // Assert
-            _testContext.Card.Count(c => c.Id == insertedCard.Id).Should().Be(1);
+            _testContext.Card.Count(c => c.Id == insertedCardId).Should().Be(1);
         }
 
 

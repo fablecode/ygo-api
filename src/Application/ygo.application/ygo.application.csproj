@@ -9,18 +9,13 @@
     <PackageReference Include="FluentValidation" Version="7.1.1" />
     <PackageReference Include="MediatR" Version="3.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="3.0.0" />
+    <PackageReference Include="MediaTypeMap" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\ygo.domain\ygo.domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Win32.Registry">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.NETCore.App\1.0.5\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
