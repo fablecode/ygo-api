@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
@@ -63,64 +62,4 @@ namespace ygo.application.Ioc
             return services;
         }
     }
-
-    public class LinkArrowDto
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class TypeDto
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class MonsterCardDto
-    {
-        public long Id { get; set; }
-        public string CardNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int? CardLevel { get; set; }
-        public int? CardRank { get; set; }
-        public int? Atk { get; set; }
-        public int? Def { get; set; }
-        public string ImageUrl { get; set; }
-        public List<SubCategoryDto> SubCategories { get; set; }
-    }
-
-    public class SpellCardDto
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string CardNumber { get; set; }
-        public string Description { get; set; }
-        public string ImageUrl { get; set; }
-        public SubCategoryDto SubCategory { get; set; }
-    }
-
-    public class SubCategoryDto
-    {
-        public long Id { get; set; }
-        public long CategoryId { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class CategoryDto
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class TrapCardDto
-    {
-        public long Id { get; set; }
-        public string CardNumber { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string ImageUrl { get; set; }
-        public SubCategoryDto SubCategory { get; set; }
-    }
-
 }

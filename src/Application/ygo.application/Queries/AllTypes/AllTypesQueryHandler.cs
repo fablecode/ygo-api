@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using ygo.application.Dto;
 using ygo.application.Ioc;
 using ygo.application.Repository;
 

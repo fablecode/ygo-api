@@ -41,14 +41,14 @@ namespace ygo.application
                     .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
                     .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
 
-                cfg.CreateMap<Card, CardDto>();
-
                 cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddTrapCardCommand>();
                 cfg.CreateMap<UpdateCardCommand, UpdateMonsterCardCommand>();
                 cfg.CreateMap<UpdateCardCommand, UpdateSpellCardCommand>();
                 cfg.CreateMap<UpdateCardCommand, UpdateTrapCardCommand>();
+
+                cfg.CreateMap<Attribute, AttributeDto>();
             });
         }
     }

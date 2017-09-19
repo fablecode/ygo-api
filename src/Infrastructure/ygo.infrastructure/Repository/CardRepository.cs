@@ -20,9 +20,13 @@ namespace ygo.infrastructure.Repository
             return _context
                     .Card
                     .Include(c => c.CardSubCategory)
+                        .ThenInclude(sc => sc.SubCategory)
                     .Include(c => c.CardAttribute)
+                        .ThenInclude(ca => ca.Attribute)
                     .Include(c => c.CardType)
+                        .ThenInclude(ct => ct.Type)
                     .Include(c => c.CardLinkArrow)
+                        .ThenInclude(cla => cla.LinkArrow)
                     .AsNoTracking()
                     .SingleOrDefaultAsync(c => c.Name == name);
         }
@@ -41,9 +45,13 @@ namespace ygo.infrastructure.Repository
             return _context
                         .Card
                         .Include(c => c.CardSubCategory)
+                            .ThenInclude(sc => sc.SubCategory)
                         .Include(c => c.CardAttribute)
+                            .ThenInclude(ca => ca.Attribute)
                         .Include(c => c.CardType)
+                            .ThenInclude(ct => ct.Type)
                         .Include(c => c.CardLinkArrow)
+                            .ThenInclude(cla => cla.LinkArrow)
                         .AsNoTracking()
                         .SingleOrDefaultAsync(s => s.Id == id);
         }

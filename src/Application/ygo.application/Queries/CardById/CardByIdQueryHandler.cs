@@ -2,6 +2,7 @@
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using ygo.application.Commands;
 using ygo.application.Dto;
 using ygo.application.Repository;
 
@@ -26,7 +27,7 @@ namespace ygo.application.Queries.CardById
             {
                 var result = await  _repository.CardById(message.Id);
 
-                return Mapper.Map<CardDto>(result);
+                return result.MapToCardDto();
             }
 
             return null;
