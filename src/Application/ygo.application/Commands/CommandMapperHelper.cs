@@ -92,8 +92,12 @@ namespace ygo.application.Commands
 
             response.Id = card.Id;
             response.CardNumber = card.CardNumber;
-            response.ImageUrl = $"/api/images/cards/{string.Concat(card.Name.Split(Path.GetInvalidFileNameChars()))}";
-            response.Name = card.Name;
+            if (card.Name != null)
+            {
+                response.ImageUrl =
+                    $"/api/images/cards/{string.Concat(card.Name.Split(Path.GetInvalidFileNameChars()))}";
+                response.Name = card.Name;
+            }
             response.Description = card.Description;
             response.CardLevel = card.CardLevel;
             response.CardRank = card.CardRank;
