@@ -11,7 +11,7 @@ To provide access to the latest [Yu-Gi-Oh](http://www.yugioh-card.com/uk/)  banl
 
 ## Prerequisite
 1. Setup the [Ygo database](https://github.com/fablecode/ygo-database)
-2. For data, install the windows services (NOT IMPLEMENTED EXCEPTION).
+2. For data, install the [ygo-scheduled-tasks](https://github.com/fablecode/ygo-database).
 
 ## Installing
 ```
