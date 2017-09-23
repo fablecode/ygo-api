@@ -16,7 +16,7 @@ namespace ygo.application.Commands.AddCard
         public int? Atk { get; set; }
         public int? Def { get; set; }
         public Uri ImageUrl { get; set; }
-        public int AttributeId { get; set; }
+        public int? AttributeId { get; set; }
         public List<int> SubCategoryIds { get; set; }
         public List<int> TypeIds { get; set; }
         public List<int> LinkArrowIds { get; set; }
