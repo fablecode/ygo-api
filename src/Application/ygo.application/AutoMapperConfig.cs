@@ -25,21 +25,21 @@ namespace ygo.application
                 cfg.CreateMap<SubCategory, SubCategoryDto>()
                     .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
 
+                cfg.CreateMap<CardSubCategory, CardSubCategoryDto>();
+
+
                 cfg.CreateMap<Type, TypeDto>();
 
                 cfg.CreateMap<LinkArrow, LinkArrowDto>();
 
                 cfg.CreateMap<Card, MonsterCardDto>()
-                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
-                    .ForMember(dest => dest.SubCategories, opt => opt.MapFrom(src => src.CardSubCategory));
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"));
 
                 cfg.CreateMap<Card, SpellCardDto>()
-                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
-                    .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"));
 
                 cfg.CreateMap<Card, TrapCardDto>()
-                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"))
-                    .ForMember(dest => dest.SubCategory, opt => opt.MapFrom(src => src.CardSubCategory.SingleOrDefault()));
+                    .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"));
 
                 cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
@@ -51,5 +51,11 @@ namespace ygo.application
                 cfg.CreateMap<Attribute, AttributeDto>();
             });
         }
+    }
+
+    public class CardSubCategoryDto
+    {
+        public long SubCategoryId { get; set; }
+        public long CardId { get; set; }
     }
 }

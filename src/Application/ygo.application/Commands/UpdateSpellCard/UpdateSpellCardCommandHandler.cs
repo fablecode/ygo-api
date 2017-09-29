@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
+using ygo.application.Dto;
 using ygo.application.Repository;
 
 namespace ygo.application.Commands.UpdateSpellCard
@@ -25,10 +28,18 @@ namespace ygo.application.Commands.UpdateSpellCard
 
             if (validationResult.IsValid)
             {
-                var updateSpellCard = message.MapToCard();
+                var cardToUpdate = await _repository.CardById(message.Id);
+                if (cardToUpdate != null)
+                {
+                    cardToUpdate.UpdateSpellCardWith(message);
 
-                commandResult.Data = await _repository.Update(updateSpellCard);
-                commandResult.IsSuccessful = true;
+                    commandResult.Data = Mapper.Map<SpellCardDto>(await _repository.Update(cardToUpdate));
+                    commandResult.IsSuccessful = true;
+                }
+                else
+                {
+                    commandResult.Errors = new List<string> { "Critical error: Card not found." };
+                }
             }
             else
             {

@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
+using ygo.application.Dto;
 using ygo.application.Repository;
 
 namespace ygo.application.Commands.UpdateTrapCard
@@ -25,10 +28,18 @@ namespace ygo.application.Commands.UpdateTrapCard
 
             if (validationResult.IsValid)
             {
-                var updateTrapCard = message.MapToCard();
+                var cardToUpdate = await _repository.CardById(message.Id);
+                if (cardToUpdate != null)
+                {
+                    cardToUpdate.UpdateTrapCardWith(message);
 
-                commandResult.Data = await _repository.Update(updateTrapCard);
-                commandResult.IsSuccessful = true;
+                    commandResult.Data = Mapper.Map<TrapCardDto>(await _repository.Update(cardToUpdate));
+                    commandResult.IsSuccessful = true;
+                }
+                else
+                {
+                    commandResult.Errors = new List<string> { "Critical error: Card not found." };
+                }
             }
             else
             {

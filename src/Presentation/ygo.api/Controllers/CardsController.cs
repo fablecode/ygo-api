@@ -54,7 +54,7 @@ namespace ygo.api.Controllers
             if (result != null)
                 return Ok(result);
 
-            return NotFound(name);
+            return NotFound();
         }
 
         [HttpGet]

@@ -34,6 +34,7 @@ namespace ygo.infrastructure.Ioc
             services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
             services.AddTransient<ITypeRepository, TypeRepository>();
             services.AddTransient<ILinkArrowRepository, LinkArrowRepository>();
+            services.AddTransient<IAttributeRepository, AttributeRepository>();
 
             return services;
         }

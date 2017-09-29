@@ -55,18 +55,21 @@ namespace ygo.application.Commands.AddCard
 
                 if (cardTypeCommandResult.IsSuccessful)
                 {
-                    var localFileNameExtension = Path.GetExtension(message.ImageUrl.AbsolutePath);
-                    var localFileName = string.Concat(message.Name.MakeValidFileName(), localFileNameExtension);
-
-                    var imageFileNameFullPath = Path.Combine(_settings.Value.CardImageFolderPath, localFileName);
-
-                    var downloadImageCommand = new DownloadImageCommand
+                    if (message.ImageUrl != null)
                     {
-                        RemoteImageUrl = message.ImageUrl,
-                        ImageFileName = imageFileNameFullPath,
-                    };
+                        var localFileNameExtension = Path.GetExtension(message.ImageUrl.AbsolutePath);
+                        var localFileName = string.Concat(message.Name.MakeValidFileName(), localFileNameExtension);
 
-                    await _mediator.Send(downloadImageCommand);
+                        var imageFileNameFullPath = Path.Combine(_settings.Value.CardImageFolderPath, localFileName);
+
+                        var downloadImageCommand = new DownloadImageCommand
+                        {
+                            RemoteImageUrl = message.ImageUrl,
+                            ImageFileName = imageFileNameFullPath,
+                        };
+
+                        await _mediator.Send(downloadImageCommand);
+                    }
                 }
 
                 commandResult = cardTypeCommandResult;

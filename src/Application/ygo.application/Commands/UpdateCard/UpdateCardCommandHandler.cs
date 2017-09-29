@@ -55,13 +55,16 @@ namespace ygo.application.Commands.UpdateCard
 
                 if (cardTypeCommandResult.IsSuccessful)
                 {
-                    var downloadImageCommand = new DownloadImageCommand
+                    if (message.ImageUrl != null)
                     {
-                        RemoteImageUrl = message.ImageUrl,
-                        ImageFileName = message.Name.MakeValidFileName(),
-                    };
+                        var downloadImageCommand = new DownloadImageCommand
+                        {
+                            RemoteImageUrl = message.ImageUrl,
+                            ImageFileName = message.Name.MakeValidFileName(),
+                        };
 
-                    await _mediator.Send(downloadImageCommand);
+                        await _mediator.Send(downloadImageCommand);
+                    }
                 }
 
                 commandResult = cardTypeCommandResult;

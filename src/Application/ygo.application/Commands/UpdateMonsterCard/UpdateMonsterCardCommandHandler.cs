@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
+using ygo.application.Dto;
 using ygo.application.Repository;
 
 namespace ygo.application.Commands.UpdateMonsterCard
@@ -32,7 +34,7 @@ namespace ygo.application.Commands.UpdateMonsterCard
                 {
                     cardToUpdate.UpdateMonsterCardWith(message);
 
-                    commandResult.Data = await _repository.Update(cardToUpdate);
+                    commandResult.Data = Mapper.Map<MonsterCardDto>(await _repository.Update(cardToUpdate));
                     commandResult.IsSuccessful = true;
                 }
                 else

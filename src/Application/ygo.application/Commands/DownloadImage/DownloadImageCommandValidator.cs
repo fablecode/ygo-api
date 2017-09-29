@@ -13,7 +13,7 @@ namespace ygo.application.Commands.DownloadImage
             RuleFor(i => i.ImageFileName)
                 .NotNull()
                 .NotEmpty()
-                .Must(i => i.IndexOfAny(Path.GetInvalidFileNameChars()) == 0)
+                .Must(i => i.IndexOfAny(Path.GetInvalidFileNameChars()) == -1)
                     .WithMessage("Invalid filename. The Image filename {ImageFileName} contains invalid character(s).");
         }
     }

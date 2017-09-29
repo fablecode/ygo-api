@@ -71,14 +71,14 @@ namespace ygo.application.Commands
 
         public static Card MapToCard(this UpdateSpellCardCommand command)
         {
-            var updateSpellCard = MapToSpellOrTrapCard(command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
+            var updateSpellCard = MapToSpellOrTrapCard(command.Id, command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
 
             return updateSpellCard;
         }
 
         public static Card MapToCard(this UpdateTrapCardCommand command)
         {
-            var updateTrapCard = MapToSpellOrTrapCard(command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
+            var updateTrapCard = MapToSpellOrTrapCard(command.Id, command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
 
             return updateTrapCard;
         }
@@ -176,10 +176,52 @@ namespace ygo.application.Commands
             }
         }
 
+        public static void UpdateSpellCardWith(this Card card, UpdateSpellCardCommand command)
+        {
+            card.CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null;
+            card.Name = command.Name;
+            card.Description = command.Description;
+            card.Updated = DateTime.UtcNow;
+
+            // Clear monster related data.
+            card.CardSubCategory.Clear();
+
+            if (command.SubCategoryIds.Any())
+            {
+                foreach (var sbIds in command.SubCategoryIds)
+                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
+            }
+        }
+
+        public static void UpdateTrapCardWith(this Card card, UpdateTrapCardCommand command)
+        {
+            card.CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null;
+            card.Name = command.Name;
+            card.Description = command.Description;
+            card.Updated = DateTime.UtcNow;
+
+            // Clear monster related data.
+            card.CardSubCategory.Clear();
+
+            if (command.SubCategoryIds.Any())
+            {
+                foreach (var sbIds in command.SubCategoryIds)
+                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
+            }
+        }
+
+
+
         public static Card MapToSpellOrTrapCard(int? cardNumber, string name, string description, IList<int> subCategoryIds)
+        {
+            return MapToSpellOrTrapCard(0, cardNumber, name, description, subCategoryIds);
+        }
+
+        public static Card MapToSpellOrTrapCard(long id, int? cardNumber, string name, string description, IList<int> subCategoryIds)
         {
             var newCard = new Card
             {
+                Id = id,
                 Name = name,
                 CardNumber = cardNumber.HasValue ? cardNumber.ToString() : null,
                 Description = description,
