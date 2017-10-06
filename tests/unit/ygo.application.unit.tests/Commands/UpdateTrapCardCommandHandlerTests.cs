@@ -18,6 +18,8 @@ namespace ygo.application.unit.tests.Commands
         [TestInitialize]
         public void SetUp()
         {
+            AutoMapperConfig.Configure();
+
             _repository = Substitute.For<ICardRepository>();
 
             _sut = new UpdateTrapCardCommandHandler(_repository, new UpdateTrapCardCommandValidator());
@@ -55,6 +57,7 @@ namespace ygo.application.unit.tests.Commands
         {
             // Arrange
             _repository.Update(Arg.Any<Card>()).Returns(new Card());
+            _repository.CardById(Arg.Any<int>()).Returns(new Card());
             var command = GetValidTrapCard();
 
             // Act
@@ -69,6 +72,7 @@ namespace ygo.application.unit.tests.Commands
         {
             // Arrange
             _repository.Update(Arg.Any<Card>()).Returns(new Card());
+            _repository.CardById(Arg.Any<int>()).Returns(new Card());
             var command = GetValidTrapCard();
 
             // Act

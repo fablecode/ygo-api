@@ -55,6 +55,7 @@ namespace ygo.application.unit.tests.Commands
         {
             // Arrange
             _repository.Update(Arg.Any<Card>()).Returns(new Card());
+            _repository.CardById(Arg.Any<int>()).Returns(new Card());
             var command = new UpdateSpellCardCommand
             {
                 Name = "Monster Reborn",
@@ -78,6 +79,7 @@ namespace ygo.application.unit.tests.Commands
         {
             // Arrange
             _repository.Update(Arg.Any<Card>()).Returns(new Card());
+            _repository.CardById(Arg.Any<int>()).Returns(new Card());
             var command = new UpdateSpellCardCommand
             {
                 Name = "Monster Reborn",

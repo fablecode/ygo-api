@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.UpdateCard;
-using ygo.application.Dto;
-using ygo.application.Ioc;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CardExists;
