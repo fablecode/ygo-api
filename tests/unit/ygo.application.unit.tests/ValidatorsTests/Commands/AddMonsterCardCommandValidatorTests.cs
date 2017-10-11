@@ -80,7 +80,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         [DataTestMethod]
         [DataRow(0)]
         [DataRow(-1)]
-        [DataRow(13)]
+        [DataRow(23)]
         public void Given_A_MonsterCard_Where_CardLevel_Is_Invalid_Validation_Should_Fail(int cardLevel)
         {
             // Arrange
@@ -96,7 +96,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         [DataTestMethod]
         [DataRow(0)]
         [DataRow(-1)]
-        [DataRow(13)]
+        [DataRow(23)]
         public void Given_A_MonsterCard_Where_CardRank_Is_Invalid_Validation_Should_Fail(int cardRank)
         {
             // Arrange
@@ -111,7 +111,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
 
         [DataTestMethod]
         [DataRow(-1)]
-        [DataRow(10001)]
+        [DataRow(20001)]
         public void Given_A_MonsterCard_Where_Atk_Is_Invalid_Validation_Should_Fail(int atk)
         {
             // Arrange
@@ -126,7 +126,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
 
         [DataTestMethod]
         [DataRow(-1)]
-        [DataRow(10001)]
+        [DataRow(20001)]
         public void Given_A_MonsterCard_Where_Def_Is_Invalid_Validation_Should_Fail(int def)
         {
             // Arrange

@@ -5,10 +5,10 @@ namespace ygo.application.Commands.AddMonsterCard
 {
     public class AddMonsterCardCommandValidator : AbstractValidator<AddMonsterCardCommand>
     {
-        private const int MaxCardLevel = 12;
-        private const int MaxCardRank = 12;
-        private const int MaxAtk = 10000;
-        private const int MaxDef = 10000;
+        private const int MaxCardLevel = 20;
+        private const int MaxCardRank = 20;
+        private const int MaxAtk = 20000;
+        private const int MaxDef = 20000;
 
         public AddMonsterCardCommandValidator()
         {
@@ -26,11 +26,12 @@ namespace ygo.application.Commands.AddMonsterCard
                 .When(c => c.CardRank.HasValue);
 
             RuleFor(c => c.Atk)
-                .GreaterThan(0)
-                .LessThanOrEqualTo(MaxAtk).When(c => c.Atk.HasValue);
+                .GreaterThanOrEqualTo(0)
+                .LessThanOrEqualTo(MaxAtk)
+                .When(c => c.Atk.HasValue);
 
             RuleFor(c => c.Def)
-                .GreaterThan(0)
+                .GreaterThanOrEqualTo(0)
                 .LessThanOrEqualTo(MaxDef).When(c => c.Def.HasValue);
 
             RuleFor(c => c.AttributeId)
