@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
-using ygo.application.Ioc;
+using System.Linq;
+using System.Threading.Tasks;
 using ygo.application.Repository;
 
 namespace ygo.application.Commands.AddMonsterCard
