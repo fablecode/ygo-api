@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using ygo.application.Commands;
 using ygo.application.Dto;
-using ygo.application.Repository;
+using ygo.domain.Repository;
 
 namespace ygo.application.Queries.CardById
 {

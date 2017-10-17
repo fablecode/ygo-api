@@ -5,7 +5,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
 using MimeTypes;
-using ygo.application.Service;
+using ygo.domain.Service;
 
 namespace ygo.application.Commands.DownloadImage
 {

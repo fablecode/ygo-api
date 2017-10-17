@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
@@ -9,8 +8,7 @@ using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
-using ygo.application.Ioc;
-using ygo.domain.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.application
 {

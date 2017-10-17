@@ -2,7 +2,7 @@
 using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ygo.application.Commands.AddCard;
-using ygo.application.Enums;
+using ygo.core.Enums;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {

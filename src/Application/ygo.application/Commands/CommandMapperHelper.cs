@@ -11,7 +11,7 @@ using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
 using ygo.application.Ioc;
-using ygo.domain.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.application.Commands
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MediatR;
-using ygo.application.Enums;
+using ygo.core.Enums;
 
 namespace ygo.application.Commands.UpdateCard
 {

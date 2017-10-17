@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ygo.domain.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.infrastructure.Database
 {

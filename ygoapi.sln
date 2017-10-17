@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application", "2. Application", "{6FE3573E-2A8E-46B0-AB61-FAFCC1DD1A4C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{6FE3573E-2A8E-46B0-AB61-FAFCC1DD1A4C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{911EF67A-A73E-4612-B3F1-1D95FB022192}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{911EF67A-A73E-4612-B3F1-1D95FB022192}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infrastructure", "3. Infrastructure", "{C7D49CE2-DF31-46E9-A1F6-48E40D55AF7D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infrastructure", "4. Infrastructure", "{C7D49CE2-DF31-46E9-A1F6-48E40D55AF7D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Tests", "5. Tests", "{A8FD6C9C-49C1-4093-BE22-94552E6A443E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Tests", "6. Tests", "{A8FD6C9C-49C1-4093-BE22-94552E6A443E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{74C56C18-0F90-4EF4-B044-B8A564F2CF27}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Presentation", "4. Presentation", "{8BF36B06-F579-4670-A08C-E8A4137346F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{8BF36B06-F579-4670-A08C-E8A4137346F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.domain", "src\Domain\ygo.domain\ygo.domain.csproj", "{60588E88-078E-4531-93EF-2E59103E19DA}"
 EndProject
@@ -24,6 +24,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.api", "src\Presentation\ygo.api\ygo.api.csproj", "{4DA82FD7-FA60-4E10-9A1C-C9F51719152C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.application.unit.tests", "tests\unit\ygo.application.unit.tests\ygo.application.unit.tests.csproj", "{C541E1B5-2A9D-4A8F-939B-38A9CDAC8E4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{99A0A8D2-118E-41AB-AE01-4576FBC9499D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.core", "src\Core\ygo.core\ygo.core.csproj", "{E561B90A-8E34-4EF2-A0BE-9289F948C805}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,10 @@ Global
 		{C541E1B5-2A9D-4A8F-939B-38A9CDAC8E4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C541E1B5-2A9D-4A8F-939B-38A9CDAC8E4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C541E1B5-2A9D-4A8F-939B-38A9CDAC8E4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E561B90A-8E34-4EF2-A0BE-9289F948C805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E561B90A-8E34-4EF2-A0BE-9289F948C805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E561B90A-8E34-4EF2-A0BE-9289F948C805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E561B90A-8E34-4EF2-A0BE-9289F948C805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +70,7 @@ Global
 		{DCA7DD1B-C960-4C47-9C1F-27D347AE11E7} = {C7D49CE2-DF31-46E9-A1F6-48E40D55AF7D}
 		{4DA82FD7-FA60-4E10-9A1C-C9F51719152C} = {8BF36B06-F579-4670-A08C-E8A4137346F9}
 		{C541E1B5-2A9D-4A8F-939B-38A9CDAC8E4A} = {74C56C18-0F90-4EF4-B044-B8A564F2CF27}
+		{E561B90A-8E34-4EF2-A0BE-9289F948C805} = {99A0A8D2-118E-41AB-AE01-4576FBC9499D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C664D76D-586F-4F48-9AF7-0436F764967A}

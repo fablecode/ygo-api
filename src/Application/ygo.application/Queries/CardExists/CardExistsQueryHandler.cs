@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
-using ygo.application.Repository;
+using ygo.domain.Repository;
 
 namespace ygo.application.Queries.CardExists
 {

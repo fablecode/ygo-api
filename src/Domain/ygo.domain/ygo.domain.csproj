@@ -8,4 +8,8 @@
     <PackageReference Include="FluentValidation" Version="7.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\ygo.core\ygo.core.csproj" />
+  </ItemGroup>
+
 </Project>

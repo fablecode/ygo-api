@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using ygo.application.Dto;
-using ygo.application.Repository;
+using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateMonsterCard
 {

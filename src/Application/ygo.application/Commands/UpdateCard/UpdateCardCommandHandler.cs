@@ -10,8 +10,8 @@ using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
-using ygo.application.Enums;
-using ygo.application.Helpers;
+using ygo.core.Enums;
+using ygo.domain.Helpers;
 
 namespace ygo.application.Commands.UpdateCard
 {

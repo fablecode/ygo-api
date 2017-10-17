@@ -4,8 +4,8 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Commands.UpdateSpellCard;
-using ygo.application.Repository;
-using ygo.domain.Models;
+using ygo.core.Models.Db;
+using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {

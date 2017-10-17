@@ -2,7 +2,7 @@
 using MediatR;
 using System.Linq;
 using System.Threading.Tasks;
-using ygo.application.Repository;
+using ygo.domain.Repository;
 
 namespace ygo.application.Commands.AddMonsterCard
 {

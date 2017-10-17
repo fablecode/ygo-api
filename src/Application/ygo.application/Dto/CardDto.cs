@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ygo.application.Ioc;
-using ygo.domain.Models;
 
 namespace ygo.application.Dto
 {

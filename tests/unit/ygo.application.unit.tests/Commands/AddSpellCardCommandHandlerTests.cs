@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ygo.application.Commands.AddSpellCard;
-using ygo.application.Repository;
-using ygo.domain.Models;
+using ygo.core.Models.Db;
+using ygo.domain.Repository;
 using ygo.infrastructure.Database;
 using ygo.infrastructure.Repository;
 

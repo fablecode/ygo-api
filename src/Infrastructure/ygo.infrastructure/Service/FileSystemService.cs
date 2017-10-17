@@ -4,7 +4,8 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.application.Service;
+using ygo.core.Models;
+using ygo.domain.Service;
 
 namespace ygo.infrastructure.Service
 {
@@ -12,12 +13,12 @@ namespace ygo.infrastructure.Service
     {
         private static object locker = new Object();
 
-        public Task<DownloadedFileDto> Download(string remoteFileUrl, string localFileFullPath)
+        public Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath)
         {
             return Download(new Uri(remoteFileUrl), localFileFullPath);
         }
 
-        public async Task<DownloadedFileDto> Download(Uri remoteFileUrl, string localFileFullPath)
+        public async Task<DownloadedFile> Download(Uri remoteFileUrl, string localFileFullPath)
         {
             using (var webClient = new WebClient())
             {
@@ -26,7 +27,7 @@ namespace ygo.infrastructure.Service
 
                 var contentType = webClient.ResponseHeaders["Content-Type"];
 
-                return new DownloadedFileDto
+                return new DownloadedFile
                 {
                     Source = remoteFileUrl,
                     Destination = localFileFullPath,

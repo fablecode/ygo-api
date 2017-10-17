@@ -7,7 +7,7 @@ using ygo.api.Auth;
 using ygo.application.Commands.AddCategory;
 using ygo.application.Queries.AllCategories;
 using ygo.application.Queries.CategoryById;
-using ygo.domain.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.api.Controllers
 {
