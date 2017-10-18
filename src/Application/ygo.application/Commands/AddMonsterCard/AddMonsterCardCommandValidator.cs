@@ -12,15 +12,18 @@ namespace ygo.application.Commands.AddMonsterCard
 
         public AddMonsterCardCommandValidator()
         {
-            RuleFor(c => c.Name).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(c => c.Name)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .CardNameValidator();
 
-            RuleFor(c => c.CardLevel).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(c => c.CardLevel)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .GreaterThan(0)
                 .LessThanOrEqualTo(MaxCardLevel)
                 .When(c => c.CardLevel.HasValue);
 
-            RuleFor(c => c.CardRank).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(c => c.CardRank)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .GreaterThan(0)
                 .LessThanOrEqualTo(MaxCardRank)
                 .When(c => c.CardRank.HasValue);

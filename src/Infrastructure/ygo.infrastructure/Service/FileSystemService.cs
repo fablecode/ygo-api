@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using ygo.application.Dto;
 using ygo.core.Models;
 using ygo.domain.Service;
 
@@ -11,7 +10,7 @@ namespace ygo.infrastructure.Service
 {
     public class FileSystemService : IFileSystemService
     {
-        private static object locker = new Object();
+        private static readonly object Locker = new object();
 
         public Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath)
         {
@@ -57,7 +56,7 @@ namespace ygo.infrastructure.Service
 
         public void Rename(string oldNameFullPath, string newNameFullPath)
         {
-            lock (locker)
+            lock (Locker)
             {
                 File.Move(oldNameFullPath, newNameFullPath);
             }
@@ -65,7 +64,7 @@ namespace ygo.infrastructure.Service
 
         public string[] GetFiles(string path, string searchPattern)
         {
-            lock (locker)
+            lock (Locker)
             {
                 return Directory.GetFiles(path, searchPattern);
             }
@@ -73,7 +72,7 @@ namespace ygo.infrastructure.Service
 
         public bool Exists(string localFileFullPath)
         {
-            lock (locker)
+            lock (Locker)
             {
                 return File.Exists(localFileFullPath);
             }
