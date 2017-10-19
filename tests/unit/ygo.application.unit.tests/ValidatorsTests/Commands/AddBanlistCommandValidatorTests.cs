@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using ygo.application.CommandsAddBanlist;
+using ygo.application.Commands.AddBanlist;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
@@ -19,8 +19,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         [DataTestMethod]
         [DataRow((long)-1)]
         [DataRow((long)0)]
-        [DataRow(null)]
-        public void Given_An_Invalid_Id_Validation_Should_Fail(long? id)
+        public void Given_An_Invalid_Id_Validation_Should_Fail(long id)
         {
             // Arrange
             var command = new AddBanlistCommand { Id = id };
@@ -35,8 +34,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         [DataTestMethod]
         [DataRow((long)-1)]
         [DataRow((long)0)]
-        [DataRow(null)]
-        public void Given_An_Invalid_FormatId_Validation_Should_Fail(long? formatId)
+        public void Given_An_Invalid_FormatId_Validation_Should_Fail(long formatId)
         {
             // Arrange
             var command = new AddBanlistCommand { FormatId = formatId };

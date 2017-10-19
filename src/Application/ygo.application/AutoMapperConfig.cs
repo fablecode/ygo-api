@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
@@ -42,11 +43,15 @@ namespace ygo.application
                 cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddTrapCardCommand>();
+                cfg.CreateMap<AddBanlistCommand, Banlist>();
                 cfg.CreateMap<UpdateCardCommand, UpdateMonsterCardCommand>();
                 cfg.CreateMap<UpdateCardCommand, UpdateSpellCardCommand>();
                 cfg.CreateMap<UpdateCardCommand, UpdateTrapCardCommand>();
 
                 cfg.CreateMap<Attribute, AttributeDto>();
+                cfg.CreateMap<Banlist, BanlistDto>();
+                cfg.CreateMap<BanlistCard, BanlistCardDto>();
+                cfg.CreateMap<Format, FormatDto>();
             });
         }
     }

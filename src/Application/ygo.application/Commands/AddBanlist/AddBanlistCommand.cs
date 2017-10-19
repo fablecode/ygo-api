@@ -1,11 +1,12 @@
 ﻿using System;
+using MediatR;
 
-namespace ygo.application.CommandsAddBanlist
+namespace ygo.application.Commands.AddBanlist
 {
-    public class AddBanlistCommand
+    public class AddBanlistCommand : IRequest<CommandResult>
     {
-        public long? Id { get; set; }
-        public long? FormatId { get; set; }
+        public long Id { get; set; }
+        public long FormatId { get; set; }
         public string Name { get; set; }
         public DateTime ReleaseDate { get; set; }
     }

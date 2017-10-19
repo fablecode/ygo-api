@@ -1,22 +1,19 @@
 ﻿using FluentValidation;
 
-namespace ygo.application.CommandsAddBanlist
+namespace ygo.application.Commands.AddBanlist
 {
     public class AddBanlistCommandValidator : AbstractValidator<AddBanlistCommand>
     {
         public AddBanlistCommandValidator()
         {
             RuleFor(b => b.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotNull()
                 .GreaterThan(0);
 
             RuleFor(b => b.FormatId)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotNull()
                 .GreaterThan(0);
 
             RuleFor(b => b.Name)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull()
                 .NotEmpty()
                 .Length(1, 255);

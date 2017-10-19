@@ -19,6 +19,7 @@ namespace ygo.infrastructure.Repository
         {
             return _context
                     .Banlist
+                    .Include(b => b.Format)
                     .Include(b => b.BanlistCard)
                     .AsNoTracking()
                     .SingleOrDefaultAsync(b => b.Id == id);

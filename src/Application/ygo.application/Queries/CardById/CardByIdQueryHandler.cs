@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using System.Threading.Tasks;
 using ygo.application.Commands;
 using ygo.application.Dto;
 using ygo.domain.Repository;
