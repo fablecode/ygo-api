@@ -5,7 +5,7 @@ using ygo.application.Commands.UpdateTips;
 
 namespace ygo.api.Controllers
 {
-    [Route("cards/{cardId}/api/[controller]")]
+    [Route("api/cards/{cardId}/[controller]")]
     public class TipsController : Controller
     {
         [HttpGet]
