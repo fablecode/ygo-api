@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using ygo.application.Commands.AddTrapCard;
 using ygo.domain.Validation;
 
 namespace ygo.application.Commands.UpdateTrapCard

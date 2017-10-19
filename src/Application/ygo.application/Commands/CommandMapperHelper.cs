@@ -6,6 +6,7 @@ using AutoMapper;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
+using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
@@ -210,7 +211,13 @@ namespace ygo.application.Commands
             }
         }
 
-
+        public static void UpdateBanlistWith(this Banlist banlist, UpdateBanlistCommand command)
+        {
+            banlist.FormatId = command.FormatId;
+            banlist.Name = command.Name;
+            banlist.ReleaseDate = command.ReleaseDate.GetValueOrDefault();
+            banlist.Updated = DateTime.UtcNow;
+        }
 
         public static Card MapToSpellOrTrapCard(int? cardNumber, string name, string description, IList<int> subCategoryIds)
         {

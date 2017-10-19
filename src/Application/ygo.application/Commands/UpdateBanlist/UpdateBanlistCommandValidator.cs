@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace ygo.application.Commands.AddBanlist
+namespace ygo.application.Commands.UpdateBanlist
 {
-    public class AddBanlistCommandValidator : AbstractValidator<AddBanlistCommand>
+    public class UpdateBanlistCommandValidator : AbstractValidator<UpdateBanlistCommand>
     {
-        public AddBanlistCommandValidator()
+        public UpdateBanlistCommandValidator()
         {
             RuleFor(b => b.Id)
                 .GreaterThan(0);

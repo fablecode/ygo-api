@@ -8,5 +8,6 @@ namespace ygo.domain.Repository
         Task<Banlist> GetBanlistById(long id);
         Task<Banlist> Add(Banlist newBanlist);
         Task<Banlist> Update(Banlist banlist);
+        Task<bool> BanlistExist(long id);
     }
 }

@@ -1,19 +1,19 @@
 ﻿using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using ygo.application.Commands.AddBanlist;
+using ygo.application.Commands.UpdateBanlist;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestClass]
-    public class AddBanlistCommandValidatorTests
+    public class UpdateBanlistCommandValidatorTests
     {
-        private AddBanlistCommandValidator _sut;
+        private UpdateBanlistCommandValidator _sut;
 
         [TestInitialize]
         public void Setup()
         {
-            _sut = new AddBanlistCommandValidator();
+            _sut = new UpdateBanlistCommandValidator();
         }
 
         [DataTestMethod]
@@ -22,7 +22,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_An_Invalid_Id_Validation_Should_Fail(long id)
         {
             // Arrange
-            var command = new AddBanlistCommand { Id = id };
+            var command = new UpdateBanlistCommand { Id = id };
 
             // Act
             Action act = () => _sut.ShouldHaveValidationErrorFor(b => b.Id, command);
@@ -37,7 +37,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_An_Invalid_FormatId_Validation_Should_Fail(long formatId)
         {
             // Arrange
-            var command = new AddBanlistCommand { FormatId = formatId };
+            var command = new UpdateBanlistCommand { FormatId = formatId };
 
             // Act
             Action act = () => _sut.ShouldHaveValidationErrorFor(b => b.FormatId, command);
@@ -53,7 +53,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_An_Invalid_Name_Validation_Should_Fail(string name)
         {
             // Arrange
-            var command = new AddBanlistCommand { Name = name };
+            var command = new UpdateBanlistCommand { Name = name };
 
             // Act
             Action act = () => _sut.ShouldHaveValidationErrorFor(b => b.Name, command);
@@ -66,7 +66,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_An_Invalid_Release_Validation_Should_Fail()
         {
             // Arrange
-            var command = new AddBanlistCommand();
+            var command = new UpdateBanlistCommand();
 
             // Act
             Action act = () => _sut.ShouldHaveValidationErrorFor(b => b.ReleaseDate, command);
@@ -79,7 +79,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_An_Name_Greater_Than_255_Validation_Should_Fail()
         {
             // Arrange
-            var command = new AddBanlistCommand { Name = new string('*', 256) };
+            var command = new UpdateBanlistCommand { Name = new string('*', 256) };
 
             // Act
             Action act = () => _sut.ShouldHaveValidationErrorFor(b => b.Name, command);

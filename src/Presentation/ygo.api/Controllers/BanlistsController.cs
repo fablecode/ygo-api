@@ -5,7 +5,9 @@ using System.Net;
 using System.Threading.Tasks;
 using ygo.api.Auth;
 using ygo.application.Commands.AddBanlist;
+using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Queries.BanlistById;
+using ygo.application.Queries.BanlistExists;
 
 namespace ygo.api.Controllers
 {
@@ -64,6 +66,34 @@ namespace ygo.api.Controllers
             }
 
             return StatusCode((int)HttpStatusCode.Conflict, existingCard);
+        }
+
+        /// <summary>
+        /// Update existing banlist
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> Put([FromBody] UpdateBanlistCommand command)
+        {
+            var banlistExists = await _mediator.Send(new BanlistExistsQuery { Id = command.Id });
+
+            if (banlistExists)
+            {
+                var result = await _mediator.Send(command);
+
+                if (result.IsSuccessful)
+                    return Ok(result.Data);
+
+                return BadRequest(result.Errors);
+            }
+
+            return NotFound(command.Id);
         }
     }
 }

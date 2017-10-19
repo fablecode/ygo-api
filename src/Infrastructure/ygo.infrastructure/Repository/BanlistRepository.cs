@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
@@ -27,6 +28,9 @@ namespace ygo.infrastructure.Repository
 
         public async Task<Banlist> Add(Banlist newBanlist)
         {
+            newBanlist.Created = 
+            newBanlist.Updated = DateTime.UtcNow;
+
             _context.Banlist.Add(newBanlist);
 
             await _context.SaveChangesAsync();
@@ -36,11 +40,18 @@ namespace ygo.infrastructure.Repository
 
         public async Task<Banlist> Update(Banlist banlist)
         {
+            banlist.Updated = DateTime.UtcNow;
+
             _context.Banlist.Update(banlist);
 
             await _context.SaveChangesAsync();
 
             return banlist;
+        }
+
+        public Task<bool> BanlistExist(long id)
+        {
+            return _context.Banlist.AnyAsync(b => b.Id == id);
         }
     }
 }
