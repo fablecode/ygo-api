@@ -2,12 +2,14 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddCategory;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Commands.UpdateCard;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
@@ -51,6 +53,8 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<CardByIdQuery>, CardByIdQueryValidator>();
             services.AddTransient<IValidator<CardByNameQuery>, CardByNameQueryValidator>();
             services.AddTransient<IValidator<DownloadImageCommand>, DownloadImageCommandValidator>();
+            services.AddTransient<IValidator<AddBanlistCommand>, AddBanlistCommandValidator>();
+            services.AddTransient<IValidator<UpdateBanlistCardsCommand>, UpdateBanlistCardsCommandValidator>();
 
             return services;
         }

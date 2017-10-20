@@ -98,7 +98,7 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Update banlist cards
+        /// Update existing banlist cards
         /// </summary>
         /// <param name="banlistId"></param>
         /// <param name="command"></param>
