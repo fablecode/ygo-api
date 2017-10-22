@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using ygo.application.Dto;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 
@@ -27,7 +30,12 @@ namespace ygo.application.Commands.UpdateBanlistCards
 
             if (validatorResults.IsValid)
             {
-                commandResult.Data = await _banlistCardsRepository.Update(message.BanlistId, Mapper.Map<BanlistCard[]>(message.BanlistCards));
+                var banlistCards = message
+                                    .BanlistCards
+                                    .Select( bl => new BanlistCard { BanlistId = bl.BanlistId, CardId = bl.CardId, LimitId = bl.LimitId})
+                                    .ToArray();
+
+                commandResult.Data = await _banlistCardsRepository.Update(message.BanlistId, banlistCards);
                 commandResult.IsSuccessful = true;
             }
             else

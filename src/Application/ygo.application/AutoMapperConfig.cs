@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddMonsterCard;
@@ -51,6 +52,7 @@ namespace ygo.application
                 cfg.CreateMap<Attribute, AttributeDto>();
                 cfg.CreateMap<Banlist, BanlistDto>();
                 cfg.CreateMap<BanlistCard, BanlistCardDto>();
+                cfg.CreateMap<BanlistCardDto, BanlistCard>();
                 cfg.CreateMap<Format, FormatDto>();
                 cfg.CreateMap<Limit, LimitDto>();
             });

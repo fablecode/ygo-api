@@ -9,6 +9,7 @@ using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Commands.UpdateCard;
 using ygo.application.Commands.UpdateMonsterCard;
@@ -57,6 +58,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<AddBanlistCommand>, AddBanlistCommandValidator>();
             services.AddTransient<IValidator<UpdateBanlistCardsCommand>, UpdateBanlistCardsCommandValidator>();
             services.AddTransient<IValidator<FormatByAcronymQuery>, FormatByAcronymQueryValidator>();
+            services.AddTransient<IValidator<UpdateBanlistCommand>, UpdateBanlistCommandValidator>();
 
             return services;
         }
