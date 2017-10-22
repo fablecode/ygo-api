@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Invalid_UpdateMonsterCardCommand_Should_Not_Execute_UpdateCard()
         {
             // Arrange
-            _banlistCardsRepository.Update(Arg.Any<long>(), Arg.Any<BanlistCard[]>()).Returns(10);
+            _banlistCardsRepository.Update(Arg.Any<long>(), Arg.Any<BanlistCard[]>()).Returns(new List<BanlistCard>());
             var command = new UpdateBanlistCardsCommand();
 
             // Act

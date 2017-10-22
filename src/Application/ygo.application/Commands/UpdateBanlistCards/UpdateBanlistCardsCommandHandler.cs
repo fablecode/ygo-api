@@ -35,7 +35,9 @@ namespace ygo.application.Commands.UpdateBanlistCards
                                     .Select( bl => new BanlistCard { BanlistId = bl.BanlistId, CardId = bl.CardId, LimitId = bl.LimitId})
                                     .ToArray();
 
-                commandResult.Data = await _banlistCardsRepository.Update(message.BanlistId, banlistCards);
+                await _banlistCardsRepository.Update(message.BanlistId, banlistCards);
+
+                commandResult.Data = message.BanlistCards;
                 commandResult.IsSuccessful = true;
             }
             else

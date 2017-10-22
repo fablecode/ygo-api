@@ -6,6 +6,6 @@ namespace ygo.domain.Repository
 {
     public interface IBanlistCardsRepository
     {
-        Task<int> Update(long banlistId, BanlistCard[] banlistCards);
+        Task<ICollection<BanlistCard>> Update(long banlistId, BanlistCard[] banlistCards);
     }
 }

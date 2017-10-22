@@ -17,9 +17,9 @@ namespace ygo.infrastructure.Repository
             _context = context;
         }
 
-        public async Task<int> Update(long banlistId , BanlistCard[] banlistCards)
+        public async Task<ICollection<BanlistCard>> Update(long banlistId, BanlistCard[] banlistCards)
         {
-            var banlist = await _context.Banlist.SingleAsync(bl => bl.Id == banlistId);
+            var banlist = await _context.Banlist.Include(blc => blc.BanlistCard).SingleAsync(bl => bl.Id == banlistId);
 
             banlist.BanlistCard.Clear();
             await _context.SaveChangesAsync();
@@ -27,7 +27,8 @@ namespace ygo.infrastructure.Repository
             foreach (var card in banlistCards)
                 banlist.BanlistCard.Add(card);
 
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return banlistCards;
         }
     }
 }
