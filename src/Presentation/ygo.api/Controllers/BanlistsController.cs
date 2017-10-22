@@ -38,7 +38,6 @@ namespace ygo.api.Controllers
             return NotFound(id);
         }
 
-
         /// <summary>
         /// Add new banlist
         /// </summary>
@@ -127,6 +126,5 @@ namespace ygo.api.Controllers
 
             return NotFound(banlistId);
         }
-
     }
 }

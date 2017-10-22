@@ -52,6 +52,7 @@ namespace ygo.application
                 cfg.CreateMap<Banlist, BanlistDto>();
                 cfg.CreateMap<BanlistCard, BanlistCardDto>();
                 cfg.CreateMap<Format, FormatDto>();
+                cfg.CreateMap<Limit, LimitDto>();
             });
         }
     }

@@ -17,6 +17,7 @@ using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CategoryById;
+using ygo.application.Queries.FormatByAcronym;
 
 namespace ygo.application.Ioc
 {
@@ -55,6 +56,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<DownloadImageCommand>, DownloadImageCommandValidator>();
             services.AddTransient<IValidator<AddBanlistCommand>, AddBanlistCommandValidator>();
             services.AddTransient<IValidator<UpdateBanlistCardsCommand>, UpdateBanlistCardsCommandValidator>();
+            services.AddTransient<IValidator<FormatByAcronymQuery>, FormatByAcronymQueryValidator>();
 
             return services;
         }
