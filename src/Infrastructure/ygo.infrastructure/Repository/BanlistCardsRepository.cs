@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 using ygo.infrastructure.Database;
@@ -19,14 +20,15 @@ namespace ygo.infrastructure.Repository
 
         public async Task<ICollection<BanlistCard>> Update(long banlistId, BanlistCard[] banlistCards)
         {
-            var banlist = await _context.Banlist.Include(blc => blc.BanlistCard).SingleAsync(bl => bl.Id == banlistId);
+            var existingBanlistCards = _context.BanlistCard.Select(bl => bl).Where(bl => bl.BanlistId == banlistId).ToList();
 
-            banlist.BanlistCard.Clear();
-            await _context.SaveChangesAsync();
+            if (existingBanlistCards.Any())
+            {
+                _context.BanlistCard.RemoveRange(existingBanlistCards);
+                await _context.SaveChangesAsync();
+            }
 
-            foreach (var card in banlistCards)
-                banlist.BanlistCard.Add(card);
-
+            await _context.BanlistCard.AddRangeAsync(banlistCards);
             await _context.SaveChangesAsync();
             return banlistCards;
         }

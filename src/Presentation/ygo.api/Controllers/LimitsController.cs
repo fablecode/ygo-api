@@ -1,8 +1,7 @@
-﻿using System;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using ygo.application.Queries.AllLimits;
 
 namespace ygo.api.Controllers
