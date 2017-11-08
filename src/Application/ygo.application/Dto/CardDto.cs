@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ygo.application.Ioc;
+﻿using System.Collections.Generic;
 
 namespace ygo.application.Dto
 {

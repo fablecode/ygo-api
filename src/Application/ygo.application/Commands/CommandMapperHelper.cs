@@ -124,7 +124,7 @@ namespace ygo.application.Commands
             {
                 foreach (var cardSubCategory in card.CardSubCategory)
                 {
-                    response.SubCategories.Add(new SubCategoryDto { Id = cardSubCategory.SubCategoryId, Name = cardSubCategory.SubCategory.Name});
+                    response.SubCategories.Add(new SubCategoryDto { Id = cardSubCategory.SubCategoryId, Name = cardSubCategory.SubCategory.Name, CategoryId = cardSubCategory.SubCategory.CategoryId});
                 }
             }
 

@@ -56,10 +56,12 @@ namespace ygo.api.Controllers
         }
 
         [HttpGet]
+        [Route("search")]
         public IActionResult Get([FromRoute] CardSearchQuery query)
         {
             return StatusCode(501);
         }
+
 
         /// <summary>
         /// Add new card
