@@ -1,25 +1,24 @@
 ﻿using System;
 using FluentValidation;
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
-    [TestClass]
+    [TestFixture]
     public class LatestBanlistByFormatQueryValidatorTests
     {
         private LatestBanlistQueryValidator _sut;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             _sut = new LatestBanlistQueryValidator();
         }
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        [DataRow(" ")]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
         public void Given_An_Format_Acronym_Validation_Should_Fail(string format)
         {
             // Arrange

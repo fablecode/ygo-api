@@ -1,14 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NUnit.Framework;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
-    [TestClass]
+    [TestFixture]
    public class LatestBanlistQueryHandlerTests
     {
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             var sut = new LatestBanlistQueryHandler();

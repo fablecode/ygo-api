@@ -1,20 +1,20 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
 using NSubstitute;
+using NUnit.Framework;
+using System.Threading.Tasks;
 using ygo.application.Queries.CategoryById;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
-    [TestClass]
+    [TestFixture]
     public class CategoryByIdQueryHandlerTests
     {
         private CategoryByIdQueryHandler _sut;
         private ICategoryRepository _categoryRepository;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             _categoryRepository = Substitute.For<ICategoryRepository>();
@@ -22,7 +22,7 @@ namespace ygo.application.unit.tests.QueriesTests
             _sut = new CategoryByIdQueryHandler(_categoryRepository, new CategoryByIdQueryValidator());
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Invalid_Query_Should_Return_Null()
         {
             // Arrange
@@ -35,7 +35,7 @@ namespace ygo.application.unit.tests.QueriesTests
             result.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_A_Valid_Query_Should_Execute_CategoryById()
         {
             // Arrange

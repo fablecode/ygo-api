@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
 using NSubstitute;
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestClass]
+    [TestFixture]
     public class UpdateSpellCardCommandHandlerTests
     {
         private UpdateSpellCardCommandHandler _sut;
         private ICardRepository _repository;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             _repository = Substitute.For<ICardRepository>();
@@ -23,7 +23,7 @@ namespace ygo.application.unit.tests.Commands
             _sut = new UpdateSpellCardCommandHandler(_repository, new UpdateSpellCardCommandValidator());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_UpdateSpellCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_UpdateSpellCardCommand_Should_Not_Execute_UpdateCard()
         {
             // Arrange
@@ -50,7 +50,7 @@ namespace ygo.application.unit.tests.Commands
             _repository.DidNotReceive();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Valid_UpdateSpellCardCommand_Should_Execute_UpdateCard()
         {
             // Arrange
@@ -74,7 +74,7 @@ namespace ygo.application.unit.tests.Commands
             await _repository.Received(1).Update(Arg.Any<Card>());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Valid_UpdateSpellCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange

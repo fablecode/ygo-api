@@ -1,27 +1,26 @@
-﻿using System;
+﻿using FluentAssertions;
+using FluentValidation.TestHelper;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
-using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ygo.application.Commands.AddMonsterCard;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
-    [TestClass]
+    [TestFixture]
     public class AddMonsterCardCommandValidatorTests
     {
         private AddMonsterCardCommandValidator _sut;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             _sut = new AddMonsterCardCommandValidator();
         }
 
-        [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(-1)]
+        [TestCase(0)]
+        [TestCase(-1)]
         public void Given_A_MonsterCard_Where_CardNumber_Is_Invalid_Validation_Should_Fail(int cardNumber)
         {
             // Arrange
@@ -35,10 +34,9 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         }
 
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        [DataRow(" ")]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
         public void Given_An_Invalid_MonsterCardName_Validation_Should_Fail(string cardName)
         {
             // Arrange
@@ -51,7 +49,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_A_MonsterCardName_If_Length_Is_Less_Than_2_Validation_Should_Fail()
         {
             // Arrange
@@ -64,7 +62,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_A_MonsterCardName_If_Length_Is_Greater_Than_255_Validation_Should_Fail()
         {
             // Arrange
@@ -77,10 +75,9 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(-1)]
-        [DataRow(23)]
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(23)]
         public void Given_A_MonsterCard_Where_CardLevel_Is_Invalid_Validation_Should_Fail(int cardLevel)
         {
             // Arrange
@@ -93,10 +90,9 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(-1)]
-        [DataRow(23)]
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(23)]
         public void Given_A_MonsterCard_Where_CardRank_Is_Invalid_Validation_Should_Fail(int cardRank)
         {
             // Arrange
@@ -109,9 +105,8 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow(-1)]
-        [DataRow(20001)]
+        [TestCase(-1)]
+        [TestCase(20001)]
         public void Given_A_MonsterCard_Where_Atk_Is_Invalid_Validation_Should_Fail(int atk)
         {
             // Arrange
@@ -124,9 +119,8 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow(-1)]
-        [DataRow(20001)]
+        [TestCase(-1)]
+        [TestCase(20001)]
         public void Given_A_MonsterCard_Where_Def_Is_Invalid_Validation_Should_Fail(int def)
         {
             // Arrange
@@ -139,9 +133,8 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(-1)]
+        [TestCase(0)]
+        [TestCase(-1)]
         public void Given_A_MonsterCard_Where_AttributeId_Is_Invalid_Validation_Should_Fail(int attributeId)
         {
             // Arrange
@@ -154,7 +147,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_A_MonsterCard_Where_SubCategoryIds_Is_Invalid_Validation_Should_Fail()
         {
             // Arrange
@@ -177,7 +170,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             });
         }
 
-        [TestMethod]
+        [Test]
         public void Given_A_Valid_MonsterCard_Validation_Should_Pass()
         {
             // Arrange
