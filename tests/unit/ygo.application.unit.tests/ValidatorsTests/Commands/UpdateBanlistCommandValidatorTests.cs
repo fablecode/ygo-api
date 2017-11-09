@@ -1,23 +1,24 @@
 ﻿using FluentValidation.TestHelper;
-using NUnit.Framework;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ygo.application.Commands.UpdateBanlist;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class UpdateBanlistCommandValidatorTests
     {
         private UpdateBanlistCommandValidator _sut;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _sut = new UpdateBanlistCommandValidator();
         }
 
-        [TestCase((long)-1)]
-        [TestCase((long)0)]
+        [DataTestMethod]
+        [DataRow((long)-1)]
+        [DataRow((long)0)]
         public void Given_An_Invalid_Id_Validation_Should_Fail(long id)
         {
             // Arrange
@@ -30,8 +31,9 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestCase((long)-1)]
-        [TestCase((long)0)]
+        [DataTestMethod]
+        [DataRow((long)-1)]
+        [DataRow((long)0)]
         public void Given_An_Invalid_FormatId_Validation_Should_Fail(long formatId)
         {
             // Arrange
@@ -44,9 +46,10 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(" ")]
         public void Given_An_Invalid_Name_Validation_Should_Fail(string name)
         {
             // Arrange
@@ -59,7 +62,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_An_Invalid_Release_Validation_Should_Fail()
         {
             // Arrange
@@ -72,7 +75,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_An_Name_Greater_Than_255_Validation_Should_Fail()
         {
             // Arrange

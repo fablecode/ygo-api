@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NUnit.Framework;
 using System.Threading.Tasks;
 using ygo.application.Queries.CardByName;
 using ygo.core.Models.Db;
@@ -8,23 +8,21 @@ using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
-    [TestFixture]
+    [TestClass]
     public class CardByNameQueryHandlerTests
     {
         private CardByNameQueryHandler _sut;
         private ICardRepository _cardRepository;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _cardRepository = Substitute.For<ICardRepository>();
 
             _sut = new CardByNameQueryHandler(_cardRepository, new CardByNameQueryValidator());
-
-            AutoMapperConfig.Configure();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_Card_Name_Should_Return_Null()
         {
             // Arrange
@@ -37,7 +35,7 @@ namespace ygo.application.unit.tests.QueriesTests
             result.Should().BeNull();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Valid_Query_Should_Execute_CardByName()
         {
             // Arrange

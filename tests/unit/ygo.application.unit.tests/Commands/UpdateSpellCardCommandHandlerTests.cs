@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ygo.application.Commands.UpdateSpellCard;
@@ -9,21 +9,21 @@ using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class UpdateSpellCardCommandHandlerTests
     {
         private UpdateSpellCardCommandHandler _sut;
         private ICardRepository _repository;
 
-        [SetUp]
-        public void SetUp()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _repository = Substitute.For<ICardRepository>();
 
             _sut = new UpdateSpellCardCommandHandler(_repository, new UpdateSpellCardCommandValidator());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_UpdateSpellCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_UpdateSpellCardCommand_Should_Not_Execute_UpdateCard()
         {
             // Arrange
@@ -50,7 +50,7 @@ namespace ygo.application.unit.tests.Commands
             _repository.DidNotReceive();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Valid_UpdateSpellCardCommand_Should_Execute_UpdateCard()
         {
             // Arrange
@@ -74,7 +74,7 @@ namespace ygo.application.unit.tests.Commands
             await _repository.Received(1).Update(Arg.Any<Card>());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Valid_UpdateSpellCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange

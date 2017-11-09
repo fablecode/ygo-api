@@ -1,25 +1,26 @@
 ﻿using FluentAssertions;
 using FluentValidation.TestHelper;
-using NUnit.Framework;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ygo.application.Commands.AddCategory;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class AddCategoryCommandValidatorTests
     {
         private AddCategoryCommandValidator _sut;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _sut = new AddCategoryCommandValidator();
         }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(" ")]
         public void Given_A_Invalid_Category_Name_Validation_Should_Fail(string categoryName)
         {
             // Arrange
@@ -32,7 +33,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_A_Category_Name_Whose_Length_Is_Not_Between_3_And_255_Validation_Should_Fail()
         {
             // Arrange
@@ -46,7 +47,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_A_Valid_Category_Name_Validation_Should_Pass()
         {
             // Arrange
@@ -60,7 +61,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_A_Invalid_Category_Name_Validation_Should_StopOnFirstFailure()
         {
             // Arrange

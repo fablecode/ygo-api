@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class AddBanlistCommandHandlerTests
     {
         

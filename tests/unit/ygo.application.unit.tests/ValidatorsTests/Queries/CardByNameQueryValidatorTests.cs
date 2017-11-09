@@ -1,25 +1,26 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentValidation.TestHelper;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using ygo.application.Queries.CardByName;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
-    [TestFixture]
+    [TestClass]
     public class CardByNameQueryValidatorTests
     {
         private CardByNameQueryValidator _sut;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _sut = new CardByNameQueryValidator();
         }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(" ")]
         public void Given_An_Invalid_Card_Name_Validation_Should_Fail(string cardName)
         {
             // Arrange
@@ -32,7 +33,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_An_Invalid_Card_Name_Validation_Should_Fail()
         {
             // Arrange
@@ -44,7 +45,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             result.Errors.Should().HaveCount(1);
         }
 
-        [Test]
+        [TestMethod]
         public void Given_An_Invalid_Card_Name_Validation_Should_StopOnFirstFailure()
         {
             // Arrange
@@ -56,7 +57,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             result.Errors.Should().HaveCount(1);
         }
 
-        [Test]
+        [TestMethod]
         public void Given_An_Valid_Card_Name_Validation_Should_Pass()
         {
             // Arrange

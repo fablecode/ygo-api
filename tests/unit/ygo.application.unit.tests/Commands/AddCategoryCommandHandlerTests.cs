@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NUnit.Framework;
 using System.Threading.Tasks;
 using ygo.application.Commands.AddCategory;
 using ygo.core.Models.Db;
@@ -8,21 +8,21 @@ using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class AddCategoryCommandHandlerTests
     {
         private AddCategoryCommandHandler _sut;
         private ICategoryRepository _categoryRepository;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _categoryRepository = Substitute.For<ICategoryRepository>();
 
             _sut = new AddCategoryCommandHandler(_categoryRepository, new AddCategoryCommandValidator());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_AddCategoryCommand_The_Command_Execution_Should_Be_Not_Successful()
         {
             // Arrange
@@ -35,7 +35,7 @@ namespace ygo.application.unit.tests.Commands
             result.IsSuccessful.Should().BeFalse();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_AddCategoryCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange
@@ -48,7 +48,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_AddCategoryCommand_Should_Not_Execute_Repository_AddCategory_Method()
         {
             // Arrange
@@ -65,7 +65,7 @@ namespace ygo.application.unit.tests.Commands
             await _categoryRepository.DidNotReceive().Add(Arg.Any<Category>());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_A_Valid_AddCategoryCommand_The_Command_Execution_Should_Be_Successfully()
         {
             // Arrange

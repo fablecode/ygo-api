@@ -1,21 +1,21 @@
 ﻿using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NUnit.Framework;
 using System.Threading.Tasks;
 using ygo.application.Commands.UpdateCard;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class UpdateCardCommandHandlerTests
     {
         private UpdateCardCommandHandler _sut;
         private IMediator _mediator;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _mediator = Substitute.For<IMediator>();
             IOptions<ApplicationSettings> settings = Substitute.For<IOptions<ApplicationSettings>>();
@@ -23,7 +23,7 @@ namespace ygo.application.unit.tests.Commands
             _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator(), settings);
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_UpdateCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange

@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using ygo.application.Commands.UpdateBanlistCards;
@@ -7,18 +7,18 @@ using ygo.application.Dto;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class UpdateBanlistCardsCommandValidatorTests
     {
         private UpdateBanlistCardsCommandValidator _sut;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _sut = new UpdateBanlistCardsCommandValidator();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_A_Null_BanlistCards_Collection_Validation_Should_Fail()
         {
             // Arrange
@@ -31,7 +31,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_A_Empty_BanlistCards_Collection_Validation_Should_Fail()
         {
             // Arrange

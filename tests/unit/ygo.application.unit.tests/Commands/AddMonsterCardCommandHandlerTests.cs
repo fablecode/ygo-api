@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +14,15 @@ using ygo.infrastructure.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class AddMonsterCardCommandHandlerTests
     {
         private AddMonsterCardCommandHandler _sut;
         private ICardRepository _repository;
         private YgoDbContext _testContext;
 
-        [SetUp]
-        public void SetUp()
+        [TestInitialize]
+        public void TestInitialize()
         {
             var options = new DbContextOptionsBuilder<YgoDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -35,7 +35,7 @@ namespace ygo.application.unit.tests.Commands
             _sut = new AddMonsterCardCommandHandler(_repository, new AddMonsterCardCommandValidator());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_AddMonsterCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange
@@ -49,7 +49,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_An_Invalid_AddMonsterCardCommand_Should_Not_Execute_AddCard()
         {
             // Arrange
@@ -63,7 +63,7 @@ namespace ygo.application.unit.tests.Commands
             await _repository.DidNotReceive().Update(Arg.Any<Card>());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_A_Valid_AddMonsterCardCommand_Should_Execute_AddCard()
         {
             // Arrange
@@ -77,7 +77,7 @@ namespace ygo.application.unit.tests.Commands
             await _repository.Received(1).Add(Arg.Any<Card>());
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_A_Valid_AddMonsterCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange
@@ -91,7 +91,7 @@ namespace ygo.application.unit.tests.Commands
             result.IsSuccessful.Should().BeTrue();
         }
 
-        [Test]
+        [TestMethod]
         public async Task Given_A_Valid_AddMonsterCardCommand_Should_Save_Card_To_Database()
         {
             // Arrange

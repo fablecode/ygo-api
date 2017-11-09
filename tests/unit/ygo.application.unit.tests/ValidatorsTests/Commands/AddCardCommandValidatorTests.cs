@@ -1,25 +1,26 @@
 ﻿using FluentValidation.TestHelper;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ygo.application.Commands.AddCard;
 using ygo.core.Enums;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
-    [TestFixture]
+    [TestClass]
     public class AddCardCommandValidatorTests
     {
         private AddCardCommandValidator _sut;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialize()
         {
             _sut = new AddCardCommandValidator();
         }
 
 
-        [TestCase(-1)]
-        [TestCase(3)]
+        [DataTestMethod]
+        [DataRow(-1)]
+        [DataRow(3)]
         public void Given_An_Invalid_CardType_Validation_Should_Fail(YgoCardType cardType)
         {
             // Arrange
@@ -32,7 +33,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [Test]
+        [TestMethod]
         public void Given_A_Null_CardType_Validation_Should_Fail()
         {
             // Arrange

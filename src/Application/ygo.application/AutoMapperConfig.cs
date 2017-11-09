@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddMonsterCard;
