@@ -1,19 +1,19 @@
-﻿using FluentValidation;
-using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using FluentValidation.TestHelper;
+using ygo.application.Queries.LatestBanlistByFormat;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
     [TestClass]
     public class LatestBanlistByFormatQueryValidatorTests
     {
-        private LatestBanlistQueryValidator _sut;
+        private LatestBanlistByFormatQueryValidator _sut;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _sut = new LatestBanlistQueryValidator();
+            _sut = new LatestBanlistByFormatQueryValidator();
         }
 
         [DataTestMethod]
@@ -23,7 +23,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
         public void Given_An_Format_Acronym_Validation_Should_Fail(string format)
         {
             // Arrange
-            var query = new LatestBanlistQuery { Format = format };
+            var query = new LatestBanlistByFormatQuery { Format = format };
 
             // Act
             Action act = () => _sut.ShouldHaveValidationErrorFor(lbl => lbl.Format, query);
@@ -31,22 +31,5 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             // Assert
             act.Invoke();
         }
-
-    }
-
-    public class LatestBanlistQueryValidator : AbstractValidator<LatestBanlistQuery>
-    {
-        public LatestBanlistQueryValidator()
-        {
-            RuleFor(lb => lb.Format)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotNull()
-                .NotEmpty();
-        }
-    }
-
-    public class LatestBanlistQuery
-    {
-        public string Format { get; set; }
     }
 }
