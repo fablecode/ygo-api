@@ -57,7 +57,10 @@ namespace ygo.infrastructure.Repository
 
         public async Task<Banlist> GetBanlistByFormatAcronym(string acronym)
         {
-            var format = await _context.Format.SingleAsync(f => f.Acronym == acronym);
+            var format = await _context.Format.SingleOrDefaultAsync(f => f.Acronym == acronym);
+
+            if (format == null)
+                return null;
 
             return await _context
                             .Banlist

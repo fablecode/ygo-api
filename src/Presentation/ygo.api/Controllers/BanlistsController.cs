@@ -9,6 +9,7 @@ using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Queries.BanlistById;
 using ygo.application.Queries.BanlistExists;
+using ygo.application.Queries.FormatByAcronym;
 using ygo.application.Queries.LatestBanlistByFormat;
 
 namespace ygo.api.Controllers
@@ -39,8 +40,8 @@ namespace ygo.api.Controllers
             return NotFound();
         }
 
-        [HttpGet("{format}")]
-        public async Task<IActionResult> Get(string format)
+        [HttpGet("latest/{format}")]
+        public async Task<IActionResult> Latest(string format)
         {
             var result = await _mediator.Send(new LatestBanlistQuery { Acronym = format });
 
