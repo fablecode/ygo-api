@@ -10,7 +10,9 @@ namespace ygo.infrastructure.Service
 {
     public class FileSystemService : IFileSystemService
     {
-        private static readonly object Locker = new object();
+        private static readonly object RenameLocker = new object();
+        private static readonly object GetFilesLocker = new object();
+        private static readonly object ExistsLocker = new object();
 
         public Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath)
         {
@@ -56,7 +58,7 @@ namespace ygo.infrastructure.Service
 
         public void Rename(string oldNameFullPath, string newNameFullPath)
         {
-            lock (Locker)
+            lock (RenameLocker)
             {
                 File.Move(oldNameFullPath, newNameFullPath);
             }
@@ -64,7 +66,7 @@ namespace ygo.infrastructure.Service
 
         public string[] GetFiles(string path, string searchPattern)
         {
-            lock (Locker)
+            lock (GetFilesLocker)
             {
                 return Directory.GetFiles(path, searchPattern);
             }
@@ -72,7 +74,7 @@ namespace ygo.infrastructure.Service
 
         public bool Exists(string localFileFullPath)
         {
-            lock (Locker)
+            lock (ExistsLocker)
             {
                 return File.Exists(localFileFullPath);
             }

@@ -1,15 +1,14 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Threading.Tasks;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.UpdateCard;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CardExists;
-using ygo.application.Queries.CardSearch;
 
 namespace ygo.api.Controllers
 {
@@ -29,6 +28,8 @@ namespace ygo.api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id:long}", Name = "CardById")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(long id)
         {
             var result = await _mediator.Send(new CardByIdQuery { Id = id });
@@ -45,6 +46,8 @@ namespace ygo.api.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("{name}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(string name)
         {
             var result = await _mediator.Send(new CardByNameQuery {Name = name});
@@ -54,14 +57,6 @@ namespace ygo.api.Controllers
 
             return NotFound();
         }
-
-        [HttpGet]
-        [Route("search")]
-        public IActionResult Get([FromRoute] CardSearchQuery query)
-        {
-            return StatusCode(501);
-        }
-
 
         /// <summary>
         /// Add new card
