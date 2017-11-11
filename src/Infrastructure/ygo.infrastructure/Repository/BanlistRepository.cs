@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 using ygo.infrastructure.Database;
@@ -52,6 +53,22 @@ namespace ygo.infrastructure.Repository
         public Task<bool> BanlistExist(long id)
         {
             return _context.Banlist.AnyAsync(b => b.Id == id);
+        }
+
+        public async Task<Banlist> GetBanlistByFormatAcronym(string acronym)
+        {
+            var format = await _context.Format.SingleAsync(f => f.Acronym == acronym);
+
+            return await _context
+                            .Banlist
+                            .Include(bl => bl.Format)
+                            .Include(bl => bl.BanlistCard)
+                                .ThenInclude(blc => blc.Card)
+                            .Include(bl => bl.BanlistCard)
+                                .ThenInclude(blc => blc.Limit)
+                            .OrderByDescending(bl => bl.ReleaseDate)
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(bl => bl.FormatId == format.Id);
         }
     }
 }

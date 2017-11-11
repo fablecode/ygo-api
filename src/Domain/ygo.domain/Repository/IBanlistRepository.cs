@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ygo.core.Models.Db;
 
 namespace ygo.domain.Repository
@@ -9,5 +11,6 @@ namespace ygo.domain.Repository
         Task<Banlist> Add(Banlist newBanlist);
         Task<Banlist> Update(Banlist banlist);
         Task<bool> BanlistExist(long id);
+        Task<Banlist> GetBanlistByFormatAcronym(string acronym);
     }
 }

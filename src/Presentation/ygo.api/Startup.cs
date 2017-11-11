@@ -81,9 +81,6 @@ namespace ygo.api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
                 c.DocExpansion("none");
             });
-
-            app.UseRewriter(new RewriteOptions()
-                .AddRedirect(@"^$", "swagger", (int)HttpStatusCode.Redirect));
         }
     }
 }
