@@ -11,7 +11,6 @@ namespace ygo.core.Models.Db
         }
 
         public long Id { get; set; }
-        public string ArchetypeNumber { get; set; }
         public string Name { get; set; }
         public string Alias { get; set; }
         public DateTime Created { get; set; }

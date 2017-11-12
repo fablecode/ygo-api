@@ -45,10 +45,6 @@ namespace ygo.infrastructure.Database
                     .IsRequired()
                     .HasMaxLength(255);
 
-                entity.Property(e => e.ArchetypeNumber)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
