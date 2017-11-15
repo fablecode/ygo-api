@@ -1,13 +1,22 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Threading.Tasks;
 using ygo.api.Auth;
+using ygo.application.Queries.ArchetypeByName;
 
 namespace ygo.api.Controllers
 {
     public class ArchetypesController : Controller
     {
+        private readonly IMediator _mediator;
+
+        public ArchetypesController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         /// <summary>
         /// Archetype by 
         /// </summary>
@@ -16,9 +25,14 @@ namespace ygo.api.Controllers
         [HttpGet("{name}")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public IActionResult Get(string name)
+        public async Task<IActionResult> Get(string name)
         {
-            return StatusCode(501);
+            var result = await _mediator.Send(new ArchetypeByNameQuery { Name = name });
+
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
         }
 
         [HttpPost]

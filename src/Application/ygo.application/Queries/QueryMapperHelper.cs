@@ -41,6 +41,28 @@ namespace ygo.application.Queries
             return latestBanlist;
         }
 
+        public static ArchetypeDto MapToArchetypeDto(this Archetype archetype)
+        {
+            if (archetype == null)
+                return null;
+
+            var response = new ArchetypeDto();
+
+            response.Id = archetype.Id;
+            response.Name = archetype.Name;
+            response.Alias = archetype.Alias;
+
+            if (archetype.ArchetypeCard != null && archetype.ArchetypeCard.Any())
+            {
+                foreach (var archetypeCard in archetype.ArchetypeCard)
+                {
+                    response.Cards.Add(new ArchetypeCardDto { Id = archetypeCard.CardId, Name = archetypeCard.Card.Name});
+                }
+            }
+
+            return response;
+        }
+
         private static LatestBanlistCardDto MapToLatestBanlistCard(BanlistCard blc)
         {
             return new LatestBanlistCardDto { Id = blc.CardId, Name = blc.Card.Name };
