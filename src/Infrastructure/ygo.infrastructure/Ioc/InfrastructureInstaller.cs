@@ -38,6 +38,7 @@ namespace ygo.infrastructure.Ioc
             services.AddTransient<IBanlistCardsRepository, BanlistCardsRepository>();
             services.AddTransient<ILimitRepository, LimitRepository>();
             services.AddTransient<IFormatRepository, FormatRepository>();
+            services.AddTransient<IArchetypeRepository, ArchetypeRepository>();
 
             return services;
         }

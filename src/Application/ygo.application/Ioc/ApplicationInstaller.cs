@@ -15,6 +15,7 @@ using ygo.application.Commands.UpdateCard;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
+using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CategoryById;
@@ -59,6 +60,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<UpdateBanlistCardsCommand>, UpdateBanlistCardsCommandValidator>();
             services.AddTransient<IValidator<FormatByAcronymQuery>, FormatByAcronymQueryValidator>();
             services.AddTransient<IValidator<UpdateBanlistCommand>, UpdateBanlistCommandValidator>();
+            services.AddTransient<IValidator<ArchetypeByNameQuery>, ArchetypeByNameQueryValidator>();
 
             return services;
         }
