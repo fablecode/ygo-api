@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 
 namespace ygo.application.Commands.UpdateArchetype
@@ -7,8 +8,12 @@ namespace ygo.application.Commands.UpdateArchetype
     {
         public Task<CommandResult> Handle(UpdateArchetypeCommand message)
         {
-            var commandResult = new CommandResult();
+           // var commandResult = new CommandResult();
 
+
+           // return commandResult
+
+            throw new NotImplementedException();
 
         }
     }
