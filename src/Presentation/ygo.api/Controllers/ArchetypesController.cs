@@ -89,9 +89,23 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public IActionResult Put([FromBody] UpdateArchetypeCommand command)
+        public async Task<IActionResult> Put([FromBody] UpdateArchetypeCommand command)
         {
-            return StatusCode(501);
+            var existingArchetype = await _mediator.Send(new ArchetypeByNameQuery { Name = command.Name });
+
+            if (existingArchetype != null)
+            {
+                var result = await _mediator.Send(command);
+
+                if (result.IsSuccessful)
+                {
+                    return Ok(result.Data);
+                }
+
+                return BadRequest(result.Errors);
+            }
+
+            return NotFound(command.Name);
         }
     }
 }
