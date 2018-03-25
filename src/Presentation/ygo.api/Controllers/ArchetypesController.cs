@@ -4,7 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
 using ygo.api.Auth;
+using ygo.application.Commands.AddArchetype;
+using ygo.application.Commands.UpdateArchetype;
+using ygo.application.Queries.ArchetypeById;
 using ygo.application.Queries.ArchetypeByName;
+using ygo.application.Queries.CardByName;
 
 namespace ygo.api.Controllers
 {
@@ -16,6 +20,25 @@ namespace ygo.api.Controllers
         {
             _mediator = mediator;
         }
+
+        /// <summary>
+        /// Archetype by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Get(long id)
+        {
+            var result = await _mediator.Send(new ArchetypeByIdQuery { Id = id});
+
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
 
         /// <summary>
         /// Archetype by 
@@ -41,9 +64,23 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int) HttpStatusCode.Conflict)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-        public IActionResult Post([FromBody] AddArchetypeCommand command)
+        public async Task<IActionResult> Post([FromBody] AddArchetypeCommand command)
         {
-            return StatusCode(501);
+            var existingArchetype = await _mediator.Send(new ArchetypeByNameQuery { Name = command.Name });
+
+            if (existingArchetype == null)
+            {
+                var result = await _mediator.Send(command);
+
+                if (result.IsSuccessful)
+                {
+                    return CreatedAtRoute("ArchetypeById", new { id = result.Data }, result.Data);
+                }
+
+                return BadRequest(result.Errors);
+            }
+
+            return StatusCode((int)HttpStatusCode.Conflict, existingArchetype);
         }
 
         [HttpPut]
@@ -56,29 +93,5 @@ namespace ygo.api.Controllers
         {
             return StatusCode(501);
         }
-
-        [HttpPut("{id:long}/cards")]
-        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int) HttpStatusCode.Created)]
-        [ProducesResponseType((int) HttpStatusCode.Conflict)]
-        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-        public IActionResult Put(long id, [FromBody] UpdateArchetypeCardsCommand command)
-        {
-            return StatusCode(501);
-        }
-
-    }
-
-    public class UpdateArchetypeCardsCommand
-    {
-    }
-
-    public class UpdateArchetypeCommand
-    {
-    }
-
-    public class AddArchetypeCommand
-    {
     }
 }

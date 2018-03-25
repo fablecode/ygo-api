@@ -6,5 +6,6 @@ namespace ygo.domain.Repository
     public interface IArchetypeRepository
     {
         Task<Archetype> ArchetypeByName(string name);
+        Task<Archetype> ArchetypeById(long id);
     }
 }

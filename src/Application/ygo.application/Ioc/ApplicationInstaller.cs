@@ -61,6 +61,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<FormatByAcronymQuery>, FormatByAcronymQueryValidator>();
             services.AddTransient<IValidator<UpdateBanlistCommand>, UpdateBanlistCommandValidator>();
             services.AddTransient<IValidator<ArchetypeByNameQuery>, ArchetypeByNameQueryValidator>();
+            //services.AddTransient(typeof(IValidator<>), typeof(AbstractValidator<>));
 
             return services;
         }

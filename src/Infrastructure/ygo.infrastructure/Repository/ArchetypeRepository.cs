@@ -22,5 +22,13 @@ namespace ygo.infrastructure.Repository
                         .Include(ac => ac.ArchetypeCard)
                     .SingleOrDefaultAsync(a => a.Name == name);
         }
+
+        public Task<Archetype> ArchetypeById(long id)
+        {
+            return _dbContext
+                    .Archetype
+                        .Include(ac => ac.ArchetypeCard)
+                    .SingleOrDefaultAsync(a => a.Id == id);
+        }
     }
 }
