@@ -1,24 +1,23 @@
 ﻿using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using ygo.application.Commands.AddBanlist;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
-    [TestClass]
+    [TestFixture]
     public class AddBanlistCommandValidatorTests
     {
         private AddBanlistCommandValidator _sut;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             _sut = new AddBanlistCommandValidator();
         }
 
-        [DataTestMethod]
-        [DataRow((long)-1)]
-        [DataRow((long)0)]
+        [TestCase(-1)]
+        [TestCase(0)]
         public void Given_An_Invalid_Id_Validation_Should_Fail(long id)
         {
             // Arrange
@@ -31,9 +30,8 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow((long)-1)]
-        [DataRow((long)0)]
+        [TestCase(-1)]
+        [TestCase(0)]
         public void Given_An_Invalid_FormatId_Validation_Should_Fail(long formatId)
         {
             // Arrange
@@ -46,10 +44,9 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        [DataRow(" ")]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
         public void Given_An_Invalid_Name_Validation_Should_Fail(string name)
         {
             // Arrange
@@ -62,7 +59,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Invalid_Release_Validation_Should_Fail()
         {
             // Arrange
@@ -75,7 +72,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Name_Greater_Than_255_Validation_Should_Fail()
         {
             // Arrange

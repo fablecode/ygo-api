@@ -1,22 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System.Threading.Tasks;
+using NUnit.Framework;
 using ygo.application.Queries.CardImageByName;
 using ygo.domain.Service;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
-    [TestClass]
+    [TestFixture]
     public class CardImageByNameQueryHandlerTests
     {
         private CardImageByNameQueryHandler _sut;
         private IOptions<ApplicationSettings> _settings;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             var fileSystemService = Substitute.For<IFileSystemService>();
@@ -25,10 +23,9 @@ namespace ygo.application.unit.tests.QueriesTests
             _sut = new CardImageByNameQueryHandler(fileSystemService, _settings);
         }
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        [DataRow(" ")]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
         public async Task Given_An_Invalid_Card_Name_ISuccessful_Should_Be_False(string cardName)
         {
             // Arrange
@@ -41,7 +38,7 @@ namespace ygo.application.unit.tests.QueriesTests
             result.IsSuccessful.Should().BeFalse();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_CardImage_DirectoryPath_ISuccessful_Should_Be_False()
         {
             // Arrange

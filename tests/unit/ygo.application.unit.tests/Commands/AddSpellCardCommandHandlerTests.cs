@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +14,15 @@ using ygo.infrastructure.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestClass]
+    [TestFixture]
     public class AddSpellCardCommandHandlerTests
     {
         private AddSpellCardCommandHandler _sut;
         private ICardRepository _repository;
         private YgoDbContext _testContext;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             var options = new DbContextOptionsBuilder<YgoDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -35,7 +35,7 @@ namespace ygo.application.unit.tests.Commands
             _sut = new AddSpellCardCommandHandler(_repository, new AddSpellCardCommandValidator());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_AddSpellCardCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange
@@ -48,7 +48,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_AddSpellCardCommand_Should_Not_Execute_AddCard()
         {
             // Arrange
@@ -62,7 +62,7 @@ namespace ygo.application.unit.tests.Commands
             _repository.DidNotReceive();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Valid_AddSpellCardCommand_Should_Execute_AddCard()
         {
             // Arrange
@@ -76,7 +76,7 @@ namespace ygo.application.unit.tests.Commands
             await _repository.Received(1).Add(Arg.Any<Card>());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Valid_AddSpellCardCommand_ISuccessful_Flag_Should_True()
         {
             // Arrange
@@ -90,7 +90,7 @@ namespace ygo.application.unit.tests.Commands
             result.IsSuccessful.Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_A_Valid_AddSpellCardCommand_Should_Save_Card_To_Database()
         {
             // Arrange

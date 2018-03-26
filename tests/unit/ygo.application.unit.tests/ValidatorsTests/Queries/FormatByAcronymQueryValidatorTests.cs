@@ -1,28 +1,27 @@
 ﻿using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using ygo.application.Queries.FormatByAcronym;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
-    [TestClass]
+    [TestFixture]
     public class FormatByAcronymQueryValidatorTests
     {
         private FormatByAcronymQueryValidator _sut;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             _sut = new FormatByAcronymQueryValidator();
         }
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        [DataRow(" ")]
-        [DataRow("uyhh")]
-        [DataRow("uy")]
-        [DataRow("y")]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("uyhh")]
+        [TestCase("uy")]
+        [TestCase("y")]
         public void Given_An_Invalid_Acronym_Validation_Should_Fail(string acronym)
         {
             // Arrange
@@ -35,9 +34,8 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             act.Invoke();
         }
 
-        [DataTestMethod]
-        [DataRow("tcg")]
-        [DataRow("ocg")]
+        [TestCase("tcg")]
+        [TestCase("ocg")]
         public void Given_A_Valid_Acronym_Validation_Should_Pass(string acronym)
         {
             // Arrange

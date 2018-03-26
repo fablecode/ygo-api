@@ -1,26 +1,25 @@
 ﻿using FluentAssertions;
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using ygo.application.Queries.ArchetypeByName;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
-    [TestClass]
+    [TestFixture]
     public class ArchetypeByNameQueryValidatorTests
     {
         private ArchetypeByNameQueryValidator _sut;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             _sut = new ArchetypeByNameQueryValidator();
         }
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        [DataRow(" ")]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
         public void Given_An_Invalid_Archetype_Name_Validation_Should_Fail(string cardName)
         {
             // Arrange
@@ -33,7 +32,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Invalid_Archetype_Name_Validation_Should_StopOnFirstFailure()
         {
             // Arrange
@@ -45,7 +44,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             result.Errors.Should().HaveCount(1);
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Valid_Card_Name_Validation_Should_Pass()
         {
             // Arrange

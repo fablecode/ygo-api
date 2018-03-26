@@ -1,24 +1,23 @@
 ﻿using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using ygo.application.Queries.CategoryById;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
-    [TestClass]
+    [TestFixture]
     public class CategoryByIdQueryValidatorTests
     {
         private CategoryByIdQueryValidator _sut;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             _sut = new CategoryByIdQueryValidator();
         }
 
-        [DataTestMethod]
-        [DataRow(-1)]
-        [DataRow(0)]
+        [TestCase(-1)]
+        [TestCase(0)]
         public void Given_A_Category_Id_LessThan_Or_Equal_To_Zero_Should_Fail_Validation(int categoryId)
         {
             // Arrange
@@ -31,7 +30,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_A_Valid_Category_Id_Validation_Should_Pass()
         {
             // Arrange

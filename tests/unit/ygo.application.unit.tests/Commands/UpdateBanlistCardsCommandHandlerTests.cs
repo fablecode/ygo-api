@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ygo.application.Commands.UpdateBanlistCards;
@@ -9,21 +9,21 @@ using ygo.domain.Repository;
 
 namespace ygo.application.unit.tests.Commands
 {
-    [TestClass]
+    [TestFixture]
     public class UpdateBanlistCardsCommandHandlerTests
     {
         private UpdateBanlistCardsCommandHandler _sut;
         private IBanlistCardsRepository _banlistCardsRepository;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             _banlistCardsRepository = Substitute.For<IBanlistCardsRepository>();
 
             _sut = new UpdateBanlistCardsCommandHandler(_banlistCardsRepository, new UpdateBanlistCardsCommandValidator());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_UpdateBanlistCardsCommand_The_Command_Execution_Should_Return_A_List_Of_Errors()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
-        [TestMethod]
+        [Test]
         public async Task Given_An_Invalid_UpdateMonsterCardCommand_Should_Not_Execute_UpdateCard()
         {
             // Arrange

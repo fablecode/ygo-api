@@ -1,25 +1,24 @@
 ﻿using FluentAssertions;
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using ygo.application.Queries.CardById;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
-    [TestClass]
+    [TestFixture]
     public class CardByIdQueryValidatorTests
     {
         private CardByIdQueryValidator _sut;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             _sut = new CardByIdQueryValidator();
         }
 
-        [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(-1)]
+        [TestCase(0)]
+        [TestCase(-1)]
         public void Given_An_Invalid_Card_Id_Validation_Should_Fail(long cardId)
         {
             // Arrange
@@ -32,7 +31,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             act.Invoke();
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Invalid_Card_Id_Validation_Should_Fail()
         {
             // Arrange
@@ -44,7 +43,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             result.Errors.Should().HaveCount(1);
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Invalid_Card_Id_Validation_Should_StopOnFirstFailure()
         {
             // Arrange
@@ -56,7 +55,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Queries
             result.Errors.Should().HaveCount(1);
         }
 
-        [TestMethod]
+        [Test]
         public void Given_An_Valid_Card_Id_Validation_Should_Pass()
         {
             // Arrange

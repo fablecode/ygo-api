@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
-    [TestClass]
+    [TestFixture]
    public class LatestBanlistQueryHandlerTests
     {
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             var sut = new LatestBanlistQueryHandler();
         }
@@ -14,10 +14,8 @@ namespace ygo.application.unit.tests.QueriesTests
 
     }
 
+    [TestFixture]
     public class LatestBanlistQueryHandler
     {
-        public LatestBanlistQueryHandler()
-        {
-        }
     }
 }
