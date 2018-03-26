@@ -8,7 +8,6 @@ using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.UpdateArchetype;
 using ygo.application.Queries.ArchetypeById;
 using ygo.application.Queries.ArchetypeByName;
-using ygo.application.Queries.CardByName;
 
 namespace ygo.api.Controllers
 {
