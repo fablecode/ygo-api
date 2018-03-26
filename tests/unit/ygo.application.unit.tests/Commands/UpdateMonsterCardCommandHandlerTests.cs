@@ -21,6 +21,14 @@ namespace ygo.application.unit.tests.Commands
             _repository = Substitute.For<ICardRepository>();
 
             _sut = new UpdateMonsterCardCommandHandler(_repository, new UpdateMonsterCardCommandValidator());
+
+        }
+
+        [OneTimeSetUp]
+        public void SetUpFixture()
+        {
+            AutoMapper.Mapper.Reset();
+            AutoMapperConfig.Configure();
         }
 
         [Test]
