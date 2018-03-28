@@ -41,13 +41,16 @@ namespace ygo.infrastructure.Database
         {
             modelBuilder.Entity<Archetype>(entity =>
             {
-                entity.Property(e => e.Alias)
-                    .IsRequired()
-                    .HasMaxLength(255);
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
+
+                entity.Property(e => e.Url)
+                    .IsRequired()
+                    .HasMaxLength(2083)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<ArchetypeCard>(entity =>
@@ -170,6 +173,8 @@ namespace ygo.infrastructure.Database
 
             modelBuilder.Entity<Banlist>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
@@ -208,6 +213,10 @@ namespace ygo.infrastructure.Database
 
             modelBuilder.Entity<Card>(entity =>
             {
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Card")
+                    .IsUnique();
+
                 entity.Property(e => e.CardNumber).HasMaxLength(50);
 
                 entity.Property(e => e.Name)
@@ -370,5 +379,6 @@ namespace ygo.infrastructure.Database
                     .HasMaxLength(255);
             });
         }
+
     }
 }

@@ -11,6 +11,7 @@ using ygo.application.Queries.ArchetypeByName;
 
 namespace ygo.api.Controllers
 {
+    [Route("api/[controller]")]
     public class ArchetypesController : Controller
     {
         private readonly IMediator _mediator;
