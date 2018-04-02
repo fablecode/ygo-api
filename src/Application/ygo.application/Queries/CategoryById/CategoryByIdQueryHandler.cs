@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using ygo.core.Models.Db;
@@ -6,7 +7,7 @@ using ygo.domain.Repository;
 
 namespace ygo.application.Queries.CategoryById
 {
-    public class CategoryByIdQueryHandler: IAsyncRequestHandler<CategoryByIdQuery, Category>
+    public class CategoryByIdQueryHandler: IRequestHandler<CategoryByIdQuery, Category>
     {
         private readonly ICategoryRepository _repository;
         private readonly IValidator<CategoryByIdQuery> _queryValidator;
@@ -17,11 +18,11 @@ namespace ygo.application.Queries.CategoryById
             _queryValidator = queryValidator;
         }
 
-        public Task<Category> Handle(CategoryByIdQuery message)
+        public Task<Category> Handle(CategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            var validationResult = _queryValidator.Validate(message);
+            var validationResult = _queryValidator.Validate(request);
 
-            return validationResult.IsValid ? _repository.CategoryById(message.Id) : null;
+            return validationResult.IsValid ? _repository.CategoryById(request.Id) : null;
         }
     }
 }

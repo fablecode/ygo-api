@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.application.Ioc;
 using ygo.domain.Repository;
 
 namespace ygo.application.Queries.AllSubCategories
 {
-    public class AllSubCategoriesQueryHandler : IAsyncRequestHandler<AllSubCategoriesQuery, IEnumerable<SubCategoryDto>>
+    public class AllSubCategoriesQueryHandler : IRequestHandler<AllSubCategoriesQuery, IEnumerable<SubCategoryDto>>
     {
         private readonly ISubCategoryRepository _repository;
 
@@ -17,7 +17,7 @@ namespace ygo.application.Queries.AllSubCategories
             _repository = repository;
         }
 
-        public async Task<IEnumerable<SubCategoryDto>> Handle(AllSubCategoriesQuery message)
+        public async Task<IEnumerable<SubCategoryDto>> Handle(AllSubCategoriesQuery request, CancellationToken cancellationToken)
         {
             var subCategories = await _repository.AllSubCategories();
 

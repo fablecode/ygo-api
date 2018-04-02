@@ -1,20 +1,15 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
 namespace ygo.application.Commands.UpdateArchetype
 {
-    public class UpdateArchetypeCommandHandler : IAsyncRequestHandler<UpdateArchetypeCommand, CommandResult>
+    public class UpdateArchetypeCommandHandler : IRequestHandler<UpdateArchetypeCommand, CommandResult>
     {
-        public Task<CommandResult> Handle(UpdateArchetypeCommand message)
+        public Task<CommandResult> Handle(UpdateArchetypeCommand request, CancellationToken cancellationToken)
         {
-           // var commandResult = new CommandResult();
-
-
-           // return commandResult
-
             throw new NotImplementedException();
-
         }
     }
 }

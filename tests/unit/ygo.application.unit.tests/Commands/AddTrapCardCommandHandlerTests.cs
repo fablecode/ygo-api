@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.AddTrapCard;
 using ygo.core.Models.Db;
@@ -42,7 +43,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddTrapCardCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.Errors.Should().NotBeEmpty();
@@ -56,7 +57,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddTrapCardCommand();
 
             // Act
-            await _sut.Handle(command);
+            await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             _repository.DidNotReceive();
@@ -70,7 +71,7 @@ namespace ygo.application.unit.tests.Commands
             var command = GetValidTrapCard();
 
             // Act
-            await _sut.Handle(command);
+            await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             await _repository.Received(1).Add(Arg.Any<Card>());
@@ -84,7 +85,7 @@ namespace ygo.application.unit.tests.Commands
             var command = GetValidTrapCard();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeTrue();
@@ -100,7 +101,7 @@ namespace ygo.application.unit.tests.Commands
             var command = GetValidTrapCard();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
             var insertedCardId = (long)result.Data;
 
             // Assert

@@ -1,12 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.AddTrapCard
 {
-    public class AddTrapCardCommandHandler : IAsyncRequestHandler<AddTrapCardCommand, CommandResult>
+    public class AddTrapCardCommandHandler : IRequestHandler<AddTrapCardCommand, CommandResult>
     {
         private readonly ICardRepository _repository;
         private readonly IValidator<AddTrapCardCommand> _validator;
@@ -17,15 +18,15 @@ namespace ygo.application.Commands.AddTrapCard
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(AddTrapCardCommand message)
+        public async Task<CommandResult> Handle(AddTrapCardCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResult = _validator.Validate(message);
+            var validationResult = _validator.Validate(request);
 
             if (validationResult.IsValid)
             {
-                var newTrapCard = message.MapToCard();
+                var newTrapCard = request.MapToCard();
 
                 var newTrapCardResult = await _repository.Add(newTrapCard);
 

@@ -2,13 +2,14 @@
 using FluentValidation;
 using MediatR;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.AddBanlist
 {
-    public class AddBanlistCommandHandler : IAsyncRequestHandler<AddBanlistCommand, CommandResult>
+    public class AddBanlistCommandHandler : IRequestHandler<AddBanlistCommand, CommandResult>
     {
         private readonly IBanlistRepository _banlistRepository;
         private readonly IValidator<AddBanlistCommand> _validator;
@@ -19,15 +20,15 @@ namespace ygo.application.Commands.AddBanlist
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(AddBanlistCommand message)
+        public async Task<CommandResult> Handle(AddBanlistCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResults = _validator.Validate(message);
+            var validationResults = _validator.Validate(request);
 
             if (validationResults.IsValid)
             {
-                var newBanlist = Mapper.Map<Banlist>(message);
+                var newBanlist = Mapper.Map<Banlist>(request);
 
                 var newBanlistResult = await _banlistRepository.Add(newBanlist);
                 commandResult.Data = newBanlistResult.Id;

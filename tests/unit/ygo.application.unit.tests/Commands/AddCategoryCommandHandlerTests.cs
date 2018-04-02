@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddCategoryCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeFalse();
@@ -42,7 +43,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddCategoryCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.Errors.Should().NotBeEmpty();
@@ -59,7 +60,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddCategoryCommand();
 
             // Act
-            await  _sut.Handle(command);
+            await  _sut.Handle(command, CancellationToken.None);
 
             // Assert
             await _categoryRepository.DidNotReceive().Add(Arg.Any<Category>());
@@ -76,7 +77,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddCategoryCommand{ Name = "category"};
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeTrue();

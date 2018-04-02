@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -6,7 +7,7 @@ using ygo.domain.Service;
 
 namespace ygo.application.Commands.DeleteFile
 {
-    public class DeleteFileCommandValidator : IAsyncRequestHandler<DeleteFileCommand, CommandResult>
+    public class DeleteFileCommandValidator : IRequestHandler<DeleteFileCommand, CommandResult>
     {
         private readonly IFileSystemService _fileSystemService;
         private readonly IValidator<DeleteFileCommand> _validator;
@@ -17,15 +18,15 @@ namespace ygo.application.Commands.DeleteFile
             _validator = validator;
         }
 
-        public Task<CommandResult> Handle(DeleteFileCommand message)
-        { 
+        public Task<CommandResult> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
+        {
             var commandResult = new CommandResult();
 
-            var validationResults = _validator.Validate(message);
+            var validationResults = _validator.Validate(request);
 
             if (validationResults.IsValid)
             {
-                _fileSystemService.Delete(message.LocalFileNameFullPath);
+                _fileSystemService.Delete(request.LocalFileNameFullPath);
             }
             else
             {

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading;
+using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace ygo.application.unit.tests.QueriesTests
             var query = new CardImageByNameQuery { Name = cardName };
 
             // Act
-            var result = await _sut.Handle(query);
+            var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeFalse();
@@ -47,7 +48,7 @@ namespace ygo.application.unit.tests.QueriesTests
             _settings.Value.Returns(new ApplicationSettings { CardImageFolderPath = "D:SomeWierdDirectory" });
 
             // Act
-            var result =  await _sut.Handle(query);
+            var result =  await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeFalse();

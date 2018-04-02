@@ -66,7 +66,7 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddArchetypeCommand command)
         {
-            var existingArchetype = await _mediator.Send(new ArchetypeByNameQuery { Name = command.Name });
+            var existingArchetype = await _mediator.Send(new ArchetypeByIdQuery { Id = command.ArchetypeNumber });
 
             if (existingArchetype == null)
             {

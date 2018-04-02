@@ -2,13 +2,14 @@
 using FluentValidation;
 using MediatR;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateBanlist
 {
-    public class UpdateBanlistCommandHandler : IAsyncRequestHandler<UpdateBanlistCommand, CommandResult>
+    public class UpdateBanlistCommandHandler : IRequestHandler<UpdateBanlistCommand, CommandResult>
     {
         private readonly IBanlistRepository _banlistRepository;
         private readonly IValidator<UpdateBanlistCommand> _validator;
@@ -19,19 +20,19 @@ namespace ygo.application.Commands.UpdateBanlist
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(UpdateBanlistCommand message)
+        public async Task<CommandResult> Handle(UpdateBanlistCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResults = _validator.Validate(message);
+            var validationResults = _validator.Validate(request);
 
             if (validationResults.IsValid)
             {
-                var banlistToupdate = await _banlistRepository.GetBanlistById(message.Id);
+                var banlistToupdate = await _banlistRepository.GetBanlistById(request.Id);
 
                 if (banlistToupdate != null)
                 {
-                    banlistToupdate.UpdateBanlistWith(message);
+                    banlistToupdate.UpdateBanlistWith(request);
 
                     commandResult.Data = Mapper.Map<BanlistDto>(await _banlistRepository.Update(banlistToupdate));
                     commandResult.IsSuccessful = true;

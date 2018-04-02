@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
@@ -9,7 +10,7 @@ using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateTrapCard
 {
-    public class UpdateTrapCardCommandHandler : IAsyncRequestHandler<UpdateTrapCardCommand, CommandResult>
+    public class UpdateTrapCardCommandHandler : IRequestHandler<UpdateTrapCardCommand, CommandResult>
     {
         private readonly ICardRepository _repository;
         private readonly IValidator<UpdateTrapCardCommand> _validator;
@@ -20,18 +21,18 @@ namespace ygo.application.Commands.UpdateTrapCard
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(UpdateTrapCardCommand message)
+        public async Task<CommandResult> Handle(UpdateTrapCardCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResult = _validator.Validate(message);
+            var validationResult = _validator.Validate(request);
 
             if (validationResult.IsValid)
             {
-                var cardToUpdate = await _repository.CardById(message.Id);
+                var cardToUpdate = await _repository.CardById(request.Id);
                 if (cardToUpdate != null)
                 {
-                    cardToUpdate.UpdateTrapCardWith(message);
+                    cardToUpdate.UpdateTrapCardWith(request);
 
                     commandResult.Data = Mapper.Map<TrapCardDto>(await _repository.Update(cardToUpdate));
                     commandResult.IsSuccessful = true;

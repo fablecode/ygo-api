@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
@@ -15,7 +16,7 @@ using ygo.domain.Helpers;
 
 namespace ygo.application.Commands.AddCard
 {
-    public class AddCardCommandHandler : IAsyncRequestHandler<AddCardCommand, CommandResult>
+    public class AddCardCommandHandler : IRequestHandler<AddCardCommand, CommandResult>
     {
         private readonly IMediator _mediator;
         private readonly IValidator<AddCardCommand> _validator;
@@ -28,43 +29,43 @@ namespace ygo.application.Commands.AddCard
             _settings = settings;
         }
 
-        public async Task<CommandResult> Handle(AddCardCommand message)
+        public async Task<CommandResult> Handle(AddCardCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResults = _validator.Validate(message);
+            var validationResults = _validator.Validate(request);
 
             if (validationResults.IsValid)
             {
                 CommandResult cardTypeCommandResult;
 
-                switch (message.CardType)
+                switch (request.CardType)
                 {
                     case YgoCardType.Monster:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddMonsterCardCommand>(message));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddMonsterCardCommand>(request));
                         break;
                     case YgoCardType.Spell:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddSpellCardCommand>(message));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddSpellCardCommand>(request));
                         break;
                     case YgoCardType.Trap:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddTrapCardCommand>(message));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddTrapCardCommand>(request));
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(message.CardType));
+                        throw new ArgumentOutOfRangeException(nameof(request.CardType));
                 }
 
                 if (cardTypeCommandResult.IsSuccessful)
                 {
-                    if (message.ImageUrl != null)
+                    if (request.ImageUrl != null)
                     {
-                        var localFileNameExtension = Path.GetExtension(message.ImageUrl.AbsolutePath);
-                        var localFileName = string.Concat(message.Name.MakeValidFileName(), localFileNameExtension);
+                        var localFileNameExtension = Path.GetExtension(request.ImageUrl.AbsolutePath);
+                        var localFileName = string.Concat(request.Name.MakeValidFileName(), localFileNameExtension);
 
                         var imageFileNameFullPath = Path.Combine(_settings.Value.CardImageFolderPath, localFileName);
 
                         var downloadImageCommand = new DownloadImageCommand
                         {
-                            RemoteImageUrl = message.ImageUrl,
+                            RemoteImageUrl = request.ImageUrl,
                             ImageFileName = imageFileNameFullPath,
                         };
 

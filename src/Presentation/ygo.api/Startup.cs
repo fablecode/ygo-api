@@ -78,7 +78,6 @@ namespace ygo.api
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
-                c.DocExpansion("none");
             });
             app.UseMvc();
             app.UseRewriter(new RewriteOptions()

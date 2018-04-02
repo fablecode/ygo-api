@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
@@ -9,7 +10,7 @@ using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateSpellCard
 {
-    public class UpdateSpellCardCommandHandler : IAsyncRequestHandler<UpdateSpellCardCommand, CommandResult>
+    public class UpdateSpellCardCommandHandler : IRequestHandler<UpdateSpellCardCommand, CommandResult>
     {
         private readonly ICardRepository _repository;
         private readonly IValidator<UpdateSpellCardCommand> _validator;
@@ -20,18 +21,18 @@ namespace ygo.application.Commands.UpdateSpellCard
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(UpdateSpellCardCommand message)
+        public async Task<CommandResult> Handle(UpdateSpellCardCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResult = _validator.Validate(message);
+            var validationResult = _validator.Validate(request);
 
             if (validationResult.IsValid)
             {
-                var cardToUpdate = await _repository.CardById(message.Id);
+                var cardToUpdate = await _repository.CardById(request.Id);
                 if (cardToUpdate != null)
                 {
-                    cardToUpdate.UpdateSpellCardWith(message);
+                    cardToUpdate.UpdateSpellCardWith(request);
 
                     commandResult.Data = Mapper.Map<SpellCardDto>(await _repository.Update(cardToUpdate));
                     commandResult.IsSuccessful = true;

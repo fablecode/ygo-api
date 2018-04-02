@@ -2,6 +2,7 @@
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.core.Models.Db;
@@ -38,7 +39,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new UpdateMonsterCardCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.Errors.Should().NotBeEmpty();
@@ -52,7 +53,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new UpdateMonsterCardCommand();
 
             // Act
-            await _sut.Handle(command);
+            await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             await _repository.DidNotReceive().Update(Arg.Any<Card>());
@@ -68,7 +69,7 @@ namespace ygo.application.unit.tests.Commands
             var command = GetValidUpdateMonsterCardCommand();
 
             // Act
-            await _sut.Handle(command);
+            await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             await _repository.Received(1).Update(Arg.Any<Card>());
@@ -83,7 +84,7 @@ namespace ygo.application.unit.tests.Commands
             var command = GetValidUpdateMonsterCardCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeTrue();

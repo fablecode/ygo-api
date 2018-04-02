@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
-using ygo.application.Dto;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateBanlistCards
 {
-    public class UpdateBanlistCardsCommandHandler : IAsyncRequestHandler<UpdateBanlistCardsCommand, CommandResult>
+    public class UpdateBanlistCardsCommandHandler : IRequestHandler<UpdateBanlistCardsCommand, CommandResult>
     {
         private readonly IBanlistCardsRepository _banlistCardsRepository;
         private readonly IValidator<UpdateBanlistCardsCommand> _validator;
@@ -22,22 +19,22 @@ namespace ygo.application.Commands.UpdateBanlistCards
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(UpdateBanlistCardsCommand message)
+        public async Task<CommandResult> Handle(UpdateBanlistCardsCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validatorResults = _validator.Validate(message);
+            var validatorResults = _validator.Validate(request);
 
             if (validatorResults.IsValid)
             {
-                var banlistCards = message
-                                    .BanlistCards
-                                    .Select( bl => new BanlistCard { BanlistId = bl.BanlistId, CardId = bl.CardId, LimitId = bl.LimitId})
-                                    .ToArray();
+                var banlistCards = request
+                    .BanlistCards
+                    .Select(bl => new BanlistCard { BanlistId = bl.BanlistId, CardId = bl.CardId, LimitId = bl.LimitId })
+                    .ToArray();
 
-                await _banlistCardsRepository.Update(message.BanlistId, banlistCards);
+                await _banlistCardsRepository.Update(request.BanlistId, banlistCards);
 
-                commandResult.Data = message.BanlistCards;
+                commandResult.Data = request.BanlistCards;
                 commandResult.IsSuccessful = true;
             }
             else

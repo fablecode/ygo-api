@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Threading;
+using FluentValidation;
 using MediatR;
 using System.Threading.Tasks;
 using ygo.application.Dto;
@@ -6,7 +7,7 @@ using ygo.domain.Repository;
 
 namespace ygo.application.Queries.ArchetypeByName
 {
-    public class ArchetypeByNameQueryHandler : IAsyncRequestHandler<ArchetypeByNameQuery, ArchetypeDto>
+    public class ArchetypeByNameQueryHandler : IRequestHandler<ArchetypeByNameQuery, ArchetypeDto>
     {
         private readonly IArchetypeRepository _repository;
         private readonly IValidator<ArchetypeByNameQuery> _validator;
@@ -17,13 +18,13 @@ namespace ygo.application.Queries.ArchetypeByName
             _validator = validator;
         }
 
-        public async Task<ArchetypeDto> Handle(ArchetypeByNameQuery message)
+        public async Task<ArchetypeDto> Handle(ArchetypeByNameQuery request, CancellationToken cancellationToken)
         {
-            var validationResults = _validator.Validate(message);
+            var validationResults = _validator.Validate(request);
 
             if (validationResults.IsValid)
             {
-                var result = await _repository.ArchetypeByName(message.Name);
+                var result = await _repository.ArchetypeByName(request.Name);
 
                 return result.MapToArchetypeDto();
             }

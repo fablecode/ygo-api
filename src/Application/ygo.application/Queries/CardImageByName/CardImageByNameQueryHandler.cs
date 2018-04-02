@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -10,7 +11,7 @@ using ygo.domain.Service;
 
 namespace ygo.application.Queries.CardImageByName
 {
-    public class CardImageByNameQueryHandler : IAsyncRequestHandler<CardImageByNameQuery, CardImageByNameResult>
+    public class CardImageByNameQueryHandler : IRequestHandler<CardImageByNameQuery, CardImageByNameResult>
     {
         private readonly IFileSystemService _fileSystemService;
         private readonly IOptions<ApplicationSettings> _settings;
@@ -21,17 +22,17 @@ namespace ygo.application.Queries.CardImageByName
             _settings = settings;
         }
 
-        public Task<CardImageByNameResult> Handle(CardImageByNameQuery message)
+        public Task<CardImageByNameResult> Handle(CardImageByNameQuery request, CancellationToken cancellationToken)
         {
             var response = new CardImageByNameResult();
 
-            if (!string.IsNullOrWhiteSpace(message.Name))
+            if (!string.IsNullOrWhiteSpace(request.Name))
             {
-                var imageFilePath = GetImagePath(message.Name.MakeValidFileName(), _settings.Value.CardImageFolderPath);
+                var imageFilePath = GetImagePath(request.Name.MakeValidFileName(), _settings.Value.CardImageFolderPath);
 
                 if (!string.IsNullOrWhiteSpace(imageFilePath) && _fileSystemService.Exists(imageFilePath))
                 {
-                    response.Name = message.Name;
+                    response.Name = request.Name;
                     response.FilePath = imageFilePath;
                     response.Extension = Path.GetExtension(imageFilePath);
                     response.ContentType = MimeTypeMap.GetMimeType(response.Extension);

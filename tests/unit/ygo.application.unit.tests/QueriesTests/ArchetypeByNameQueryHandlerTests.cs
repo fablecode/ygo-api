@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace ygo.application.unit.tests.QueriesTests
             var query = new ArchetypeByNameQuery();
 
             // Act
-            var result = await _sut.Handle(query);
+            var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             result.Should().BeNull();
@@ -46,7 +47,7 @@ namespace ygo.application.unit.tests.QueriesTests
             var query = new ArchetypeByNameQuery{ Name = "goodarchetypename"};
 
             // Act
-            await _sut.Handle(query);
+            await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             await _archetypeRepository.Received(1).ArchetypeByName(Arg.Any<string>());

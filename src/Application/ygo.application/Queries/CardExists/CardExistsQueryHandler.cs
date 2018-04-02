@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using ygo.domain.Repository;
 
 namespace ygo.application.Queries.CardExists
 {
-    public class CardExistsQueryHandler : IAsyncRequestHandler<CardExistsQuery, bool>
+    public class CardExistsQueryHandler : IRequestHandler<CardExistsQuery, bool>
     {
         private readonly ICardRepository _repository;
 
@@ -13,9 +14,9 @@ namespace ygo.application.Queries.CardExists
             _repository = repository;
         }
 
-        public Task<bool> Handle(CardExistsQuery message)
+        public Task<bool> Handle(CardExistsQuery request, CancellationToken cancellationToken)
         {
-            return _repository.CardExists(message.Id);
+            return _repository.CardExists(request.Id);
         }
     }
 }

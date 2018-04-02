@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -6,7 +7,7 @@ using ygo.domain.Repository;
 
 namespace ygo.application.Commands.AddSpellCard
 {
-    public class AddSpellCardCommandHandler : IAsyncRequestHandler<AddSpellCardCommand, CommandResult>
+    public class AddSpellCardCommandHandler : IRequestHandler<AddSpellCardCommand, CommandResult>
     {
         private readonly ICardRepository _repository;
         private readonly IValidator<AddSpellCardCommand> _validator;
@@ -17,15 +18,15 @@ namespace ygo.application.Commands.AddSpellCard
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(AddSpellCardCommand message)
+        public async Task<CommandResult> Handle(AddSpellCardCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validationResult = _validator.Validate(message);
+            var validationResult = _validator.Validate(request);
 
             if (validationResult.IsValid)
             {
-                var newSpellCard = message.MapToCard();
+                var newSpellCard = request.MapToCard();
 
                 var newSpellCardResult = await _repository.Add(newSpellCard);
                 commandResult.Data = newSpellCardResult.Id;

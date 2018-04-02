@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading;
+using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -18,9 +19,9 @@ namespace ygo.application.unit.tests.Commands
         public void SetUp()
         {
             _mediator = Substitute.For<IMediator>();
-            IOptions<ApplicationSettings> settings = Substitute.For<IOptions<ApplicationSettings>>();
+            Substitute.For<IOptions<ApplicationSettings>>();
 
-            _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator(), settings);
+            _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator());
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new UpdateCardCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.Errors.Should().NotBeEmpty();

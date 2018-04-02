@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using MediatR;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.AddMonsterCard
 {
-    public class AddMonsterCardCommandHandler : IAsyncRequestHandler<AddMonsterCardCommand, CommandResult>
+    public class AddMonsterCardCommandHandler : IRequestHandler<AddMonsterCardCommand, CommandResult>
     {
         private readonly ICardRepository _repository;
         private readonly IValidator<AddMonsterCardCommand> _validator;
@@ -17,15 +18,15 @@ namespace ygo.application.Commands.AddMonsterCard
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(AddMonsterCardCommand message)
+        public async Task<CommandResult> Handle(AddMonsterCardCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
-            var validateResults = _validator.Validate(message);
+            var validateResults = _validator.Validate(request);
 
             if (validateResults.IsValid)
             {
-                var newMonsterCard = message.MapToCard();
+                var newMonsterCard = request.MapToCard();
 
                 var newMonsterCardResult = await _repository.Add(newMonsterCard);
 

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading;
+using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -30,7 +31,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new AddCardCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.Errors.Should().NotBeEmpty();

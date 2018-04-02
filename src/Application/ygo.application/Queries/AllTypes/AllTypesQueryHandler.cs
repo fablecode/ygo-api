@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.application.Ioc;
 using ygo.domain.Repository;
 
 namespace ygo.application.Queries.AllTypes
 {
-    public class AllTypesQueryHandler : IAsyncRequestHandler<AllTypesQuery, IEnumerable<TypeDto>>
+    public class AllTypesQueryHandler : IRequestHandler<AllTypesQuery, IEnumerable<TypeDto>>
     {
         private readonly ITypeRepository _repository;
 
@@ -17,7 +17,7 @@ namespace ygo.application.Queries.AllTypes
             _repository = repository;
         }
 
-        public async Task<IEnumerable<TypeDto>> Handle(AllTypesQuery message)
+        public async Task<IEnumerable<TypeDto>> Handle(AllTypesQuery request, CancellationToken cancellationToken)
         {
             var types = await _repository.AllTypes();
 

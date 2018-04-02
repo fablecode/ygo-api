@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Queries.CardById;
 using ygo.core.Models.Db;
@@ -29,7 +30,7 @@ namespace ygo.application.unit.tests.QueriesTests
             var query = new CardByIdQuery();
 
             // Act
-            var result = await _sut.Handle(query);
+            var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             result.Should().BeNull();
@@ -46,7 +47,7 @@ namespace ygo.application.unit.tests.QueriesTests
             var query = new CardByIdQuery { Id = 696865 };
 
             // Act
-            await _sut.Handle(query);
+            await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             await _cardRepository.Received(1).CardById(Arg.Any<long>());

@@ -2,6 +2,7 @@
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.core.Models.Db;
@@ -30,7 +31,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new UpdateSpellCardCommand();
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.Errors.Should().NotBeEmpty();
@@ -44,7 +45,7 @@ namespace ygo.application.unit.tests.Commands
             var command = new UpdateSpellCardCommand();
 
             // Act
-            await _sut.Handle(command);
+            await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             _repository.DidNotReceive();
@@ -68,7 +69,7 @@ namespace ygo.application.unit.tests.Commands
             };
 
             // Act
-            await _sut.Handle(command);
+            await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             await _repository.Received(1).Update(Arg.Any<Card>());
@@ -92,7 +93,7 @@ namespace ygo.application.unit.tests.Commands
             };
 
             // Act
-            var result = await _sut.Handle(command);
+            var result = await _sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.IsSuccessful.Should().BeTrue();
