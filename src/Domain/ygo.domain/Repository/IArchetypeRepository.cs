@@ -7,5 +7,6 @@ namespace ygo.domain.Repository
     {
         Task<Archetype> ArchetypeByName(string name);
         Task<Archetype> ArchetypeById(long id);
+        Task<Archetype> Add(Archetype archetype);
     }
 }

@@ -30,5 +30,13 @@ namespace ygo.infrastructure.Repository
                         .Include(ac => ac.ArchetypeCard)
                     .SingleOrDefaultAsync(a => a.Id == id);
         }
+
+        public async Task<Archetype> Add(Archetype archetype)
+        {
+            await _dbContext.Archetype.AddAsync(archetype);
+            await _dbContext.SaveChangesAsync();
+
+            return archetype;
+        }
     }
 }

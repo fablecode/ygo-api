@@ -42,13 +42,13 @@ namespace ygo.application.Commands.AddCard
                 switch (request.CardType)
                 {
                     case YgoCardType.Monster:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddMonsterCardCommand>(request));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddMonsterCardCommand>(request), cancellationToken);
                         break;
                     case YgoCardType.Spell:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddSpellCardCommand>(request));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddSpellCardCommand>(request), cancellationToken);
                         break;
                     case YgoCardType.Trap:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddTrapCardCommand>(request));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<AddTrapCardCommand>(request), cancellationToken);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(request.CardType));
@@ -69,7 +69,7 @@ namespace ygo.application.Commands.AddCard
                             ImageFileName = imageFileNameFullPath,
                         };
 
-                        await _mediator.Send(downloadImageCommand);
+                        await _mediator.Send(downloadImageCommand, cancellationToken);
                     }
                 }
 
