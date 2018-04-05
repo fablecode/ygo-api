@@ -1,12 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Options;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.Options;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
@@ -58,15 +58,11 @@ namespace ygo.application.Commands.AddCard
                 {
                     if (request.ImageUrl != null)
                     {
-                        var localFileNameExtension = Path.GetExtension(request.ImageUrl.AbsolutePath);
-                        var localFileName = string.Concat(request.Name.MakeValidFileName(), localFileNameExtension);
-
-                        var imageFileNameFullPath = Path.Combine(_settings.Value.CardImageFolderPath, localFileName);
-
                         var downloadImageCommand = new DownloadImageCommand
                         {
                             RemoteImageUrl = request.ImageUrl,
-                            ImageFileName = imageFileNameFullPath,
+                            ImageFileName = request.Name.MakeValidFileName(),
+                            ImageFolderPath = _settings.Value.CardImageFolderPath
                         };
 
                         await _mediator.Send(downloadImageCommand, cancellationToken);

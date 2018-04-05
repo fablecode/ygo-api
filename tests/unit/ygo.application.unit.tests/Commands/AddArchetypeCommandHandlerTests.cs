@@ -15,11 +15,8 @@ namespace ygo.application.unit.tests.Commands
         {
             var mediator = Substitute.For<IMediator>();
             var archetypeRepository = Substitute.For<IArchetypeRepository>();
-            var appSettings = Substitute.For<IOptions<ApplicationSettings>>()
-                ;
+            var appSettings = Substitute.For<IOptions<ApplicationSettings>>();
             var sut = new AddArchetypeCommandHandler(mediator, new AddArchetypeCommandValidator(), archetypeRepository, appSettings);
         }
-
-
     }
 }

@@ -7,6 +7,14 @@ namespace ygo.application.Commands.DownloadImage
     {
         public DownloadImageCommandValidator()
         {
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+
+            RuleFor(i => i.ImageFolderPath)
+                .NotNull()
+                .NotEmpty()
+                .Must(Directory.Exists)
+                    .WithMessage("Invalid '{PropertyName}'");
+
             RuleFor(i => i.RemoteImageUrl)
                 .NotNull();
 

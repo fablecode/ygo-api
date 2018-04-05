@@ -1,8 +1,7 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
-using System.IO;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
@@ -40,29 +39,28 @@ namespace ygo.application.Commands.AddArchetype
 
             if (validationResult.IsValid)
             {
-                response.Data = await _archetypeRepository.Add(new Archetype
+                var newArchetype = await _archetypeRepository.Add(new Archetype
                 {
                     Id = request.ArchetypeNumber,
                     Name = request.Name,
-                    Url = request.ProfileUrl
+                    Url = request.ProfileUrl,
+                    Created = DateTime.UtcNow,
+                    Updated = DateTime.UtcNow
                 });
 
                 if (!string.IsNullOrWhiteSpace(request.ImageUrl))
                 {
-                    var localFileNameExtension = Path.GetExtension(request.ImageUrl);
-                    var localFileName = string.Concat(request.ArchetypeNumber, localFileNameExtension);
-
-                    var imageFileNameFullPath = Path.Combine(_settings.Value.ArchetypeImageFolderPath, localFileName);
-
                     var downloadImageCommand = new DownloadImageCommand
                     {
                         RemoteImageUrl = new Uri(request.ImageUrl),
-                        ImageFileName = imageFileNameFullPath,
+                        ImageFileName = newArchetype.Id.ToString(),
+                        ImageFolderPath = _settings.Value.ArchetypeImageFolderPath
                     };
 
                     await _mediator.Send(downloadImageCommand, cancellationToken);
                 }
 
+                response.Data = newArchetype.Id;
                 response.IsSuccessful = true;
             }
 

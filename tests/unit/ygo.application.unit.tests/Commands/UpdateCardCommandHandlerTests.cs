@@ -19,9 +19,9 @@ namespace ygo.application.unit.tests.Commands
         public void SetUp()
         {
             _mediator = Substitute.For<IMediator>();
-            Substitute.For<IOptions<ApplicationSettings>>();
+             var settings = Substitute.For<IOptions<ApplicationSettings>>();
 
-            _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator());
+            _sut = new UpdateCardCommandHandler(_mediator, new UpdateCardCommandValidator(), settings);
         }
 
         [Test]

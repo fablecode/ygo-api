@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
@@ -18,11 +19,13 @@ namespace ygo.application.Commands.UpdateCard
     {
         private readonly IMediator _mediator;
         private readonly IValidator<UpdateCardCommand> _validator;
+        private readonly IOptions<ApplicationSettings> _settings;
 
-        public UpdateCardCommandHandler(IMediator mediator, IValidator<UpdateCardCommand> validator)
+        public UpdateCardCommandHandler(IMediator mediator, IValidator<UpdateCardCommand> validator, IOptions<ApplicationSettings> settings)
         {
             _mediator = mediator;
             _validator = validator;
+            _settings = settings;
         }
 
         public async Task<CommandResult> Handle(UpdateCardCommand request, CancellationToken cancellationToken)
@@ -38,13 +41,13 @@ namespace ygo.application.Commands.UpdateCard
                 switch (request.CardType)
                 {
                     case YgoCardType.Monster:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateMonsterCardCommand>(request));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateMonsterCardCommand>(request), cancellationToken);
                         break;
                     case YgoCardType.Spell:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateSpellCardCommand>(request));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateSpellCardCommand>(request), cancellationToken);
                         break;
                     case YgoCardType.Trap:
-                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateTrapCardCommand>(request));
+                        cardTypeCommandResult = await _mediator.Send(Mapper.Map<UpdateTrapCardCommand>(request), cancellationToken);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(request.CardType));
@@ -58,6 +61,7 @@ namespace ygo.application.Commands.UpdateCard
                         {
                             RemoteImageUrl = request.ImageUrl,
                             ImageFileName = request.Name.MakeValidFileName(),
+                            ImageFolderPath = _settings.Value.CardImageFolderPath
                         };
 
                         await _mediator.Send(downloadImageCommand, cancellationToken);

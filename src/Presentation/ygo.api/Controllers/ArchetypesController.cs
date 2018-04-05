@@ -26,7 +26,7 @@ namespace ygo.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id:long}")]
+        [HttpGet("{id:long}", Name = "ArchetypeById")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(long id)
@@ -91,21 +91,14 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Put([FromBody] UpdateArchetypeCommand command)
         {
-            var existingArchetype = await _mediator.Send(new ArchetypeByNameQuery { Name = command.Name });
+            var result = await _mediator.Send(command);
 
-            if (existingArchetype != null)
+            if (result.IsSuccessful)
             {
-                var result = await _mediator.Send(command);
-
-                if (result.IsSuccessful)
-                {
-                    return Ok(result.Data);
-                }
-
-                return BadRequest(result.Errors);
+                return Ok(result.Data);
             }
 
-            return NotFound(command.Name);
+            return BadRequest(result.Errors);
         }
     }
 }

@@ -38,5 +38,14 @@ namespace ygo.infrastructure.Repository
 
             return archetype;
         }
+
+        public async Task<Archetype> Update(Archetype archetype)
+        {
+            _dbContext.Archetype.Update(archetype);
+
+            await _dbContext.SaveChangesAsync();
+
+            return archetype;
+        }
     }
 }
