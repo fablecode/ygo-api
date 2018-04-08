@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace ygo.core.Models.Db
+namespace ygo.infrastructure.Models
 {
-    public class AspNetRoles
+    public partial class AspNetRoles
     {
         public AspNetRoles()
         {

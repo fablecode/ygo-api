@@ -1,6 +1,9 @@
-﻿namespace ygo.core.Models.Db
+﻿using System;
+using System.Collections.Generic;
+
+namespace ygo.infrastructure.Models
 {
-    public class ArchetypeCard
+    public partial class ArchetypeCard
     {
         public long ArchetypeId { get; set; }
         public long CardId { get; set; }

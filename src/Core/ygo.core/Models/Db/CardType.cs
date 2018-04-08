@@ -1,6 +1,9 @@
-﻿namespace ygo.core.Models.Db
+﻿using System;
+using System.Collections.Generic;
+
+namespace ygo.infrastructure.Models
 {
-    public class CardType
+    public partial class CardType
     {
         public long TypeId { get; set; }
         public long CardId { get; set; }

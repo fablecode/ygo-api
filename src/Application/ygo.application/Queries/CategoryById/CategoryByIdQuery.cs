@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ygo.core.Models.Db;
+using ygo.infrastructure.Models;
 
 namespace ygo.application.Queries.CategoryById
 {

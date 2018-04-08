@@ -1,6 +1,9 @@
-﻿namespace ygo.core.Models.Db
+﻿using System;
+using System.Collections.Generic;
+
+namespace ygo.infrastructure.Models
 {
-    public class AspNetRoleClaims
+    public partial class AspNetRoleClaims
     {
         public int Id { get; set; }
         public string ClaimType { get; set; }

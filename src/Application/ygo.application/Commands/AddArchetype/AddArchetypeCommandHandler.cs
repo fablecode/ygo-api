@@ -5,8 +5,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
-using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.infrastructure.Models;
 
 namespace ygo.application.Commands.AddArchetype
 {

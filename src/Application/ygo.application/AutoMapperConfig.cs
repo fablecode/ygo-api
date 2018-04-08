@@ -9,7 +9,7 @@ using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
-using ygo.core.Models.Db;
+using ygo.infrastructure.Models;
 
 namespace ygo.application
 {

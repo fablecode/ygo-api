@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ygo.infrastructure.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using ygo.core.Models.Db;
+using System.Threading.Tasks;
 using ygo.domain.Repository;
+using ygo.infrastructure.Database;
+using ygo.infrastructure.Models;
 
 namespace ygo.infrastructure.Repository
 {

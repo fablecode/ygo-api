@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ygo.application.Dto;
-using ygo.core.Models.Db;
+using ygo.infrastructure.Models;
 
 namespace ygo.application.Queries
 {
@@ -55,7 +55,7 @@ namespace ygo.application.Queries
             {
                 foreach (var archetypeCard in archetype.ArchetypeCard)
                 {
-                    response.Cards.Add(new ArchetypeCardDto { Id = archetypeCard.CardId, Name = archetypeCard.Card.Name});
+                    response.Cards.Add(new ArchetypeCardDto { ArchetypeId = archetypeCard.CardId, CardId = archetypeCard.CardId});
                 }
             }
 

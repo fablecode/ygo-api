@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ygo.core.Models.Db
+namespace ygo.infrastructure.Models
 {
-    public class CardTip
+    public partial class CardTip
     {
         public long Id { get; set; }
         public long CardId { get; set; }

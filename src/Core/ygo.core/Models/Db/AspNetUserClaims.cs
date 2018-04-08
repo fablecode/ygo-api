@@ -1,6 +1,9 @@
-﻿namespace ygo.core.Models.Db
+﻿using System;
+using System.Collections.Generic;
+
+namespace ygo.infrastructure.Models
 {
-    public class AspNetUserClaims
+    public partial class AspNetUserClaims
     {
         public int Id { get; set; }
         public string ClaimType { get; set; }

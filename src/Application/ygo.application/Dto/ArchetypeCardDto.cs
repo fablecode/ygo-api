@@ -2,7 +2,7 @@
 {
     public class ArchetypeCardDto
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
+        public long ArchetypeId { get; set; }
+        public long CardId { get; set; }
     }
 }

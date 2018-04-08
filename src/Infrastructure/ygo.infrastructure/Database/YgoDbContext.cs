@@ -1,5 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ygo.core.Models.Db;
+using AspNetRoles = ygo.infrastructure.Models.AspNetRoles;
+using AspNetUsers = ygo.infrastructure.Models.AspNetUsers;
+using Format = ygo.infrastructure.Models.Format;
+using Limit = ygo.infrastructure.Models.Limit;
+using LinkArrow = ygo.infrastructure.Models.LinkArrow;
+using Type = ygo.infrastructure.Models.Type;
 
 namespace ygo.infrastructure.Database
 {
@@ -10,36 +15,46 @@ namespace ygo.infrastructure.Database
         {
         }
 
-        public virtual DbSet<Archetype> Archetype { get; set; }
-        public virtual DbSet<ArchetypeCard> ArchetypeCard { get; set; }
-        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
+
+        public virtual DbSet<Models.Archetype> Archetype { get; set; }
+        public virtual DbSet<Models.ArchetypeCard> ArchetypeCard { get; set; }
+        public virtual DbSet<Models.AspNetRoleClaims> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<Models.AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<Models.AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<Models.AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<Attribute> Attribute { get; set; }
-        public virtual DbSet<Banlist> Banlist { get; set; }
-        public virtual DbSet<BanlistCard> BanlistCard { get; set; }
-        public virtual DbSet<Card> Card { get; set; }
-        public virtual DbSet<CardAttribute> CardAttribute { get; set; }
-        public virtual DbSet<CardLinkArrow> CardLinkArrow { get; set; }
-        public virtual DbSet<CardRuling> CardRuling { get; set; }
-        public virtual DbSet<CardSubCategory> CardSubCategory { get; set; }
-        public virtual DbSet<CardTip> CardTip { get; set; }
-        public virtual DbSet<CardTrivia> CardTrivia { get; set; }
-        public virtual DbSet<CardType> CardType { get; set; }
-        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Models.AspNetUserTokens> AspNetUserTokens { get; set; }
+        public virtual DbSet<Models.Attribute> Attribute { get; set; }
+        public virtual DbSet<Models.Banlist> Banlist { get; set; }
+        public virtual DbSet<Models.BanlistCard> BanlistCard { get; set; }
+        public virtual DbSet<Models.Card> Card { get; set; }
+        public virtual DbSet<Models.CardAttribute> CardAttribute { get; set; }
+        public virtual DbSet<Models.CardLinkArrow> CardLinkArrow { get; set; }
+        public virtual DbSet<Models.CardRuling> CardRuling { get; set; }
+        public virtual DbSet<Models.CardSubCategory> CardSubCategory { get; set; }
+        public virtual DbSet<Models.CardTip> CardTip { get; set; }
+        public virtual DbSet<Models.CardTrivia> CardTrivia { get; set; }
+        public virtual DbSet<Models.CardType> CardType { get; set; }
+        public virtual DbSet<Models.Category> Category { get; set; }
         public virtual DbSet<Format> Format { get; set; }
         public virtual DbSet<Limit> Limit { get; set; }
         public virtual DbSet<LinkArrow> LinkArrow { get; set; }
-        public virtual DbSet<SubCategory> SubCategory { get; set; }
+        public virtual DbSet<Models.SubCategory> SubCategory { get; set; }
         public virtual DbSet<Type> Type { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ygo;Data Source=msi");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Archetype>(entity =>
+            modelBuilder.Entity<Models.Archetype>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -53,7 +68,7 @@ namespace ygo.infrastructure.Database
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ArchetypeCard>(entity =>
+            modelBuilder.Entity<Models.ArchetypeCard>(entity =>
             {
                 entity.HasKey(e => new { e.ArchetypeId, e.CardId });
 
@@ -70,7 +85,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_ArchetypeCard_Card");
             });
 
-            modelBuilder.Entity<AspNetRoleClaims>(entity =>
+            modelBuilder.Entity<Models.AspNetRoleClaims>(entity =>
             {
                 entity.HasIndex(e => e.RoleId);
 
@@ -95,7 +110,7 @@ namespace ygo.infrastructure.Database
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<AspNetUserClaims>(entity =>
+            modelBuilder.Entity<Models.AspNetUserClaims>(entity =>
             {
                 entity.HasIndex(e => e.UserId);
 
@@ -106,7 +121,7 @@ namespace ygo.infrastructure.Database
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<AspNetUserLogins>(entity =>
+            modelBuilder.Entity<Models.AspNetUserLogins>(entity =>
             {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
 
@@ -119,7 +134,7 @@ namespace ygo.infrastructure.Database
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<AspNetUserRoles>(entity =>
+            modelBuilder.Entity<Models.AspNetUserRoles>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.RoleId });
 
@@ -155,7 +170,7 @@ namespace ygo.infrastructure.Database
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<AspNetUserTokens>(entity =>
+            modelBuilder.Entity<Models.AspNetUserTokens>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 
@@ -164,14 +179,14 @@ namespace ygo.infrastructure.Database
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<Attribute>(entity =>
+            modelBuilder.Entity<Models.Attribute>(entity =>
             {
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
             });
 
-            modelBuilder.Entity<Banlist>(entity =>
+            modelBuilder.Entity<Models.Banlist>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -188,7 +203,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_Banlist_Format");
             });
 
-            modelBuilder.Entity<BanlistCard>(entity =>
+            modelBuilder.Entity<Models.BanlistCard>(entity =>
             {
                 entity.HasKey(e => new { e.BanlistId, e.CardId });
 
@@ -211,7 +226,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_BanlistCard_ToLimit");
             });
 
-            modelBuilder.Entity<Card>(entity =>
+            modelBuilder.Entity<Models.Card>(entity =>
             {
                 entity.HasIndex(e => e.Name)
                     .HasName("IX_Card")
@@ -224,7 +239,7 @@ namespace ygo.infrastructure.Database
                     .HasMaxLength(255);
             });
 
-            modelBuilder.Entity<CardAttribute>(entity =>
+            modelBuilder.Entity<Models.CardAttribute>(entity =>
             {
                 entity.HasKey(e => new { e.AttributeId, e.CardId });
 
@@ -241,7 +256,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardAttributes_CardId");
             });
 
-            modelBuilder.Entity<CardLinkArrow>(entity =>
+            modelBuilder.Entity<Models.CardLinkArrow>(entity =>
             {
                 entity.HasKey(e => new { e.LinkArrowId, e.CardId });
 
@@ -258,7 +273,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardLinkArrow_LinkArrow");
             });
 
-            modelBuilder.Entity<CardRuling>(entity =>
+            modelBuilder.Entity<Models.CardRuling>(entity =>
             {
                 entity.Property(e => e.Ruling).IsRequired();
 
@@ -269,7 +284,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardRuling_ToCard");
             });
 
-            modelBuilder.Entity<CardSubCategory>(entity =>
+            modelBuilder.Entity<Models.CardSubCategory>(entity =>
             {
                 entity.HasKey(e => new { e.SubCategoryId, e.CardId });
 
@@ -286,7 +301,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardSubCategory_ToSubCategory");
             });
 
-            modelBuilder.Entity<CardTip>(entity =>
+            modelBuilder.Entity<Models.CardTip>(entity =>
             {
                 entity.Property(e => e.Tip).IsRequired();
 
@@ -297,7 +312,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardTip_ToCard");
             });
 
-            modelBuilder.Entity<CardTrivia>(entity =>
+            modelBuilder.Entity<Models.CardTrivia>(entity =>
             {
                 entity.Property(e => e.Trivia).IsRequired();
 
@@ -308,7 +323,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardTrivia_ToCard");
             });
 
-            modelBuilder.Entity<CardType>(entity =>
+            modelBuilder.Entity<Models.CardType>(entity =>
             {
                 entity.HasKey(e => new { e.TypeId, e.CardId });
 
@@ -325,7 +340,7 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardType_Type");
             });
 
-            modelBuilder.Entity<Category>(entity =>
+            modelBuilder.Entity<Models.Category>(entity =>
             {
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -359,7 +374,7 @@ namespace ygo.infrastructure.Database
                     .HasMaxLength(255);
             });
 
-            modelBuilder.Entity<SubCategory>(entity =>
+            modelBuilder.Entity<Models.SubCategory>(entity =>
             {
                 entity.Property(e => e.Name)
                     .IsRequired()

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using FluentValidation;
+using MediatR;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
-using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.infrastructure.Models;
 
 namespace ygo.application.Commands.AddCategory
 {

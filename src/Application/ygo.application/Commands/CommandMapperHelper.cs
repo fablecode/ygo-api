@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AutoMapper;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
@@ -11,8 +11,7 @@ using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
-using ygo.application.Ioc;
-using ygo.core.Models.Db;
+using ygo.infrastructure.Models;
 
 namespace ygo.application.Commands
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ygo.core.Models.Db
+namespace ygo.infrastructure.Models
 {
-    public class Limit
+    public partial class Limit
     {
         public Limit()
         {

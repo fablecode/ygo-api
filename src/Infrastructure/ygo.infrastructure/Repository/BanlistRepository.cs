@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ygo.core.Models.Db;
 using ygo.domain.Repository;
 using ygo.infrastructure.Database;
+using ygo.infrastructure.Models;
 
 namespace ygo.infrastructure.Repository
 {

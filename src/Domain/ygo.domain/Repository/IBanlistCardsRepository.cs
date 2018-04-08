@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ygo.core.Models.Db;
+using ygo.infrastructure.Models;
 
 namespace ygo.domain.Repository
 {

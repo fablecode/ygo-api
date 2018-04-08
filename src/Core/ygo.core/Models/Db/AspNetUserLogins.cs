@@ -1,6 +1,9 @@
-﻿namespace ygo.core.Models.Db
+﻿using System;
+using System.Collections.Generic;
+
+namespace ygo.infrastructure.Models
 {
-    public class AspNetUserLogins
+    public partial class AspNetUserLogins
     {
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }

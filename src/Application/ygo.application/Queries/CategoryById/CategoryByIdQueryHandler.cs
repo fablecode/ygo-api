@@ -1,9 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
-using ygo.core.Models.Db;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.domain.Repository;
+using ygo.infrastructure.Models;
 
 namespace ygo.application.Queries.CategoryById
 {
