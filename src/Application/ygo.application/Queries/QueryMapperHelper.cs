@@ -50,7 +50,6 @@ namespace ygo.application.Queries
 
             response.Id = archetype.Id;
             response.Name = archetype.Name;
-            response.Url = archetype.Url;
 
             if (archetype.ArchetypeCard != null && archetype.ArchetypeCard.Any())
             {
