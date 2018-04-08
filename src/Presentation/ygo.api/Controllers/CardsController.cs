@@ -85,7 +85,7 @@ namespace ygo.api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return StatusCode((int)HttpStatusCode.Conflict, existingCard);
+            return StatusCode((int)HttpStatusCode.Conflict);
         }
 
         /// <summary>

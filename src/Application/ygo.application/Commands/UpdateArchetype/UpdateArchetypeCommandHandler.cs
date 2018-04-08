@@ -30,6 +30,7 @@ namespace ygo.application.Commands.UpdateArchetype
             _archetypeRepository = archetypeRepository;
             _settings = settings;
         }
+
         public async Task<CommandResult> Handle(UpdateArchetypeCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();

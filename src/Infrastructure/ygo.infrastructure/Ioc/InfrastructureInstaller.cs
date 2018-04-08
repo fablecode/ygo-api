@@ -39,6 +39,7 @@ namespace ygo.infrastructure.Ioc
             services.AddTransient<ILimitRepository, LimitRepository>();
             services.AddTransient<IFormatRepository, FormatRepository>();
             services.AddTransient<IArchetypeRepository, ArchetypeRepository>();
+            services.AddTransient<IArchetypeCardsRepository, ArchetypeCardsRepository>();
 
             return services;
         }

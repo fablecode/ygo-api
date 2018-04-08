@@ -11,6 +11,7 @@ using ygo.application.Commands.AddSpellCard;
 using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateArchetype;
+using ygo.application.Commands.UpdateArchetypeCards;
 using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Commands.UpdateCard;
@@ -65,6 +66,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<ArchetypeByNameQuery>, ArchetypeByNameQueryValidator>();
             services.AddTransient<IValidator<AddArchetypeCommand>, AddArchetypeCommandValidator>();
             services.AddTransient<IValidator<UpdateArchetypeCommand>, UpdateArchetypeCommandValidator>();
+            services.AddTransient<IValidator<UpdateArchetypeCardsCommand>, UpdateArchetypeCardsCommandValidator>();
 
             return services;
         }

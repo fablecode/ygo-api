@@ -5,7 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using ygo.api.Auth;
 using ygo.application.Commands.AddArchetype;
-using ygo.application.Commands.UpdateArchetype;
+using ygo.application.Commands.UpdateArchetypeCards;
 using ygo.application.Queries.ArchetypeById;
 using ygo.application.Queries.ArchetypeByName;
 
@@ -80,7 +80,7 @@ namespace ygo.api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return StatusCode((int)HttpStatusCode.Conflict, existingArchetype);
+            return StatusCode((int)HttpStatusCode.Conflict);
         }
 
         [HttpPut]
@@ -89,7 +89,7 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> Put([FromBody] UpdateArchetypeCommand command)
+        public async Task<IActionResult> Put([FromBody] UpdateArchetypeCardsCommand command)
         {
             var result = await _mediator.Send(command);
 
