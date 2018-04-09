@@ -1,9 +1,8 @@
-﻿using System.Linq;
+﻿using FluentValidation;
+using MediatR;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
-using ygo.application.Commands.UpdateArchetype;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateArchetypeCards
