@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ygo.infrastructure.Models
+﻿namespace ygo.core.Models.Db
 {
-    public partial class AspNetUserRoles
+    public class AspNetUserRoles
     {
         public string UserId { get; set; }
         public string RoleId { get; set; }

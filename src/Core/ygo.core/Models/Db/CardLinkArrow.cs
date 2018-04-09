@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ygo.infrastructure.Models
+﻿namespace ygo.core.Models.Db
 {
-    public partial class CardLinkArrow
+    public class CardLinkArrow
     {
         public long LinkArrowId { get; set; }
         public long CardId { get; set; }

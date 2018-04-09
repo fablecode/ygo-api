@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ygo.infrastructure.Models
+﻿namespace ygo.core.Models.Db
 {
-    public partial class CardAttribute
+    public class CardAttribute
     {
         public long AttributeId { get; set; }
         public long CardId { get; set; }

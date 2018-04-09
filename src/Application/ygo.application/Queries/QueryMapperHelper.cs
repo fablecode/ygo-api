@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ygo.application.Dto;
-using ygo.infrastructure.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.application.Queries
 {

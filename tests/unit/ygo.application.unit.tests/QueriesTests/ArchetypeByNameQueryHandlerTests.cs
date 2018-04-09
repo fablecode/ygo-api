@@ -4,8 +4,8 @@ using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Queries.ArchetypeByName;
+using ygo.core.Models.Db;
 using ygo.domain.Repository;
-using ygo.infrastructure.Models;
 
 namespace ygo.application.unit.tests.QueriesTests
 {

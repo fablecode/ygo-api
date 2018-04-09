@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ygo.infrastructure.Models
+namespace ygo.core.Models.Db
 {
-    public partial class Archetype
+    public class Archetype
     {
         public Archetype()
         {

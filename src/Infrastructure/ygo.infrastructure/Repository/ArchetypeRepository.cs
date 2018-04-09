@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ygo.core.Models.Db;
 using ygo.domain.Repository;
 using ygo.infrastructure.Database;
-using ygo.infrastructure.Models;
 
 namespace ygo.infrastructure.Repository
 {

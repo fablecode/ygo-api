@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using ygo.infrastructure.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.infrastructure.Database
 {

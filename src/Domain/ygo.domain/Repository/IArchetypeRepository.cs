@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ygo.infrastructure.Models;
+using ygo.core.Models.Db;
 
 namespace ygo.domain.Repository
 {

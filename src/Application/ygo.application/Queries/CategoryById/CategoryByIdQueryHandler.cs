@@ -2,8 +2,8 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using ygo.core.Models.Db;
 using ygo.domain.Repository;
-using ygo.infrastructure.Models;
 
 namespace ygo.application.Queries.CategoryById
 {
