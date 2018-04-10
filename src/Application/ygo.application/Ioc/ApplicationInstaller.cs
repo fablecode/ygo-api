@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.AddCard;
@@ -12,6 +12,7 @@ using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateArchetype;
 using ygo.application.Commands.UpdateArchetypeCards;
+using ygo.application.Commands.UpdateArchetypeSupportCards;
 using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Commands.UpdateCard;
@@ -67,6 +68,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<AddArchetypeCommand>, AddArchetypeCommandValidator>();
             services.AddTransient<IValidator<UpdateArchetypeCommand>, UpdateArchetypeCommandValidator>();
             services.AddTransient<IValidator<UpdateArchetypeCardsCommand>, UpdateArchetypeCardsCommandValidator>();
+            services.AddTransient<IValidator<UpdateArchetypeSupportCardsCommand>, UpdateArchetypeSupportCardsCommandValidator>();
 
             return services;
         }
