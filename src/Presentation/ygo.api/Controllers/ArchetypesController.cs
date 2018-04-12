@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using ygo.api.Auth;
@@ -29,7 +31,7 @@ namespace ygo.api.Controllers
         [HttpGet("{id:long}", Name = "ArchetypeById")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get(long id)
+        public async Task<IActionResult> GetById(long id)
         {
             var result = await _mediator.Send(new ArchetypeByIdQuery { Id = id});
 
@@ -41,14 +43,14 @@ namespace ygo.api.Controllers
 
 
         /// <summary>
-        /// Archetype by 
+        /// Archetype by name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("names")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get([FromQuery] string name)
+        public async Task<IActionResult> GetByName([FromQuery] string name)
         {
             var result = await _mediator.Send(new ArchetypeByNameQuery { Name = name });
 
@@ -58,6 +60,24 @@ namespace ygo.api.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Archetype list with pagination.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public Task<IActionResult> GetArchetypeList([FromQuery]ArchetypeSearchInputModel query)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Add a new Archetype
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         [ProducesResponseType((int) HttpStatusCode.Created)]
@@ -83,6 +103,11 @@ namespace ygo.api.Controllers
             return StatusCode((int)HttpStatusCode.Conflict);
         }
 
+        /// <summary>
+        /// Update an existing Archetype
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
@@ -100,5 +125,14 @@ namespace ygo.api.Controllers
 
             return BadRequest(result.Errors);
         }
+    }
+
+    public class ArchetypeSearchInputModel
+    {
+        public string SearchTerm { get; set; }
+        [BindRequired]
+        public int Offset { get; set; }
+        [BindRequired]
+        public int Limit { get; set; }
     }
 }

@@ -1,15 +1,17 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
 using ygo.api.Auth;
 using ygo.api.Auth.Swagger;
 using ygo.application;
@@ -39,10 +41,21 @@ namespace ygo.api
                 setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
             });
 
+            // Api version
+            services.AddApiVersioning(o =>
+            {
+                o.DefaultApiVersion = new ApiVersion(1, 0); // specify the default api version
+                o.AssumeDefaultVersionWhenUnspecified = true; // assume that the caller wants the default version if they don't specify
+                o.ApiVersionReader = new HeaderApiVersionReader
+                {
+                    HeaderNames = { "api-version" }
+                };
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Ygo API", Version = "v1" });
-
+                c.DescribeAllEnumsAsStrings();
                 // To add an extra token input field in the Swagger UI
                 c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
 
@@ -77,7 +90,7 @@ namespace ygo.api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");                
             });
             app.UseMvc();
             app.UseRewriter(new RewriteOptions()
