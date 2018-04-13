@@ -44,11 +44,12 @@ namespace ygo.api
             // Api version
             services.AddApiVersioning(o =>
             {
+                o.ReportApiVersions = true; // Adds a response header "api-supported-versions"
                 o.DefaultApiVersion = new ApiVersion(1, 0); // specify the default api version
                 o.AssumeDefaultVersionWhenUnspecified = true; // assume that the caller wants the default version if they don't specify
                 o.ApiVersionReader = new HeaderApiVersionReader
                 {
-                    HeaderNames = { "api-version" }
+                    HeaderNames = { "api-version" } // Supported version headers
                 };
             });
 
