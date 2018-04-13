@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.UpdateArchetypeCards;
 using ygo.application.Queries.ArchetypeById;
 using ygo.application.Queries.ArchetypeByName;
+using ygo.application.Queries.ArchetypeSearch;
 
 namespace ygo.api.Controllers
 {
@@ -68,7 +68,7 @@ namespace ygo.api.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public Task<IActionResult> GetArchetypeList([FromQuery]ArchetypeSearchInputModel query)
+        public Task<IActionResult> GetArchetypeList([FromQuery]ArchetypeSearchQuery query)
         {
             throw new NotImplementedException();
         }
@@ -125,14 +125,5 @@ namespace ygo.api.Controllers
 
             return BadRequest(result.Errors);
         }
-    }
-
-    public class ArchetypeSearchInputModel
-    {
-        public string SearchTerm { get; set; }
-        [BindRequired]
-        public int Offset { get; set; }
-        [BindRequired]
-        public int Limit { get; set; }
     }
 }

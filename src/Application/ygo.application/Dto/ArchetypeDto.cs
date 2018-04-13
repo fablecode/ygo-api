@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using MediatR;
 
 namespace ygo.application.Dto
 {
-    public class ArchetypeDto
+    public class ArchetypeDto : IRequest
     {
         public long Id { get; set; }
         public string Name { get; set; }
