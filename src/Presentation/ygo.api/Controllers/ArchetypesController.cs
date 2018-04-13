@@ -47,10 +47,10 @@ namespace ygo.api.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpGet("names")]
+        [HttpGet("named")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetByName([FromQuery] string name)
+        public async Task<IActionResult> GetByName([FromQuery] string name = "")
         {
             var result = await _mediator.Send(new ArchetypeByNameQuery { Name = name });
 

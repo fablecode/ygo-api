@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
@@ -45,5 +47,16 @@ namespace ygo.infrastructure.Repository
 
             return archetype;
         }
+
+        public async Task<IEnumerable<string>> NameList(string filter)
+        {
+            return await (
+                            from a in _dbContext.Archetype
+                            where EF.Functions.Like(a.Name, $"%{filter}%")
+                            select a.Name
+                         )
+                         .ToListAsync();
+        }
+
     }
 }
