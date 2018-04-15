@@ -50,6 +50,7 @@ namespace ygo.application.Queries
 
             response.Id = archetype.Id;
             response.Name = archetype.Name;
+            response.ImageUrl = $"/api/images/archetypes/{archetype.Id}";
 
             if (archetype.ArchetypeCard != null && archetype.ArchetypeCard.Any())
             {

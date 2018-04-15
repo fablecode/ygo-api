@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using System.Threading.Tasks;
 using ygo.application.Dto;
+using ygo.application.Queries.ArchetypeImageById;
 using ygo.domain.Repository;
 
 namespace ygo.application.Queries.ArchetypeByName
