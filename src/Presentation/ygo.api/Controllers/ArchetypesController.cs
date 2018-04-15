@@ -107,7 +107,6 @@ namespace ygo.api.Controllers
                 if (searchResults.List.Any())
                     return Ok(new
                     {
-                        Paging = searchResults.GetHeader(),
                         Links = ArchetypeSearchLinks(searchResults, query.SearchTerm),
                         Items = searchResults.List
                     });
