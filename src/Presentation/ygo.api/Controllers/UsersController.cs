@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using ygo.api.Auth;
 
 namespace ygo.api.Controllers
@@ -9,15 +9,15 @@ namespace ygo.api.Controllers
     public class UsersController : Controller
     {
         /// <summary>
-        /// Get user by email address
+        ///     Get user by email address
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpGet("{email}", Name = "UserByEmail")]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult Get(string email)
         {
             return StatusCode(501);

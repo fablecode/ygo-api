@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using System.Net;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Threading.Tasks;
 using ygo.api.Auth;
 using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.UpdateBanlist;
@@ -24,16 +24,16 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Banlist by id
+        ///     Banlist by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id:long}", Name = "BanlistById")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(long id)
         {
-            var result = await _mediator.Send(new BanlistByIdQuery { Id = id });
+            var result = await _mediator.Send(new BanlistByIdQuery {Id = id});
 
             if (result != null)
                 return Ok(result);
@@ -42,11 +42,11 @@ namespace ygo.api.Controllers
         }
 
         [HttpGet("latest/{format}")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> Latest(string format)
         {
-            var result = await _mediator.Send(new LatestBanlistQuery { Acronym = format });
+            var result = await _mediator.Send(new LatestBanlistQuery {Acronym = format});
 
             if (result != null)
                 return Ok(result);
@@ -56,49 +56,46 @@ namespace ygo.api.Controllers
 
 
         /// <summary>
-        /// Add new banlist
+        ///     Add new banlist
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
-        [ProducesResponseType((int)HttpStatusCode.Conflict)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int) HttpStatusCode.Created)]
+        [ProducesResponseType((int) HttpStatusCode.Conflict)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddBanlistCommand command)
         {
-            var existingBanlist = await _mediator.Send(new BanlistByIdQuery { Id = command.Id });
+            var existingBanlist = await _mediator.Send(new BanlistByIdQuery {Id = command.Id});
 
             if (existingBanlist == null)
             {
                 var result = await _mediator.Send(command);
 
-                if (result.IsSuccessful)
-                {
-                    return CreatedAtRoute("BanlistById", new { id = result.Data }, result.Data);
-                }
+                if (result.IsSuccessful) return CreatedAtRoute("BanlistById", new {id = result.Data}, result.Data);
 
                 return BadRequest(result.Errors);
             }
 
-            return StatusCode((int)HttpStatusCode.Conflict, existingBanlist);
+            return StatusCode((int) HttpStatusCode.Conflict, existingBanlist);
         }
 
         /// <summary>
-        /// Update existing banlist
+        ///     Update existing banlist
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Put([FromBody] UpdateBanlistCommand command)
         {
-            var banlistExists = await _mediator.Send(new BanlistExistsQuery { Id = command.Id });
+            var banlistExists = await _mediator.Send(new BanlistExistsQuery {Id = command.Id});
 
             if (banlistExists)
             {
@@ -114,20 +111,20 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Update existing banlist cards
+        ///     Update existing banlist cards
         /// </summary>
         /// <param name="banlistId"></param>
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPut("{banlistId:long}/cards")]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Put(long banlistId, [FromBody] UpdateBanlistCardsCommand command)
         {
-            var banlistExists = await _mediator.Send(new BanlistExistsQuery { Id = banlistId });
+            var banlistExists = await _mediator.Send(new BanlistExistsQuery {Id = banlistId});
 
             if (banlistExists)
             {

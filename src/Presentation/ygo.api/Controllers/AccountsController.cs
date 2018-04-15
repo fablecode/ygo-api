@@ -19,14 +19,14 @@ namespace ygo.api.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountsController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _config;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public AccountsController
         (
-            UserManager<ApplicationUser> userManager, 
-            SignInManager<ApplicationUser> signInManager, 
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             IConfiguration config
         )
         {
@@ -36,19 +36,19 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// User registration
+        ///     User registration
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Created)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -63,14 +63,14 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Token authentication
+        ///     Token authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Token([FromBody] LoginModel model)
         {
             if (ModelState.IsValid)
@@ -86,9 +86,9 @@ namespace ygo.api.Controllers
                         var claims = new List<Claim>
                         {
                             new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                            new Claim(JwtRegisteredClaimNames.Jti, user.Id),
+                            new Claim(JwtRegisteredClaimNames.Jti, user.Id)
                         };
-                        
+
                         // Role Claims
                         var userRoles = await _userManager.GetRolesAsync(user);
                         claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
@@ -103,7 +103,7 @@ namespace ygo.api.Controllers
                             expires: DateTime.Now.AddDays(30),
                             signingCredentials: creds);
 
-                        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                        return Ok(new {token = new JwtSecurityTokenHandler().WriteToken(token)});
                     }
                 }
 
@@ -112,6 +112,5 @@ namespace ygo.api.Controllers
 
             return BadRequest(ModelState);
         }
-
     }
 }

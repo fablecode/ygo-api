@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Rewrite.Internal.ApacheModRewrite;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.api.Model;
 using ygo.application.Commands.AddArchetype;
@@ -22,8 +21,8 @@ namespace ygo.api.Controllers
     [Route("api/[controller]")]
     public class ArchetypesController : Controller
     {
-        private readonly IMediator _mediator;
         private const string ArchetypeSearchRouteName = "ArchetypeSearch";
+        private readonly IMediator _mediator;
 
         public ArchetypesController(IMediator mediator)
         {
@@ -31,16 +30,16 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Archetype by Id
+        ///     Archetype by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id:long}", Name = "ArchetypeById")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetById(long id)
         {
-            var result = await _mediator.Send(new ArchetypeByIdQuery { Id = id});
+            var result = await _mediator.Send(new ArchetypeByIdQuery {Id = id});
 
             if (result != null)
                 return Ok(result);
@@ -50,7 +49,7 @@ namespace ygo.api.Controllers
 
 
         /// <summary>
-        /// Archetype by name
+        ///     Archetype by name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -59,7 +58,7 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetByName([FromQuery] string name = "")
         {
-            var result = await _mediator.Send(new ArchetypeByNameQuery { Name = name });
+            var result = await _mediator.Send(new ArchetypeByNameQuery {Name = name});
 
             if (result != null)
                 return Ok(result);
@@ -68,16 +67,16 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Archeytpe autosuggest by name
+        ///     Archeytpe autosuggest by name
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet("names")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> AutoSuggests([FromQuery] string filter = "")
         {
-            var result = await _mediator.Send(new ArchetypeAutosuggestQuery { Filter = filter });
+            var result = await _mediator.Send(new ArchetypeAutosuggestQuery {Filter = filter});
 
             if (result != null)
                 return Ok(result);
@@ -87,27 +86,40 @@ namespace ygo.api.Controllers
 
 
         /// <summary>
-        /// Paginated Archetype list
+        ///     Paginated Archetype list
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Name = "ArchetypeSearch")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetArchetypeSearch([FromQuery]ArchetypeSearchQuery query)
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetArchetypeSearch([FromQuery] ArchetypeSearchQuery query)
         {
             var result = await _mediator.Send(query);
 
-            Response.Headers.Add("X-Pagination", result.GetHeader().ToJson());
+            if (result.IsSuccessful)
+            {
+                var searchResults = (PagedList<ArchetypeDto>) result.Data;
 
-            if (result.List.Any())
-                return Ok(new { Paging = result.GetHeader(), Links = ArchetypeSearchLinks(result, query.SearchTerm), Items = result.List});
+                Response.Headers.Add("X-Pagination", searchResults.GetHeader().ToJson());
 
-            return NotFound();
+                if (searchResults.List.Any())
+                    return Ok(new
+                    {
+                        Paging = searchResults.GetHeader(),
+                        Links = ArchetypeSearchLinks(searchResults, query.SearchTerm),
+                        Items = searchResults.List
+                    });
+
+                return NotFound();
+            }
+
+            return BadRequest(result.Errors);
         }
 
         /// <summary>
-        /// Add a new Archetype
+        ///     Add a new Archetype
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -119,42 +131,36 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddArchetypeCommand command)
         {
-            var existingArchetype = await _mediator.Send(new ArchetypeByIdQuery { Id = command.ArchetypeNumber });
+            var existingArchetype = await _mediator.Send(new ArchetypeByIdQuery {Id = command.ArchetypeNumber});
 
             if (existingArchetype == null)
             {
                 var result = await _mediator.Send(command);
 
-                if (result.IsSuccessful)
-                {
-                    return CreatedAtRoute("ArchetypeById", new { id = result.Data }, result.Data);
-                }
+                if (result.IsSuccessful) return CreatedAtRoute("ArchetypeById", new {id = result.Data}, result.Data);
 
                 return BadRequest(result.Errors);
             }
 
-            return StatusCode((int)HttpStatusCode.Conflict);
+            return StatusCode((int) HttpStatusCode.Conflict);
         }
 
         /// <summary>
-        /// Update an existing Archetype
+        ///     Update an existing Archetype
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
-        [ProducesResponseType((int)HttpStatusCode.Conflict)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int) HttpStatusCode.Created)]
+        [ProducesResponseType((int) HttpStatusCode.Conflict)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Put([FromBody] UpdateArchetypeCardsCommand command)
         {
             var result = await _mediator.Send(command);
 
-            if (result.IsSuccessful)
-            {
-                return Ok(result.Data);
-            }
+            if (result.IsSuccessful) return Ok(result.Data);
 
             return BadRequest(result.Errors);
         }
@@ -167,19 +173,23 @@ namespace ygo.api.Controllers
 
 
             if (list.HasPreviousPage)
-                links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PreviousPageNumber, list.PageSize, "previous", "GET"));
+                links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PreviousPageNumber,
+                    list.PageSize, "previous", "GET"));
 
-            links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PageNumber, list.PageSize, "self", "GET"));
+            links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PageNumber, list.PageSize,
+                "self", "GET"));
 
             if (list.HasNextPage)
-                links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.NextPageNumber, list.PageSize, "next", "GET"));
+                links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.NextPageNumber,
+                    list.PageSize, "next", "GET"));
 
             return links;
         }
 
-        private LinkInfo ArchetypeSearchCreateLink(string routeName, string searchTerm, int pageNumber, int pageSize, string rel, string method)
+        private LinkInfo ArchetypeSearchCreateLink(string routeName, string searchTerm, int pageNumber, int pageSize,
+            string rel, string method)
         {
-            var values = new { SearchTerm = searchTerm, PageNumber = pageNumber, PageSize = pageSize };
+            var values = new {SearchTerm = searchTerm, PageNumber = pageNumber, PageSize = pageSize};
 
             return new LinkInfo
             {
@@ -187,7 +197,7 @@ namespace ygo.api.Controllers
                 Rel = rel,
                 Method = method
             };
-        } 
+        }
 
         #endregion
     }

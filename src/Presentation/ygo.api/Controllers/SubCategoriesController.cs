@@ -17,11 +17,11 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// All SubCategories
+        ///     All SubCategories
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(new AllSubCategoriesQuery());

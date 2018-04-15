@@ -20,12 +20,13 @@ namespace ygo.api.Controllers
         {
             _mediator = mediator;
         }
+
         /// <summary>
-        /// All categories
+        ///     All categories
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(new AllCategoriesQuery());
@@ -34,13 +35,13 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Category by id
+        ///     Category by id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns> 
+        /// <returns></returns>
         [HttpGet("{id}", Name = "CategoryById")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _mediator.Send(new CategoryByIdQuery {Id = id});
@@ -52,21 +53,21 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// New category
+        ///     New category
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int) HttpStatusCode.Created)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> Post([FromBody] AddCategoryCommand command)
         {
             var result = await _mediator.Send(command);
 
             if (result.IsSuccessful)
-                return CreatedAtRoute("CategoryById", new { id = ((Category)result.Data).Id }, result.Data);
+                return CreatedAtRoute("CategoryById", new {id = ((Category) result.Data).Id}, result.Data);
 
             return BadRequest(result.Errors);
         }

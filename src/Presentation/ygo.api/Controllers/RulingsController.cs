@@ -20,6 +20,5 @@ namespace ygo.api.Controllers
         {
             return StatusCode(501);
         }
-
     }
 }

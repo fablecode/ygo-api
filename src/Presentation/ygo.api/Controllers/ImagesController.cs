@@ -1,7 +1,7 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using ygo.application.Queries.CardImageByName;
 
 namespace ygo.api.Controllers
@@ -17,13 +17,13 @@ namespace ygo.api.Controllers
         }
 
         [HttpGet("cards/{name}")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(string name)
         {
-            var result = await _mediator.Send(new CardImageByNameQuery { Name = name });
+            var result = await _mediator.Send(new CardImageByNameQuery {Name = name});
 
-            if(result.IsSuccessful)
+            if (result.IsSuccessful)
                 return new PhysicalFileResult(result.FilePath, result.ContentType);
 
             return NotFound();
