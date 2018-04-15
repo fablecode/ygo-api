@@ -1,12 +1,18 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Rewrite.Internal.ApacheModRewrite;
 using ygo.api.Auth;
+using ygo.api.Model;
 using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.UpdateArchetypeCards;
+using ygo.application.Dto;
+using ygo.application.Paging;
+using ygo.application.Queries.ArchetypeAutosuggest;
 using ygo.application.Queries.ArchetypeById;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.ArchetypeSearch;
@@ -17,6 +23,7 @@ namespace ygo.api.Controllers
     public class ArchetypesController : Controller
     {
         private readonly IMediator _mediator;
+        private const string ArchetypeSearchRouteName = "ArchetypeSearch";
 
         public ArchetypesController(IMediator mediator)
         {
@@ -61,16 +68,42 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        /// Archetype list with pagination.
+        /// Archeytpe autosuggest by name
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet("names")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> AutoSuggests([FromQuery] string filter = "")
+        {
+            var result = await _mediator.Send(new ArchetypeAutosuggestQuery { Filter = filter });
+
+            if (result != null)
+                return Ok(result);
+
+            return NotFound();
+        }
+
+
+        /// <summary>
+        /// Paginated Archetype list
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet(Name = "ArchetypeSearch")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public Task<IActionResult> GetArchetypeList([FromQuery]ArchetypeSearchQuery query)
+        public async Task<IActionResult> GetArchetypeSearch([FromQuery]ArchetypeSearchQuery query)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(query);
+
+            Response.Headers.Add("X-Pagination", result.GetHeader().ToJson());
+
+            if (result.List.Any())
+                return Ok(new { Paging = result.GetHeader(), Links = ArchetypeSearchLinks(result, query.SearchTerm), Items = result.List});
+
+            return NotFound();
         }
 
         /// <summary>
@@ -125,5 +158,37 @@ namespace ygo.api.Controllers
 
             return BadRequest(result.Errors);
         }
+
+        #region private helpers
+
+        private List<LinkInfo> ArchetypeSearchLinks(PagedList<ArchetypeDto> list, string searchTerm)
+        {
+            var links = new List<LinkInfo>();
+
+
+            if (list.HasPreviousPage)
+                links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PreviousPageNumber, list.PageSize, "previous", "GET"));
+
+            links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PageNumber, list.PageSize, "self", "GET"));
+
+            if (list.HasNextPage)
+                links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.NextPageNumber, list.PageSize, "next", "GET"));
+
+            return links;
+        }
+
+        private LinkInfo ArchetypeSearchCreateLink(string routeName, string searchTerm, int pageNumber, int pageSize, string rel, string method)
+        {
+            var values = new { SearchTerm = searchTerm, PageNumber = pageNumber, PageSize = pageSize };
+
+            return new LinkInfo
+            {
+                Href = Url.Link(routeName, values),
+                Rel = rel,
+                Method = method
+            };
+        } 
+
+        #endregion
     }
 }

@@ -1,85 +1,29 @@
 ﻿using MediatR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
+using ygo.application.Paging;
+using ygo.domain.Repository;
 
 namespace ygo.application.Queries.ArchetypeSearch
 {
-    public class ArchetypeSearchQueryHandler : IRequestHandler<ArchetypeSearchQuery, ArchetypeDto>
+    public class ArchetypeSearchQueryHandler : IRequestHandler<ArchetypeSearchQuery, PagedList<ArchetypeDto>>
     {
-        public Task<ArchetypeDto> Handle(ArchetypeSearchQuery request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
+        private readonly IArchetypeRepository _archetypeRepository;
 
-    public class PagedList<T>
-    {
-        public PagedList(IQueryable<T> source, int pageNumber, int pageSize)
+        public ArchetypeSearchQueryHandler(IArchetypeRepository archetypeRepository)
         {
-            TotalItems = source.Count();
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            List = source
-                .Skip(pageSize * (pageNumber - 1))
-                .Take(pageSize)
-                .ToList();
+            _archetypeRepository = archetypeRepository;
         }
 
-        public int TotalItems { get; }
-        public int PageNumber { get; }
-        public int PageSize { get; }
-        public List<T> List { get; }
-
-        public int TotalPages =>
-            (int) Math.Ceiling(TotalItems / (double) PageSize);
-
-        public bool HasPreviousPage => PageNumber > 1;
-        public bool HasNextPage => PageNumber < TotalPages;
-
-        public int NextPageNumber =>
-            HasNextPage ? PageNumber + 1 : TotalPages;
-
-        public int PreviousPageNumber =>
-            HasPreviousPage ? PageNumber - 1 : 1;
-
-        public PagingHeader GetHeader()
+        public async Task<PagedList<ArchetypeDto>> Handle(ArchetypeSearchQuery request, CancellationToken cancellationToken)
         {
-            return new PagingHeader(
-                TotalItems, PageNumber,
-                PageSize, TotalPages);
-        }
-    }
+            var searchResult = await _archetypeRepository.Search(request.SearchTerm, request.PageNumber, request.PageSize);
 
-    public class PagingHeader
-    {
-        public PagingHeader(
-            int totalItems, int pageNumber, int pageSize, int totalPages)
-        {
-            TotalItems = totalItems;
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            TotalPages = totalPages;
-        }
+            var archetypeList = searchResult.Items.Select(a => a.MapToArchetypeDto()).ToList();
 
-        public int TotalItems { get; }
-        public int PageNumber { get; }
-        public int PageSize { get; }
-        public int TotalPages { get; }
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new
-                        CamelCasePropertyNamesContractResolver()
-                });
+            return new PagedList<ArchetypeDto>(archetypeList, searchResult.TotalRecords, request.PageNumber,request.PageSize);
         }
     }
 }

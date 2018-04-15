@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ygo.application.Dto
 {
-    public class ArchetypeDto : IRequest
+    public class ArchetypeDto
     {
         public long Id { get; set; }
         public string Name { get; set; }

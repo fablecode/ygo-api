@@ -55,7 +55,7 @@ namespace ygo.application.Queries
             {
                 foreach (var archetypeCard in archetype.ArchetypeCard)
                 {
-                    response.Cards.Add(new ArchetypeCardDto { ArchetypeId = archetypeCard.CardId, CardId = archetypeCard.CardId});
+                    response.Cards.Add(new ArchetypeCardDto { ArchetypeId = archetypeCard.ArchetypeId, CardId = archetypeCard.CardId});
                 }
             }
 
