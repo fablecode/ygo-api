@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ygo.application.Queries.ArchetypeImageById;
 using ygo.application.Queries.CardImageByName;
 
 namespace ygo.api.Controllers
@@ -16,6 +17,11 @@ namespace ygo.api.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Card image by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet("cards/{name}")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
@@ -28,5 +34,24 @@ namespace ygo.api.Controllers
 
             return NotFound();
         }
+
+        /// <summary>
+        /// Archetype image by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("archetypes/{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Get(long id)
+        {
+            var result = await _mediator.Send(new ArchetypeImageByIdQuery { Id = id });
+
+            if (result.IsSuccessful)
+                return new PhysicalFileResult(result.FilePath, result.ContentType);
+
+            return NotFound();
+        }
+
     }
 }
