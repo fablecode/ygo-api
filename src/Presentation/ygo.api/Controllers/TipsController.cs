@@ -16,7 +16,7 @@ namespace ygo.api.Controllers
 
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        public IActionResult PutTips([FromBody] UpdateTipsCommand command)
+        public IActionResult Put([FromBody] UpdateTipsCommand command)
         {
             return StatusCode(501);
         }

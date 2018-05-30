@@ -18,6 +18,7 @@ using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Commands.UpdateCard;
 using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
+using ygo.application.Commands.UpdateTips;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.ArchetypeSearch;
