@@ -16,6 +16,7 @@ namespace ygo.core.Models.Db
             CardTip = new HashSet<CardTip>();
             CardTrivia = new HashSet<CardTrivia>();
             CardType = new HashSet<CardType>();
+            TipSection = new HashSet<TipSection>();
         }
 
         public long Id { get; set; }
@@ -38,5 +39,6 @@ namespace ygo.core.Models.Db
         public ICollection<CardTip> CardTip { get; set; }
         public ICollection<CardTrivia> CardTrivia { get; set; }
         public ICollection<CardType> CardType { get; set; }
+        public ICollection<TipSection> TipSection { get; set; }
     }
 }

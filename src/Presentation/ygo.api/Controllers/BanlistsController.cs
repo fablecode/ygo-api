@@ -24,7 +24,7 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        ///     Banlist by id
+        /// Banlist by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -41,6 +41,11 @@ namespace ygo.api.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// The latest banlist based on format
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
         [HttpGet("latest/{format}")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
@@ -56,7 +61,7 @@ namespace ygo.api.Controllers
 
 
         /// <summary>
-        ///     Add new banlist
+        ///  Add new banlist
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -83,7 +88,7 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        ///     Update existing banlist
+        /// Update existing banlist
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -111,7 +116,7 @@ namespace ygo.api.Controllers
         }
 
         /// <summary>
-        ///     Update existing banlist cards
+        /// Update existing banlist cards
         /// </summary>
         /// <param name="banlistId"></param>
         /// <param name="command"></param>

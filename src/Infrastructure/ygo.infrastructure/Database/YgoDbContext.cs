@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ygo.core.Models.Db;
-using AspNetRoles = ygo.core.Models.Db.AspNetRoles;
-using AspNetUsers = ygo.core.Models.Db.AspNetUsers;
-using Format = ygo.core.Models.Db.Format;
-using Limit = ygo.core.Models.Db.Limit;
-using LinkArrow = ygo.core.Models.Db.LinkArrow;
 using Type = ygo.core.Models.Db.Type;
 
 namespace ygo.infrastructure.Database
@@ -42,6 +37,8 @@ namespace ygo.infrastructure.Database
         public virtual DbSet<Limit> Limit { get; set; }
         public virtual DbSet<LinkArrow> LinkArrow { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
+        public virtual DbSet<Tip> Tip { get; set; }
+        public virtual DbSet<TipSection> TipSection { get; set; }
         public virtual DbSet<Type> Type { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -377,6 +374,32 @@ namespace ygo.infrastructure.Database
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SubCategory_Archetype");
+            });
+
+            modelBuilder.Entity<Tip>(entity =>
+            {
+                entity.Property(e => e.Text)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.TipSection)
+                    .WithMany(p => p.Tip)
+                    .HasForeignKey(d => d.TipSectionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Tip_TipSection");
+            });
+
+            modelBuilder.Entity<TipSection>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.Card)
+                    .WithMany(p => p.TipSection)
+                    .HasForeignKey(d => d.CardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TipSection_Card");
             });
 
             modelBuilder.Entity<Type>(entity =>
