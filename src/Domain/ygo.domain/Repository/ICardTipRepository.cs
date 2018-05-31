@@ -7,5 +7,7 @@ namespace ygo.domain.Repository
     public interface ICardTipRepository
     {
         Task<List<TipSection>> TipSectionsByCardId(long cardId);
+        Task DeleteByCardId(long cardId);
+        Task Update(List<TipSection> tipSections);
     }
 }

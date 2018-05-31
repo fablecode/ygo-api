@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ygo.core.Models.Db;
@@ -24,6 +25,23 @@ namespace ygo.infrastructure.Repository
                     .Include(t => t.Tip)
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public async Task DeleteByCardId(long cardId)
+        {
+            var tipSections = await TipSectionsByCardId(cardId);
+
+            if (tipSections.Any())
+            {
+                _context.Remove(tipSections);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task Update(List<TipSection> tipSections)
+        {
+            _context.TipSection.UpdateRange(tipSections);
+            await _context.SaveChangesAsync();
         }
     }
 }
