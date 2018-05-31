@@ -17,8 +17,7 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         }
 
         [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(" ")]
+        [TestCase(-1)]
         public void Given_An_Invalid_CardId_Validation_Should_Fail(long cardId)
         {
             // Arrange
