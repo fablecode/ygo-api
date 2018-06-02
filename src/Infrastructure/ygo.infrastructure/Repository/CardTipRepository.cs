@@ -29,11 +29,18 @@ namespace ygo.infrastructure.Repository
 
         public async Task DeleteByCardId(long cardId)
         {
-            var tipSections = await TipSectionsByCardId(cardId);
+            var tipSections = await _context
+                                .TipSection
+                                .Include(t => t.Card)
+                                .Include(t => t.Tip)
+                                .ToListAsync();
 
             if (tipSections.Any())
             {
-                _context.Remove(tipSections);
+                _context.Tip.RemoveRange(tipSections.SelectMany(t => t.Tip));
+                _context.TipSection.RemoveRange(tipSections);
+
+                //_context.RemoveRange(tipSections);
                 await _context.SaveChangesAsync();
             }
         }

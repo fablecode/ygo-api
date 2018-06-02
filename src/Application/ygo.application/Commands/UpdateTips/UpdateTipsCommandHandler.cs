@@ -61,6 +61,7 @@ namespace ygo.application.Commands.UpdateTips
                 if (newTipSectionList.Any())
                 {
                     await _cardTipRepository.Update(newTipSectionList);
+                    
                     commandResult.IsSuccessful = true;
                 }
             }

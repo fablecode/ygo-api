@@ -72,6 +72,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<UpdateArchetypeCardsCommand>, UpdateArchetypeCardsCommandValidator>();
             services.AddTransient<IValidator<UpdateArchetypeSupportCardsCommand>, UpdateArchetypeSupportCardsCommandValidator>();
             services.AddTransient<IValidator<ArchetypeSearchQuery>, ArchetypeSearchQueryValidator>();
+            services.AddTransient<IValidator<UpdateTipsCommand>, UpdateTipsCommandValidator>();
 
             return services;
         }
