@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using MediatR;
+using ygo.application.Dto;
 
 namespace ygo.application.Commands.UpdateRulings
 {
-    public class UpdateRulingsCommand
+    public class UpdateRulingCommand : IRequest<CommandResult>
     {
         public long CardId { get; set; }
-        public List<string> Rulings { get; set; }
+        public List<RulingSectionDto> Tips { get; set; }
     }
 }
