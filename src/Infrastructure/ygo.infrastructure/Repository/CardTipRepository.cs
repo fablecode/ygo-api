@@ -33,6 +33,7 @@ namespace ygo.infrastructure.Repository
                                 .TipSection
                                 .Include(t => t.Card)
                                 .Include(t => t.Tip)
+                                .Where(ts => ts.CardId == cardId)
                                 .ToListAsync();
 
             if (tipSections.Any())
