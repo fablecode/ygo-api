@@ -13,10 +13,11 @@ namespace ygo.core.Models.Db
             CardLinkArrow = new HashSet<CardLinkArrow>();
             CardRuling = new HashSet<CardRuling>();
             CardSubCategory = new HashSet<CardSubCategory>();
-            CardTip = new HashSet<CardTip>();
             CardTrivia = new HashSet<CardTrivia>();
             CardType = new HashSet<CardType>();
+            RulingSection = new HashSet<RulingSection>();
             TipSection = new HashSet<TipSection>();
+            TriviaSection = new HashSet<TriviaSection>();
         }
 
         public long Id { get; set; }
@@ -36,9 +37,10 @@ namespace ygo.core.Models.Db
         public ICollection<CardLinkArrow> CardLinkArrow { get; set; }
         public ICollection<CardRuling> CardRuling { get; set; }
         public ICollection<CardSubCategory> CardSubCategory { get; set; }
-        public ICollection<CardTip> CardTip { get; set; }
         public ICollection<CardTrivia> CardTrivia { get; set; }
         public ICollection<CardType> CardType { get; set; }
+        public ICollection<RulingSection> RulingSection { get; set; }
         public ICollection<TipSection> TipSection { get; set; }
+        public ICollection<TriviaSection> TriviaSection { get; set; }
     }
 }

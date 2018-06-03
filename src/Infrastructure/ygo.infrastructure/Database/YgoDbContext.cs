@@ -29,16 +29,19 @@ namespace ygo.infrastructure.Database
         public virtual DbSet<CardLinkArrow> CardLinkArrow { get; set; }
         public virtual DbSet<CardRuling> CardRuling { get; set; }
         public virtual DbSet<CardSubCategory> CardSubCategory { get; set; }
-        public virtual DbSet<CardTip> CardTip { get; set; }
         public virtual DbSet<CardTrivia> CardTrivia { get; set; }
         public virtual DbSet<CardType> CardType { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Format> Format { get; set; }
         public virtual DbSet<Limit> Limit { get; set; }
         public virtual DbSet<LinkArrow> LinkArrow { get; set; }
+        public virtual DbSet<Ruling> Ruling { get; set; }
+        public virtual DbSet<RulingSection> RulingSection { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<Tip> Tip { get; set; }
         public virtual DbSet<TipSection> TipSection { get; set; }
+        public virtual DbSet<Trivia> Trivia { get; set; }
+        public virtual DbSet<TriviaSection> TriviaSection { get; set; }
         public virtual DbSet<Type> Type { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -290,17 +293,6 @@ namespace ygo.infrastructure.Database
                     .HasConstraintName("FK_CardSubCategory_ToSubCategory");
             });
 
-            modelBuilder.Entity<CardTip>(entity =>
-            {
-                entity.Property(e => e.Tip).IsRequired();
-
-                entity.HasOne(d => d.Card)
-                    .WithMany(p => p.CardTip)
-                    .HasForeignKey(d => d.CardId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CardTip_ToCard");
-            });
-
             modelBuilder.Entity<CardTrivia>(entity =>
             {
                 entity.Property(e => e.Trivia).IsRequired();
@@ -363,6 +355,32 @@ namespace ygo.infrastructure.Database
                     .HasMaxLength(255);
             });
 
+            modelBuilder.Entity<Ruling>(entity =>
+            {
+                entity.Property(e => e.Text)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.RulingSection)
+                    .WithMany(p => p.Ruling)
+                    .HasForeignKey(d => d.RulingSectionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ruling_RulingSection");
+            });
+
+            modelBuilder.Entity<RulingSection>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.Card)
+                    .WithMany(p => p.RulingSection)
+                    .HasForeignKey(d => d.CardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RulingSection_Card");
+            });
+
             modelBuilder.Entity<SubCategory>(entity =>
             {
                 entity.Property(e => e.Name)
@@ -400,6 +418,32 @@ namespace ygo.infrastructure.Database
                     .HasForeignKey(d => d.CardId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TipSection_Card");
+            });
+
+            modelBuilder.Entity<Trivia>(entity =>
+            {
+                entity.Property(e => e.Text)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.TriviaSection)
+                    .WithMany(p => p.Trivia)
+                    .HasForeignKey(d => d.TriviaSectionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Trivia_TriviaSection");
+            });
+
+            modelBuilder.Entity<TriviaSection>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.Card)
+                    .WithMany(p => p.TriviaSection)
+                    .HasForeignKey(d => d.CardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TriviaSection_Card");
             });
 
             modelBuilder.Entity<Type>(entity =>

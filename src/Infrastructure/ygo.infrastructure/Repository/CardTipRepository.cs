@@ -41,7 +41,6 @@ namespace ygo.infrastructure.Repository
                 _context.Tip.RemoveRange(tipSections.SelectMany(t => t.Tip));
                 _context.TipSection.RemoveRange(tipSections);
 
-                //_context.RemoveRange(tipSections);
                 await _context.SaveChangesAsync();
             }
         }
