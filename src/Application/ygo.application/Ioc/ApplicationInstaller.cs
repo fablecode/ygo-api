@@ -20,6 +20,7 @@ using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTips;
 using ygo.application.Commands.UpdateTrapCard;
+using ygo.application.Commands.UpdateTrivias;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.ArchetypeSearch;
 using ygo.application.Queries.CardById;
@@ -73,6 +74,7 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<UpdateArchetypeSupportCardsCommand>, UpdateArchetypeSupportCardsCommandValidator>();
             services.AddTransient<IValidator<ArchetypeSearchQuery>, ArchetypeSearchQueryValidator>();
             services.AddTransient<IValidator<UpdateTipsCommand>, UpdateTipsCommandValidator>();
+            services.AddTransient<IValidator<UpdateTriviaCommand>, UpdateTriviaCommandValidator>();
 
             return services;
         }

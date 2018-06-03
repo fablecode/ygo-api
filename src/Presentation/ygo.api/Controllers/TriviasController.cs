@@ -1,13 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.application.Commands.UpdateTrivias;
 
 namespace ygo.api.Controllers
 {
-    [Route("cards/{cardId}/api/[controller]")]
-    public class TriviasController : Controller
+    [Route("api/cards/{cardId}/[controller]")]
+    public class TriviaController : Controller
     {
+        private readonly IMediator _mediator;
+
+        public TriviaController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
         public IActionResult Get(long cardId)
         {
@@ -16,9 +25,14 @@ namespace ygo.api.Controllers
 
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        public IActionResult PutTrivia([FromBody] UpdateTriviasCommand command)
+        public async Task<IActionResult> PutTrivia([FromBody] UpdateTriviaCommand command)
         {
-            return StatusCode(501);
+            var result = await _mediator.Send(command);
+
+            if (result.IsSuccessful)
+                return Ok();
+
+            return BadRequest(result.Errors);
         }
     }
 }

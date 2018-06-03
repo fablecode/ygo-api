@@ -42,6 +42,7 @@ namespace ygo.infrastructure.Ioc
             services.AddTransient<IArchetypeCardsRepository, ArchetypeCardsRepository>();
             services.AddTransient<IArchetypeSupportCardsRepository, ArchetypeSupportCardsRepository>();
             services.AddTransient<ICardTipRepository, CardTipRepository>();
+            services.AddTransient<ICardTriviaRepository, CardTriviaRepository>();
 
             return services;
         }
