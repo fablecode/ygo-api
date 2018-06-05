@@ -7,6 +7,6 @@ namespace ygo.application.Commands.UpdateRulings
     public class UpdateRulingCommand : IRequest<CommandResult>
     {
         public long CardId { get; set; }
-        public List<RulingSectionDto> Tips { get; set; }
+        public List<RulingSectionDto> Rulings { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace ygo.application.Commands.UpdateRulings
 
                 var newRulingSectionList = new List<RulingSection>();
 
-                foreach (var rulingSectionDto in request.Tips)
+                foreach (var rulingSectionDto in request.Rulings)
                 {
                     var newRulingSection = new RulingSection
                     {
@@ -43,7 +43,7 @@ namespace ygo.application.Commands.UpdateRulings
                         Updated = DateTime.UtcNow
                     };
 
-                    foreach (var ruling in rulingSectionDto.Tips)
+                    foreach (var ruling in rulingSectionDto.Rulings)
                     {
                         newRulingSection.Ruling.Add(new Ruling
                         {
