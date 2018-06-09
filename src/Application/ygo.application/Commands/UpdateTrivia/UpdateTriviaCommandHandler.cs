@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using ygo.application.Commands.UpdateTips;
-using ygo.application.Commands.UpdateTrivias;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateTrivia
 {
-    public class UpdateTriviaCommandHandler : IRequestHandler<UpdateTipsCommand, CommandResult>
+    public class UpdateTriviaCommandHandler : IRequestHandler<UpdateTriviaCommand, CommandResult>
     {
         private readonly ICardTriviaRepository _cardTriviaRepository;
         private readonly IValidator<UpdateTriviaCommand> _validator;
@@ -23,7 +22,7 @@ namespace ygo.application.Commands.UpdateTrivia
             _validator = validator;
         }
 
-        public async Task<CommandResult> Handle(UpdateTipsCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult> Handle(UpdateTriviaCommand request, CancellationToken cancellationToken)
         {
             var commandResult = new CommandResult();
 
@@ -35,7 +34,7 @@ namespace ygo.application.Commands.UpdateTrivia
 
                 var newTriviaSectionList = new List<TriviaSection>();
 
-                foreach (var triviaSectionDto in request.Tips)
+                foreach (var triviaSectionDto in request.Trivia)
                 {
                     var newTriviaSection = new TriviaSection
                     {
@@ -45,7 +44,7 @@ namespace ygo.application.Commands.UpdateTrivia
                         Updated = DateTime.UtcNow
                     };
 
-                    foreach (var trivia in triviaSectionDto.Tips)
+                    foreach (var trivia in triviaSectionDto.Trivia)
                     {
                         newTriviaSection.Trivia.Add(new Trivia
                         {

@@ -21,7 +21,7 @@ using ygo.application.Commands.UpdateRulings;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTips;
 using ygo.application.Commands.UpdateTrapCard;
-using ygo.application.Commands.UpdateTrivias;
+using ygo.application.Commands.UpdateTrivia;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.ArchetypeSearch;
 using ygo.application.Queries.CardById;

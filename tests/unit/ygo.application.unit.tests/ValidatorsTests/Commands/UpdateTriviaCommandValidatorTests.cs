@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
 using System;
-using ygo.application.Commands.UpdateTrivias;
+using ygo.application.Commands.UpdateTrivia;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {

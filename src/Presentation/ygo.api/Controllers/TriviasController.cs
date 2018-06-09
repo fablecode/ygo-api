@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
-using ygo.application.Commands.UpdateTrivias;
+using ygo.application.Commands.UpdateTrivia;
 
 namespace ygo.api.Controllers
 {

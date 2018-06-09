@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ygo.application.Commands.UpdateTrivias
+namespace ygo.application.Commands.UpdateTrivia
 {
     public class UpdateTriviaCommandValidator : AbstractValidator<UpdateTriviaCommand>
     {
