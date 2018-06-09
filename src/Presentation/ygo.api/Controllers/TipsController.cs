@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using ygo.api.Auth;
 using ygo.application.Commands.UpdateTips;
 
@@ -12,12 +11,10 @@ namespace ygo.api.Controllers
     public class TipsController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<TipsController> _logger;
 
-        public TipsController(IMediator mediator, ILogger<TipsController> logger)
+        public TipsController(IMediator mediator)
         {
             _mediator = mediator;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -30,20 +27,12 @@ namespace ygo.api.Controllers
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         public async Task<IActionResult> Put([FromBody] UpdateTipsCommand command)
         {
-            try
-            {
-                var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-                if (result.IsSuccessful)
-                    return Ok();
+            if (result.IsSuccessful)
+                return Ok();
 
-                return BadRequest(result.Errors);
-            }
-            catch (System.Exception ex)
-            {
-                _logger.LogError(ex, "Update cards tips");
-                throw;
-            }
+            return BadRequest(result.Errors);
         }
     }
 }
