@@ -17,12 +17,6 @@ namespace ygo.api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public IActionResult Get(long cardId)
-        {
-            return StatusCode(501);
-        }
-
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
         public async Task<IActionResult> PutTrivia([FromBody] UpdateTriviaCommand command)
