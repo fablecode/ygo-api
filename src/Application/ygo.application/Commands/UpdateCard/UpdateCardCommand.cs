@@ -9,7 +9,7 @@ namespace ygo.application.Commands.UpdateCard
     {
         public long Id { get; set; }
         public YgoCardType? CardType { get; set; }
-        public string CardNumber { get; set; }
+        public long? CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int? CardLevel { get; set; }

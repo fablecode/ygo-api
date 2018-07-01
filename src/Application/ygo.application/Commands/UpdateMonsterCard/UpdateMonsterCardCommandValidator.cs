@@ -33,11 +33,11 @@ namespace ygo.application.Commands.UpdateMonsterCard
                 .When(c => c.CardRank.HasValue);
 
             RuleFor(c => c.Atk)
-                .GreaterThan(0)
+                .GreaterThanOrEqualTo(0)
                 .LessThanOrEqualTo(MaxAtk).When(c => c.Atk.HasValue);
 
             RuleFor(c => c.Def)
-                .GreaterThan(0)
+                .GreaterThanOrEqualTo(0)
                 .LessThanOrEqualTo(MaxDef).When(c => c.Def.HasValue);
 
             RuleFor(c => c.AttributeId)

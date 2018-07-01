@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ygo.domain.Repository;
 using ygo.infrastructure.Database;
+using Type = ygo.core.Models.Db.Type;
 
 namespace ygo.infrastructure.Repository
 {
@@ -19,7 +19,7 @@ namespace ygo.infrastructure.Repository
 
         public Task<List<Type>> AllTypes()
         {
-            throw new NotImplementedException();
+            return _dbContext.Type.OrderBy(t => t.Name).ToListAsync();
         }
     }
 }

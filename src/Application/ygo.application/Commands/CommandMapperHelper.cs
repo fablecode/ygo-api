@@ -21,7 +21,7 @@ namespace ygo.application.Commands
         {
             var newMonsterCard = new Card
             {
-                CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null,
+                CardNumber = command.CardNumber,
                 Name = command.Name,
                 Description = command.Description,
                 CardLevel = command.CardLevel,
@@ -141,7 +141,7 @@ namespace ygo.application.Commands
 
         public static void UpdateMonsterCardWith(this Card card, UpdateMonsterCardCommand command)
         {
-            card.CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null;
+            card.CardNumber = command.CardNumber;
             card.Name = command.Name;
             card.Description = command.Description;
             card.CardLevel = command.CardLevel;
@@ -178,7 +178,7 @@ namespace ygo.application.Commands
 
         public static void UpdateSpellCardWith(this Card card, UpdateSpellCardCommand command)
         {
-            card.CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null;
+            card.CardNumber = command.CardNumber;
             card.Name = command.Name;
             card.Description = command.Description;
             card.Updated = DateTime.UtcNow;
@@ -195,7 +195,7 @@ namespace ygo.application.Commands
 
         public static void UpdateTrapCardWith(this Card card, UpdateTrapCardCommand command)
         {
-            card.CardNumber = command.CardNumber.HasValue ? command.CardNumber.ToString() : null;
+            card.CardNumber = command.CardNumber;
             card.Name = command.Name;
             card.Description = command.Description;
             card.Updated = DateTime.UtcNow;
@@ -218,18 +218,18 @@ namespace ygo.application.Commands
             banlist.Updated = DateTime.UtcNow;
         }
 
-        public static Card MapToSpellOrTrapCard(int? cardNumber, string name, string description, IList<int> subCategoryIds)
+        public static Card MapToSpellOrTrapCard(long? cardNumber, string name, string description, IList<int> subCategoryIds)
         {
             return MapToSpellOrTrapCard(0, cardNumber, name, description, subCategoryIds);
         }
 
-        public static Card MapToSpellOrTrapCard(long id, int? cardNumber, string name, string description, IList<int> subCategoryIds)
+        public static Card MapToSpellOrTrapCard(long id, long? cardNumber, string name, string description, IList<int> subCategoryIds)
         {
             var newCard = new Card
             {
                 Id = id,
                 Name = name,
-                CardNumber = cardNumber.HasValue ? cardNumber.ToString() : null,
+                CardNumber = cardNumber,
                 Description = description,
                 Created = DateTime.UtcNow,
                 Updated = DateTime.UtcNow
@@ -244,10 +244,10 @@ namespace ygo.application.Commands
             return newCard;
         }
 
-        public static void MapToSpellOrTrapCard(this Card card, int? cardNumber, string name, string description, IList<int> subCategoryIds)
+        public static void MapToSpellOrTrapCard(this Card card, long? cardNumber, string name, string description, IList<int> subCategoryIds)
         {
             card.Name = name;
-            card.CardNumber = cardNumber.HasValue ? cardNumber.ToString() : null;
+            card.CardNumber = cardNumber;
             card.Description = description;
             card.Updated = DateTime.UtcNow;
 

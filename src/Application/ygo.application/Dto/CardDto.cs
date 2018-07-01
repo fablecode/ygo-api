@@ -5,7 +5,7 @@ namespace ygo.application.Dto
     public class CardDto
     {
         public long Id { get; set; }
-        public string CardNumber { get; set; }
+        public long? CardNumber { get; set; }
         public string ImageUrl { get; set; }
 
         public string Name { get; set; }

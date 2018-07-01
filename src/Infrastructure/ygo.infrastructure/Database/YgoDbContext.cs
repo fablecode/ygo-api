@@ -44,6 +44,7 @@ namespace ygo.infrastructure.Database
         public virtual DbSet<TriviaSection> TriviaSection { get; set; }
         public virtual DbSet<Type> Type { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Archetype>(entity =>
@@ -223,8 +224,6 @@ namespace ygo.infrastructure.Database
                 entity.HasIndex(e => e.Name)
                     .HasName("IX_Card")
                     .IsUnique();
-
-                entity.Property(e => e.CardNumber).HasMaxLength(50);
 
                 entity.Property(e => e.Name)
                     .IsRequired()

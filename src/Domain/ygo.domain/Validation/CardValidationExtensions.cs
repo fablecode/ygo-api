@@ -9,7 +9,7 @@ namespace ygo.domain.Validation
             return rule
                     .NotNull()
                     .NotEmpty()
-                    .Length(2, 255);
+                    .Length(1, 255);
         }
     }
 }

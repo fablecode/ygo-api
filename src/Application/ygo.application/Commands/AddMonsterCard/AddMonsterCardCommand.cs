@@ -5,7 +5,7 @@ namespace ygo.application.Commands.AddMonsterCard
 {
     public class AddMonsterCardCommand : IRequest<CommandResult>
     {
-        public int? CardNumber { get; set; }
+        public long? CardNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int? CardLevel { get; set; }
