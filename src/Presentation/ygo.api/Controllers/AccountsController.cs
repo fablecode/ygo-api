@@ -47,14 +47,18 @@ namespace ygo.api.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var userResult = await _userManager.CreateAsync(user, model.Password);
+                if (userResult.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "User");
-                    return CreatedAtRoute("UserByEmail", new {model.Email}, model.Email);
+                    var roleResult = await _userManager.AddToRoleAsync(user, "User");
+
+                    if(roleResult.Succeeded)
+                        return Ok();
+
+                    return BadRequest(roleResult.Errors);
                 }
 
-                return BadRequest(result.Errors);
+                return BadRequest(userResult.Errors);
             }
 
             return BadRequest(ModelState);
