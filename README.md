@@ -6,7 +6,7 @@ A C# .NET Core 2 api for [Yu-Gi-Oh](http://www.yugioh-card.com/uk/) data such as
 ## Why?
 To provide access to the latest [Yu-Gi-Oh](http://www.yugioh-card.com/uk/)  banlist & card errata in a simple JSON format.
 
-## Live Demo
+## Api Url
 [http://www.ygo-api.com](http://www.ygo-api.com)
 
 ## Prerequisite
