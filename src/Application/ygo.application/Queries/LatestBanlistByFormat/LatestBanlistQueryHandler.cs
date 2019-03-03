@@ -17,7 +17,7 @@ namespace ygo.application.Queries.LatestBanlistByFormat
 
         public async Task<LatestBanlistDto> Handle(LatestBanlistQuery request, CancellationToken cancellationToken)
         {
-            var banlist = await _banlistRepository.GetBanlistByFormatAcronym(request.Acronym);
+            var banlist = await _banlistRepository.GetBanlistByFormatAcronym(request.Acronym.ToString());
 
             return banlist?.MapToLatestBanlist();
         }

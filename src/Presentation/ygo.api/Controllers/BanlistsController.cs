@@ -7,6 +7,7 @@ using ygo.api.Auth;
 using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Commands.UpdateBanlistCards;
+using ygo.application.Enums;
 using ygo.application.Queries.BanlistById;
 using ygo.application.Queries.BanlistExists;
 using ygo.application.Queries.LatestBanlistByFormat;
@@ -49,7 +50,7 @@ namespace ygo.api.Controllers
         [HttpGet("latest/{format}")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Latest(string format)
+        public async Task<IActionResult> Latest([FromRoute] BanlistFormat format)
         {
             var result = await _mediator.Send(new LatestBanlistQuery {Acronym = format});
 

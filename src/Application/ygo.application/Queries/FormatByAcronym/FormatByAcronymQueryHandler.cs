@@ -11,27 +11,17 @@ namespace ygo.application.Queries.FormatByAcronym
     public class FormatByAcronymQueryHandler : IRequestHandler<FormatByAcronymQuery, FormatDto>
     {
         private readonly IFormatRepository _repository;
-        private readonly IValidator<FormatByAcronymQuery> _validator;
 
-        public FormatByAcronymQueryHandler(IFormatRepository repository, IValidator<FormatByAcronymQuery> validator)
+        public FormatByAcronymQueryHandler(IFormatRepository repository)
         {
             _repository = repository;
-            _validator = validator;
         }
 
         public async Task<FormatDto> Handle(FormatByAcronymQuery request, CancellationToken cancellationToken)
         {
-            var validatorResults = _validator.Validate(request);
+            var result = await _repository.FormatByAcronym(request.Acronym.ToString());
 
-            if (validatorResults.IsValid)
-            {
-                var result = await _repository.FormatByAcronym(request.Acronym);
-
-                if (result != null)
-                    return Mapper.Map<FormatDto>(result);
-            }
-
-            return null;
+            return result != null ? Mapper.Map<FormatDto>(result) : null;
         }
     }
 }

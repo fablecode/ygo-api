@@ -66,7 +66,6 @@ namespace ygo.application.Ioc
             services.AddTransient<IValidator<DownloadImageCommand>, DownloadImageCommandValidator>();
             services.AddTransient<IValidator<AddBanlistCommand>, AddBanlistCommandValidator>();
             services.AddTransient<IValidator<UpdateBanlistCardsCommand>, UpdateBanlistCardsCommandValidator>();
-            services.AddTransient<IValidator<FormatByAcronymQuery>, FormatByAcronymQueryValidator>();
             services.AddTransient<IValidator<UpdateBanlistCommand>, UpdateBanlistCommandValidator>();
             services.AddTransient<IValidator<ArchetypeByNameQuery>, ArchetypeByNameQueryValidator>();
             services.AddTransient<IValidator<AddArchetypeCommand>, AddArchetypeCommandValidator>();

@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using ygo.application.Dto;
+using ygo.application.Enums;
 
 namespace ygo.application.Queries.FormatByAcronym
 {
     public class FormatByAcronymQuery : IRequest<FormatDto>
     {
-        public string Acronym { get; set; }
+        public BanlistFormat Acronym { get; set; }
     }
 }

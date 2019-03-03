@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ygo.application.Enums;
 using ygo.application.Queries.FormatByAcronym;
 
 namespace ygo.api.Controllers
@@ -16,7 +17,7 @@ namespace ygo.api.Controllers
         }
 
         [HttpGet("{acronym}")]
-        public async Task<IActionResult> Get(string acronym)
+        public async Task<IActionResult> Get([FromRoute] BanlistFormat acronym)
         {
             var result = await _mediator.Send(new FormatByAcronymQuery {Acronym = acronym});
 
