@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using ygo.application.Queries.CardById;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class CardByIdQueryHandlerTests
     {
         private CardByIdQueryHandler _sut;

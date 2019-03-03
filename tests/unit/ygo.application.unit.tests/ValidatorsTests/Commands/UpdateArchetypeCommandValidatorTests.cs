@@ -1,12 +1,13 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
 using System;
-using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.UpdateArchetype;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateArchetypeCommandValidatorTests
     {
         private UpdateArchetypeCommandValidator _sut;

@@ -2,10 +2,12 @@
 using NUnit.Framework;
 using System;
 using ygo.application.Commands.UpdateBanlist;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateBanlistCommandValidatorTests
     {
         private UpdateBanlistCommandValidator _sut;

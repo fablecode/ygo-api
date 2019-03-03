@@ -3,10 +3,12 @@ using NUnit.Framework;
 using System;
 using ygo.application.Commands.AddCard;
 using ygo.core.Enums;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class AddCardCommandValidatorTests
     {
         private AddCardCommandValidator _sut;

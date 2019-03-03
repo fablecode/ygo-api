@@ -2,10 +2,12 @@
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 using ygo.application.Commands.UpdateArchetypeCards;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateArchetypeCardsCommandValidatorTests
     {
         private UpdateArchetypeCardsCommandValidator _sut;

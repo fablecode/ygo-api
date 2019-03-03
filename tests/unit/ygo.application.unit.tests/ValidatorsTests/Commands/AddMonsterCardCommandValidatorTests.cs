@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ygo.application.Commands.AddMonsterCard;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class AddMonsterCardCommandValidatorTests
     {
         private AddMonsterCardCommandValidator _sut;

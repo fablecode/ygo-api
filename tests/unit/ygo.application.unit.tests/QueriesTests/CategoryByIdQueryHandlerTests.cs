@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using ygo.application.Queries.CategoryById;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class CategoryByIdQueryHandlerTests
     {
         private CategoryByIdQueryHandler _sut;

@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateSpellCardCommandHandlerTests
     {
         private UpdateSpellCardCommandHandler _sut;

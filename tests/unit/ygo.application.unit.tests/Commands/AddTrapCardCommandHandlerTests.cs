@@ -12,10 +12,12 @@ using ygo.core.Models.Db;
 using ygo.domain.Repository;
 using ygo.infrastructure.Database;
 using ygo.infrastructure.Repository;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class AddTrapCardCommandHandlerTests
     {
         private AddTrapCardCommandHandler _sut;

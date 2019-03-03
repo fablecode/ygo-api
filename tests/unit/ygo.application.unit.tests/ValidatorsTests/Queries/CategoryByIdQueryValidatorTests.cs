@@ -2,10 +2,12 @@
 using NUnit.Framework;
 using System;
 using ygo.application.Queries.CategoryById;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class CategoryByIdQueryValidatorTests
     {
         private CategoryByIdQueryValidator _sut;

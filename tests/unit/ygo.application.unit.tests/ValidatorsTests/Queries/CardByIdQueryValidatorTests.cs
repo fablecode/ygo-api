@@ -3,10 +3,12 @@ using FluentValidation.TestHelper;
 using NUnit.Framework;
 using System;
 using ygo.application.Queries.CardById;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class CardByIdQueryValidatorTests
     {
         private CardByIdQueryValidator _sut;

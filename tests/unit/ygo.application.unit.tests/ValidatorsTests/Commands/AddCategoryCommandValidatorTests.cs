@@ -3,10 +3,12 @@ using FluentValidation.TestHelper;
 using NUnit.Framework;
 using System;
 using ygo.application.Commands.AddCategory;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class AddCategoryCommandValidatorTests
     {
         private AddCategoryCommandValidator _sut;

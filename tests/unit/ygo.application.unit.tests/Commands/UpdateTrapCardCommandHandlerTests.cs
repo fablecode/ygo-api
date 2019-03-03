@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateTrapCardCommandHandlerTests
     {
         private UpdateTrapCardCommandHandler _sut;

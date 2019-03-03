@@ -2,10 +2,12 @@
 using NUnit.Framework;
 using System;
 using ygo.application.Commands.AddTrapCard;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class AddTrapCardCommandValidatorTests
     {
         private AddTrapCardCommandValidator _sut;

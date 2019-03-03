@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using ygo.application.Commands.UpdateBanlistCards;
 using ygo.application.Dto;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateBanlistCardsCommandValidatorTests
     {
         private UpdateBanlistCardsCommandValidator _sut;

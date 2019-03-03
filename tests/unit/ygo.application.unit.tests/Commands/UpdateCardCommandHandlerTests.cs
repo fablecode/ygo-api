@@ -6,10 +6,12 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using ygo.application.Commands.UpdateCard;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateCardCommandHandlerTests
     {
         private UpdateCardCommandHandler _sut;

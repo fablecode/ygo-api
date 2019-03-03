@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.core.Models.Db;
 using ygo.domain.Repository;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class ArchetypeByNameQueryHandlerTests
     {
         private ArchetypeByNameQueryHandler _sut;

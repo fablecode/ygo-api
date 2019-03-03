@@ -2,10 +2,12 @@
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 using ygo.application.Queries.ArchetypeSearch;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Queries
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class ArchetypeSearchQueryValidatorTests
     {
         private ArchetypeSearchQueryValidator _sut;

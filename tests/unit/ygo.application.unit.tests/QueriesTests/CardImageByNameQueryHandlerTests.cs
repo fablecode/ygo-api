@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using ygo.application.Queries.CardImageByName;
 using ygo.domain.Service;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
 {
     [TestFixture]
+    [Category(TestType.Unit)]
     public class CardImageByNameQueryHandlerTests
     {
         private CardImageByNameQueryHandler _sut;
