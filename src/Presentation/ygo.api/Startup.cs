@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using ygo.api.Auth;
 using ygo.api.Auth.Swagger;
 using ygo.application;
@@ -91,7 +92,9 @@ namespace ygo.api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");                
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ygo API V1");
+
+                c.DocExpansion(DocExpansion.None);
             });
             app.UseMvc();
             app.UseRewriter(new RewriteOptions()
