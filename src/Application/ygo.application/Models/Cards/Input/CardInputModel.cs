@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using MediatR;
 using ygo.application.Enums;
-using ygo.core.Enums;
 
-namespace ygo.application.Commands.UpdateCard
+namespace ygo.application.Models.Cards.Input
 {
-    public class UpdateCardCommand : IRequest<CommandResult>
+    public class CardInputModel
     {
         public long Id { get; set; }
         public YgoCardType? CardType { get; set; }

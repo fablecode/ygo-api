@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ygo.domain.Service;
+using ygo.domain.Services;
 
 namespace ygo.application.Commands.DownloadImage
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ygo.domain.Repository;
-using ygo.domain.Service;
+using ygo.domain.Services;
 using ygo.infrastructure.Database;
 using ygo.infrastructure.Repository;
 using ygo.infrastructure.Service;

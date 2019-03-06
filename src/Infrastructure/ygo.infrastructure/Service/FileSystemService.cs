@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models;
-using ygo.domain.Service;
+using ygo.domain.Services;
 
 namespace ygo.infrastructure.Service
 {

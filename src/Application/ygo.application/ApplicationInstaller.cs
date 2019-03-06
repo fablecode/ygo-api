@@ -1,10 +1,10 @@
-﻿using FluentValidation;
+﻿using System.Reflection;
+using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.AddBanlist;
-using ygo.application.Commands.AddCard;
 using ygo.application.Commands.AddCategory;
 using ygo.application.Commands.AddMonsterCard;
 using ygo.application.Commands.AddSpellCard;
@@ -22,14 +22,15 @@ using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTips;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Commands.UpdateTrivia;
+using ygo.application.Models.Cards.Input;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.ArchetypeSearch;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CategoryById;
-using ygo.application.Queries.FormatByAcronym;
+using ygo.application.Validations.Cards;
 
-namespace ygo.application.Ioc
+namespace ygo.application
 {
     public static class ApplicationInstaller
     {
@@ -53,7 +54,7 @@ namespace ygo.application.Ioc
         {
             services.AddTransient<IValidator<CategoryByIdQuery>, CategoryByIdQueryValidator>();
             services.AddTransient<IValidator<AddCategoryCommand>, AddCategoryCommandValidator>();
-            services.AddTransient<IValidator<AddCardCommand>, AddCardCommandValidator>();
+            services.AddTransient<IValidator<CardInputModel>, CardValidator>();
             services.AddTransient<IValidator<AddMonsterCardCommand>, AddMonsterCardCommandValidator>();
             services.AddTransient<IValidator<AddSpellCardCommand>, AddSpellCardCommandValidator>();
             services.AddTransient<IValidator<AddTrapCardCommand>, AddTrapCardCommandValidator>();
@@ -80,11 +81,11 @@ namespace ygo.application.Ioc
             return services;
         }
 
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
-        {
-            AutoMapperConfig.Configure();
+        //public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        //{
+        //    AutoMapperConfig.Configure();
 
-            return services;
-        }
+        //    return services;
+        //}
     }
 }

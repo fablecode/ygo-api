@@ -5,7 +5,7 @@ using NSubstitute;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using ygo.application.Queries.CardImageByName;
-using ygo.domain.Service;
+using ygo.domain.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests

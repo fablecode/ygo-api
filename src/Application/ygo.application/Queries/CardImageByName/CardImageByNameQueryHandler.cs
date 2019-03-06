@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using MimeTypes;
 using ygo.domain.Helpers;
-using ygo.domain.Service;
+using ygo.domain.Services;
 
 namespace ygo.application.Queries.CardImageByName
 {

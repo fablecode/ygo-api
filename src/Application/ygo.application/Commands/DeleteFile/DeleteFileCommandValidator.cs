@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using ygo.domain.Service;
+using ygo.domain.Services;
 
 namespace ygo.application.Commands.DeleteFile
 {

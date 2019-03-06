@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using ygo.application.Models.Cards.Input;
 
-namespace ygo.application.Commands.AddCard
+namespace ygo.application.Validations.Cards
 {
-    public class AddCardCommandValidator : AbstractValidator<AddCardCommand>
+    public class CardValidator : AbstractValidator<CardInputModel>
     {
-        public AddCardCommandValidator()
+        public CardValidator()
         {
             RuleFor(c => c.CardType)
                 .Cascade(CascadeMode.StopOnFirstFailure)
@@ -12,5 +13,4 @@ namespace ygo.application.Commands.AddCard
                 .IsInEnum();
         }
     }
-
 }

@@ -9,6 +9,8 @@ using ygo.application.Commands.UpdateMonsterCard;
 using ygo.application.Commands.UpdateSpellCard;
 using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
+using ygo.application.Models.Cards.Input;
+using ygo.core.Models;
 using ygo.core.Models.Db;
 
 namespace ygo.application
@@ -43,6 +45,12 @@ namespace ygo.application
                 cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
                 cfg.CreateMap<AddCardCommand, AddTrapCardCommand>();
+
+                cfg.CreateMap<CardInputModel, CardModel>();
+                cfg.CreateMap<CardModel, MonsterCardModel>();
+                cfg.CreateMap<CardModel, SpellCardModel>();
+                cfg.CreateMap<CardModel, TrapCardModel>();
+
                 cfg.CreateMap<AddBanlistCommand, Banlist>();
                 cfg.CreateMap<UpdateCardCommand, UpdateMonsterCardCommand>();
                 cfg.CreateMap<UpdateCardCommand, UpdateSpellCardCommand>();

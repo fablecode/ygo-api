@@ -6,6 +6,8 @@ using NSubstitute;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using ygo.application.Commands.AddCard;
+using ygo.application.Validations.Cards;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
@@ -23,7 +25,7 @@ namespace ygo.application.unit.tests.Commands
             _mediator = Substitute.For<IMediator>();
             IOptions<ApplicationSettings> settings = Substitute.For<IOptions<ApplicationSettings>>();
 
-            _sut = new AddCardCommandHandler(_mediator, new AddCardCommandValidator(), settings);
+            _sut = new AddCardCommandHandler(_mediator, new CardValidator(), Substitute.For<ICardService>(), settings);
         }
 
         [Test]

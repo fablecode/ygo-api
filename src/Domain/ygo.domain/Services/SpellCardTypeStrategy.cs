@@ -1,0 +1,36 @@
+﻿using System;
+using System.Threading.Tasks;
+using ygo.core.Enums;
+using ygo.core.Models;
+using ygo.core.Models.Db;
+using ygo.core.Services;
+using ygo.domain.Mappers;
+using ygo.domain.Repository;
+
+namespace ygo.domain.Services
+{
+    public class SpellCardTypeStrategy : ICardTypeStrategy
+    {
+        private readonly ICardRepository _cardRepository;
+
+        public SpellCardTypeStrategy(ICardRepository cardRepository)
+        {
+            _cardRepository = cardRepository;
+        }
+        public async Task<Card> Add(CardModel cardModel)
+        {
+            var newSpellCard = CardMapper.MapToSpellOrTrapCard(cardModel);
+
+            return await _cardRepository.Add(newSpellCard);
+        }
+        public async Task<Card> Update(CardModel cardModel)
+        {
+            throw new NotImplementedException();
+        }
+        public bool Handles(YugiohCardType yugiohCardType)
+        {
+            return yugiohCardType == YugiohCardType.Spell;
+        }
+
+    }
+}

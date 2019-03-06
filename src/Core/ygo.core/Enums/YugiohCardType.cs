@@ -1,6 +1,6 @@
 ﻿namespace ygo.core.Enums
 {
-    public enum YgoCardType
+    public enum YugiohCardType
     {
         Monster,
         Spell,

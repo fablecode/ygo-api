@@ -16,7 +16,6 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using ygo.api.Auth;
 using ygo.api.Auth.Swagger;
 using ygo.application;
-using ygo.application.Ioc;
 using ygo.infrastructure.Ioc;
 
 namespace ygo.api

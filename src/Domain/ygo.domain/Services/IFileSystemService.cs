@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ygo.core.Models;
 
-namespace ygo.domain.Service
+namespace ygo.domain.Services
 {
     public interface IFileSystemService
     {
