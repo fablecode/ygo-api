@@ -21,9 +21,6 @@ namespace ygo.application.Mappings.Profiles
 
             CreateMap<Card, TrapCardDto>()
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"));
-
-            CreateMap<CardInputModel, CardModel>();
-
         }
     }
 }
