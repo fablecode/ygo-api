@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ygo.core.Enums;
 using ygo.core.Models;
 using ygo.core.Models.Db;
-using ygo.core.Services;
+using ygo.core.Strategies;
 using ygo.domain.Mappers;
 using ygo.domain.Repository;
 
-namespace ygo.domain.Services
+namespace ygo.domain.Strategies
 {
     public class SpellCardTypeStrategy : ICardTypeStrategy
     {

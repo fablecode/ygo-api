@@ -3,7 +3,7 @@ using ygo.core.Enums;
 using ygo.core.Models;
 using ygo.core.Models.Db;
 
-namespace ygo.core.Services
+namespace ygo.core.Strategies
 {
     public interface ICardTypeStrategy
     {
