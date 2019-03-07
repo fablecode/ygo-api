@@ -5,18 +5,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.AddBanlist
 {
     public class AddBanlistCommandHandler : IRequestHandler<AddBanlistCommand, CommandResult>
     {
-        private readonly IBanlistRepository _banlistRepository;
+        private readonly IBanlistService _banlistService;
         private readonly IValidator<AddBanlistCommand> _validator;
 
-        public AddBanlistCommandHandler(IBanlistRepository banlistRepository, IValidator<AddBanlistCommand> validator)
+        public AddBanlistCommandHandler(IBanlistService banlistService, IValidator<AddBanlistCommand> validator)
         {
-            _banlistRepository = banlistRepository;
+            _banlistService = banlistService;
             _validator = validator;
         }
 
@@ -30,7 +30,7 @@ namespace ygo.application.Commands.AddBanlist
             {
                 var newBanlist = Mapper.Map<Banlist>(request);
 
-                var newBanlistResult = await _banlistRepository.Add(newBanlist);
+                var newBanlistResult = await _banlistService.Add(newBanlist);
                 commandResult.Data = newBanlistResult.Id;
                 commandResult.IsSuccessful = true;
             }
