@@ -22,6 +22,8 @@ using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CategoryById;
 using ygo.application.Validations.Cards;
+using ygo.core.Services;
+using ygo.domain.Services;
 
 namespace ygo.application
 {
@@ -32,6 +34,8 @@ namespace ygo.application
             services.AddCqrs();
             services.AddValidators();
             services.AddAutoMapper();
+            services.DomainServices();
+            services.AddStrategies();
 
             return services;
         }
@@ -64,7 +68,27 @@ namespace ygo.application
             services.AddTransient<IValidator<UpdateTriviaCommand>, UpdateTriviaCommandValidator>();
             services.AddTransient<IValidator<UpdateRulingCommand>, UpdateRulingCommandValidator>();
 
+
+
             return services;
         }
+
+        public static IServiceCollection AddStrategies(this IServiceCollection services)
+        {
+
+            services.AddTransient<ICardTypeStrategy, MonsterCardTypeStrategy>();
+            services.AddTransient<ICardTypeStrategy, SpellCardTypeStrategy>();
+            services.AddTransient<ICardTypeStrategy, TrapCardTypeStrategy>();
+
+            return services;
+        }
+        public static IServiceCollection DomainServices(this IServiceCollection services)
+        {
+
+            services.AddTransient<ICardService, CardService>();
+
+            return services;
+        }
+
     }
 }
