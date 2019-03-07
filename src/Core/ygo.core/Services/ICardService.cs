@@ -8,5 +8,6 @@ namespace ygo.core.Services
     {
         Task<Card> Add(CardModel cardModel);
         Task<Card> Update(CardModel cardModel);
+        Task<Card> CardById(long cardId);
     }
 }

@@ -3,13 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ygo.application.Commands.AddMonsterCard;
-using ygo.application.Commands.AddSpellCard;
-using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.UpdateBanlist;
-using ygo.application.Commands.UpdateMonsterCard;
-using ygo.application.Commands.UpdateSpellCard;
-using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
 using ygo.core.Models.Db;
 
@@ -17,72 +11,6 @@ namespace ygo.application.Commands
 {
     public static class CommandMapperHelper
     {
-        public static Card MapToCard(this AddMonsterCardCommand command)
-        {
-            var newMonsterCard = new Card
-            {
-                CardNumber = command.CardNumber,
-                Name = command.Name,
-                Description = command.Description,
-                CardLevel = command.CardLevel,
-                CardRank = command.CardRank,
-                Atk = command.Atk,
-                Def = command.Def,
-                Created = DateTime.UtcNow,
-                Updated = DateTime.UtcNow
-            };
-
-            newMonsterCard.CardAttribute.Add(new CardAttribute { AttributeId = command.AttributeId });
-
-            if (command.SubCategoryIds.Any())
-            {
-                foreach (var sbIds in command.SubCategoryIds)
-                    newMonsterCard.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds });
-            }
-
-            if (command.TypeIds.Any())
-            {
-                foreach (var typeId in command.TypeIds)
-                    newMonsterCard.CardType.Add(new CardType { TypeId = typeId});
-            }
-
-            if (command.LinkArrowIds.Any())
-            {
-                foreach (var linkArrowId in command.LinkArrowIds)
-                    newMonsterCard.CardLinkArrow.Add(new CardLinkArrow{ LinkArrowId = linkArrowId});
-            }
-
-            return newMonsterCard;
-        }
-
-        public static Card MapToCard(this AddSpellCardCommand command)
-        {
-            var newSpellCard = MapToSpellOrTrapCard(command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
-
-            return newSpellCard;
-        }
-
-        public static Card MapToCard(this AddTrapCardCommand command)
-        {
-            var newTrapCard = MapToSpellOrTrapCard(command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
-
-            return newTrapCard;
-        }
-
-        public static Card MapToCard(this UpdateSpellCardCommand command)
-        {
-            var updateSpellCard = MapToSpellOrTrapCard(command.Id, command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
-
-            return updateSpellCard;
-        }
-
-        public static Card MapToCard(this UpdateTrapCardCommand command)
-        {
-            var updateTrapCard = MapToSpellOrTrapCard(command.Id, command.CardNumber, command.Name, command.Description, command.SubCategoryIds);
-
-            return updateTrapCard;
-        }
-
         public static CardDto MapToCardDto(this Card card)
         {
             if (card == null)
@@ -137,77 +65,6 @@ namespace ygo.application.Commands
 
 
             return response;
-        }
-
-        public static void UpdateMonsterCardWith(this Card card, UpdateMonsterCardCommand command)
-        {
-            card.CardNumber = command.CardNumber;
-            card.Name = command.Name;
-            card.Description = command.Description;
-            card.CardLevel = command.CardLevel;
-            card.CardRank = command.CardRank;
-            card.Atk = command.Atk;
-            card.Def = command.Def;
-            card.Updated = DateTime.UtcNow;
-
-            // Clear monster related data.
-            card.CardAttribute.Clear();
-            card.CardSubCategory.Clear();
-            card.CardType.Clear();
-
-            card.CardAttribute.Add(new CardAttribute { AttributeId = command.AttributeId, CardId = card.Id});
-
-            if (command.SubCategoryIds.Any())
-            {
-                foreach (var sbIds in command.SubCategoryIds)
-                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
-            }
-
-            if (command.TypeIds.Any())
-            {
-                foreach (var typeId in command.TypeIds)
-                    card.CardType.Add(new CardType { TypeId = typeId, CardId = card.Id });
-            }
-
-            if (command.LinkArrowIds.Any())
-            {
-                foreach (var linkArrowId in command.LinkArrowIds)
-                    card.CardLinkArrow.Add(new CardLinkArrow { LinkArrowId = linkArrowId, CardId = card.Id });
-            }
-        }
-
-        public static void UpdateSpellCardWith(this Card card, UpdateSpellCardCommand command)
-        {
-            card.CardNumber = command.CardNumber;
-            card.Name = command.Name;
-            card.Description = command.Description;
-            card.Updated = DateTime.UtcNow;
-
-            // Clear monster related data.
-            card.CardSubCategory.Clear();
-
-            if (command.SubCategoryIds.Any())
-            {
-                foreach (var sbIds in command.SubCategoryIds)
-                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
-            }
-        }
-
-        public static void UpdateTrapCardWith(this Card card, UpdateTrapCardCommand command)
-        {
-            card.CardNumber = command.CardNumber;
-            card.Name = command.Name;
-            card.Description = command.Description;
-            card.Updated = DateTime.UtcNow;
-
-            // Clear monster related data.
-            card.CardSubCategory.Clear();
-
-            if (command.SubCategoryIds.Any())
-            {
-                foreach (var sbIds in command.SubCategoryIds)
-                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
-            }
         }
 
         public static void UpdateBanlistWith(this Banlist banlist, UpdateBanlistCommand command)

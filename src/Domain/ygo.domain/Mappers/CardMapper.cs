@@ -78,5 +78,77 @@ namespace ygo.domain.Mappers
 
             return newCard;
         }
+
+        public static void UpdateMonsterCardWith(Card card, CardModel cardModel)
+        {
+            card.CardNumber = cardModel.CardNumber;
+            card.Name = cardModel.Name;
+            card.Description = cardModel.Description;
+            card.CardLevel = cardModel.CardLevel;
+            card.CardRank = cardModel.CardRank;
+            card.Atk = cardModel.Atk;
+            card.Def = cardModel.Def;
+            card.Updated = DateTime.UtcNow;
+
+            // Clear monster related data.
+            card.CardAttribute.Clear();
+            card.CardSubCategory.Clear();
+            card.CardType.Clear();
+
+            card.CardAttribute.Add(new CardAttribute { AttributeId = cardModel.AttributeId.GetValueOrDefault(), CardId = card.Id });
+
+            if (cardModel.SubCategoryIds.Any())
+            {
+                foreach (var sbIds in cardModel.SubCategoryIds)
+                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
+            }
+
+            if (cardModel.TypeIds.Any())
+            {
+                foreach (var typeId in cardModel.TypeIds)
+                    card.CardType.Add(new CardType { TypeId = typeId, CardId = card.Id });
+            }
+
+            if (cardModel.LinkArrowIds.Any())
+            {
+                foreach (var linkArrowId in cardModel.LinkArrowIds)
+                    card.CardLinkArrow.Add(new CardLinkArrow { LinkArrowId = linkArrowId, CardId = card.Id });
+            }
+        }
+
+        public static void UpdateSpellCardWith(Card card, CardModel cardModel)
+        {
+            card.CardNumber = cardModel.CardNumber;
+            card.Name = cardModel.Name;
+            card.Description = cardModel.Description;
+            card.Updated = DateTime.UtcNow;
+
+            // Clear monster related data.
+            card.CardSubCategory.Clear();
+
+            if (cardModel.SubCategoryIds.Any())
+            {
+                foreach (var sbIds in cardModel.SubCategoryIds)
+                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
+            }
+        }
+
+        public static void UpdateTrapCardWith(Card card, CardModel cardModel)
+        {
+            card.CardNumber = cardModel.CardNumber;
+            card.Name = cardModel.Name;
+            card.Description = cardModel.Description;
+            card.Updated = DateTime.UtcNow;
+
+            // Clear monster related data.
+            card.CardSubCategory.Clear();
+
+            if (cardModel.SubCategoryIds.Any())
+            {
+                foreach (var sbIds in cardModel.SubCategoryIds)
+                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = sbIds, CardId = card.Id });
+            }
+        }
+
     }
 }

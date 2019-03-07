@@ -1,20 +1,20 @@
-﻿using System.Linq;
+﻿using FluentValidation;
+using MediatR;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
-using ygo.domain.Services;
+using ygo.domain.SystemIO;
 
 namespace ygo.application.Commands.DeleteFile
 {
     public class DeleteFileCommandValidator : IRequestHandler<DeleteFileCommand, CommandResult>
     {
-        private readonly IFileSystemService _fileSystemService;
+        private readonly IFileSystem _fileSystem;
         private readonly IValidator<DeleteFileCommand> _validator;
 
-        public DeleteFileCommandValidator(IFileSystemService fileSystemService, IValidator<DeleteFileCommand> validator)
+        public DeleteFileCommandValidator(IFileSystem fileSystem, IValidator<DeleteFileCommand> validator)
         {
-            _fileSystemService = fileSystemService;
+            _fileSystem = fileSystem;
             _validator = validator;
         }
 
@@ -26,7 +26,7 @@ namespace ygo.application.Commands.DeleteFile
 
             if (validationResults.IsValid)
             {
-                _fileSystemService.Delete(request.LocalFileNameFullPath);
+                _fileSystem.Delete(request.LocalFileNameFullPath);
             }
             else
             {

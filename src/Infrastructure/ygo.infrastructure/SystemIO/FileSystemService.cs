@@ -4,11 +4,11 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models;
-using ygo.domain.Services;
+using ygo.domain.SystemIO;
 
-namespace ygo.infrastructure.Service
+namespace ygo.infrastructure.SystemIO
 {
-    public class FileSystemService : IFileSystemService
+    public class FileSystem : IFileSystem
     {
         private static readonly object RenameLocker = new object();
         private static readonly object GetFilesLocker = new object();

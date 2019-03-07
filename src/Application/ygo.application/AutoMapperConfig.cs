@@ -1,13 +1,7 @@
 ﻿using System.IO;
 using ygo.application.Commands.AddBanlist;
 using ygo.application.Commands.AddCard;
-using ygo.application.Commands.AddMonsterCard;
-using ygo.application.Commands.AddSpellCard;
-using ygo.application.Commands.AddTrapCard;
 using ygo.application.Commands.UpdateCard;
-using ygo.application.Commands.UpdateMonsterCard;
-using ygo.application.Commands.UpdateSpellCard;
-using ygo.application.Commands.UpdateTrapCard;
 using ygo.application.Dto;
 using ygo.application.Models.Cards.Input;
 using ygo.core.Models;
@@ -42,19 +36,12 @@ namespace ygo.application
                 cfg.CreateMap<Card, TrapCardDto>()
                     .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => $"/api/images/cards/{string.Concat(src.Name.Split(Path.GetInvalidFileNameChars()))}"));
 
-                cfg.CreateMap<AddCardCommand, AddMonsterCardCommand>();
-                cfg.CreateMap<AddCardCommand, AddSpellCardCommand>();
-                cfg.CreateMap<AddCardCommand, AddTrapCardCommand>();
-
                 cfg.CreateMap<CardInputModel, CardModel>();
                 cfg.CreateMap<CardModel, MonsterCardModel>();
                 cfg.CreateMap<CardModel, SpellCardModel>();
                 cfg.CreateMap<CardModel, TrapCardModel>();
 
                 cfg.CreateMap<AddBanlistCommand, Banlist>();
-                cfg.CreateMap<UpdateCardCommand, UpdateMonsterCardCommand>();
-                cfg.CreateMap<UpdateCardCommand, UpdateSpellCardCommand>();
-                cfg.CreateMap<UpdateCardCommand, UpdateTrapCardCommand>();
 
                 cfg.CreateMap<Attribute, AttributeDto>();
                 cfg.CreateMap<Banlist, BanlistDto>();

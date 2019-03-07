@@ -11,6 +11,10 @@ namespace ygo.application.Validations.Cards
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull()
                 .IsInEnum();
+
+            RuleFor(c => c).SetValidator(new MonsterCardValidator());
+            RuleFor(c => c).SetValidator(new SpellCardValidator());
+            RuleFor(c => c).SetValidator(new TrapCardValidator());
         }
     }
 }

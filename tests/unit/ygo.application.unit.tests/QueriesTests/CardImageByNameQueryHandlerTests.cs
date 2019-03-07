@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
-using System.Threading.Tasks;
 using NUnit.Framework;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.application.Queries.CardImageByName;
-using ygo.domain.Services;
+using ygo.domain.SystemIO;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
@@ -20,7 +20,7 @@ namespace ygo.application.unit.tests.QueriesTests
         [SetUp]
         public void Setup()
         {
-            var fileSystemService = Substitute.For<IFileSystemService>();
+            var fileSystemService = Substitute.For<IFileSystem>();
             _settings = Substitute.For<IOptions<ApplicationSettings>>();
 
             _sut = new CardImageByNameQueryHandler(fileSystemService, _settings);

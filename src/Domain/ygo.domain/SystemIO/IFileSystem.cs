@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using ygo.core.Models;
 
-namespace ygo.domain.Services
+namespace ygo.domain.SystemIO
 {
-    public interface IFileSystemService
+    public interface IFileSystem
     {
         Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath);
         Task<DownloadedFile> Download(Uri remoteFileUrl, string localFileFullPath);

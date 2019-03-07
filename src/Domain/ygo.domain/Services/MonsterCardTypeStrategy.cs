@@ -24,9 +24,17 @@ namespace ygo.domain.Services
             return await _cardRepository.Add(newMonsterCard);
         }
 
-        public Task<Card> Update(CardModel cardModel)
+        public async Task<Card> Update(CardModel cardModel)
         {
-            throw new NotImplementedException();
+            var cardToUpdate = await _cardRepository.CardById(cardModel.Id);
+
+            if (cardToUpdate != null)
+            {
+                CardMapper.UpdateMonsterCardWith(cardToUpdate, cardModel);
+                return await _cardRepository.Update(cardToUpdate);
+            }
+
+            return null;
         }
 
         public bool Handles(YugiohCardType yugiohCardType)

@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using MediatR;
+using Microsoft.Extensions.Options;
+using MimeTypes;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Options;
-using MimeTypes;
-using ygo.domain.Services;
+using ygo.domain.SystemIO;
 
 namespace ygo.application.Queries.ArchetypeImageById
 {
     public class ArchetypeImageByIdQueryHandler : IRequestHandler<ArchetypeImageByIdQuery, ImageResult>
     {
-        private readonly IFileSystemService _fileSystemService;
+        private readonly IFileSystem _fileSystem;
         private readonly IOptions<ApplicationSettings> _settings;
 
-        public ArchetypeImageByIdQueryHandler(IFileSystemService fileSystemService, IOptions<ApplicationSettings> settings)
+        public ArchetypeImageByIdQueryHandler(IFileSystem fileSystem, IOptions<ApplicationSettings> settings)
         {
-            _fileSystemService = fileSystemService;
+            _fileSystem = fileSystem;
             _settings = settings;
         }
 
@@ -27,7 +27,7 @@ namespace ygo.application.Queries.ArchetypeImageById
 
             var imageFilePath = GetImagePath(request.Id.ToString(), _settings.Value.ArchetypeImageFolderPath);
 
-            if (!string.IsNullOrWhiteSpace(imageFilePath) && _fileSystemService.Exists(imageFilePath))
+            if (!string.IsNullOrWhiteSpace(imageFilePath) && _fileSystem.Exists(imageFilePath))
             {
                 response.Name = request.Id.ToString();
                 response.FilePath = imageFilePath;
@@ -52,7 +52,7 @@ namespace ygo.application.Queries.ArchetypeImageById
         {
             var searchPattern = fileName + ".*";
 
-            var imageFiles = _fileSystemService.GetFiles(directoryPath, searchPattern);
+            var imageFiles = _fileSystem.GetFiles(directoryPath, searchPattern);
 
             return imageFiles;
         }

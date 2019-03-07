@@ -25,7 +25,15 @@ namespace ygo.domain.Services
         }
         public async Task<Card> Update(CardModel cardModel)
         {
-            throw new NotImplementedException();
+            var cardToUpdate = await _cardRepository.CardById(cardModel.Id);
+
+            if (cardToUpdate != null)
+            {
+                CardMapper.UpdateSpellCardWith(cardToUpdate, cardModel);
+                return await _cardRepository.Update(cardToUpdate);
+            }
+
+            return null;
         }
         public bool Handles(YugiohCardType yugiohCardType)
         {
