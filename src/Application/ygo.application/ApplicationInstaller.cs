@@ -24,7 +24,6 @@ using ygo.application.Queries.CategoryById;
 using ygo.application.Validations.Cards;
 using ygo.core.Services;
 using ygo.core.Strategies;
-using ygo.domain.Repository;
 using ygo.domain.Services;
 using ygo.domain.Strategies;
 
@@ -93,6 +92,7 @@ namespace ygo.application
             services.AddTransient<IBanlistService, BanlistService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IArchetypeCardsService, ArchetypeCardsService>();
+            services.AddTransient<IArchetypeSupportCardsService, ArchetypeSupportCardsService>();
 
             return services;
         }

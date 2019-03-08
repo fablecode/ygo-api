@@ -1,10 +1,9 @@
-﻿using System.Linq;
+﻿using FluentValidation;
+using MediatR;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
-using ygo.application.Commands.UpdateArchetypeCards;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateArchetypeSupportCards
 {
@@ -12,12 +11,12 @@ namespace ygo.application.Commands.UpdateArchetypeSupportCards
         UpdateArchetypeSupportCardsCommandHandler : IRequestHandler<UpdateArchetypeSupportCardsCommand, CommandResult>
     {
         private readonly IValidator<UpdateArchetypeSupportCardsCommand> _validator;
-        private readonly IArchetypeSupportCardsRepository _archetypeSupportCardsRepository;
+        private readonly IArchetypeSupportCardsService _archetypeSupportCardsService;
 
-        public UpdateArchetypeSupportCardsCommandHandler(IValidator<UpdateArchetypeSupportCardsCommand> validator, IArchetypeSupportCardsRepository archetypeSupportCardsRepository)
+        public UpdateArchetypeSupportCardsCommandHandler(IValidator<UpdateArchetypeSupportCardsCommand> validator, IArchetypeSupportCardsService archetypeSupportCardsService)
         {
             _validator = validator;
-            _archetypeSupportCardsRepository = archetypeSupportCardsRepository;
+            _archetypeSupportCardsService = archetypeSupportCardsService;
         }
 
         public async Task<CommandResult> Handle(UpdateArchetypeSupportCardsCommand request,
@@ -31,7 +30,7 @@ namespace ygo.application.Commands.UpdateArchetypeSupportCards
             {
                 if (request.Cards.Any())
                 {
-                    var result = await _archetypeSupportCardsRepository.Update(request.ArchetypeId, request.Cards.Distinct());
+                    var result = await _archetypeSupportCardsService.Update(request.ArchetypeId, request.Cards.Distinct());
 
                     commandResult.Data = result;
                 }
