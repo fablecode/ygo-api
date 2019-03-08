@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
 
-namespace ygo.domain.Repository
+namespace ygo.core.Services
 {
-    public interface ICardTriviaRepository
+    public interface ICardTriviaService
     {
         Task<List<TriviaSection>> TriviaSectionsByCardId(long cardId);
         Task DeleteByCardId(long cardId);

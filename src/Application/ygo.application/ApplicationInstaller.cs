@@ -90,6 +90,7 @@ namespace ygo.application
             services.AddTransient<ICardService, CardService>();
             services.AddTransient<ICardRulingService, CardRulingService>();
             services.AddTransient<ICardTipService, CardTipService>();
+            services.AddTransient<ICardTriviaService, CardTriviaService>();
             services.AddTransient<IArchetypeService, ArchetypeService>();
             services.AddTransient<IBanlistService, BanlistService>();
             services.AddTransient<IBanlistCardsService, BanlistCardsService>();

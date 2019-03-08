@@ -1,24 +1,24 @@
-﻿using System;
+﻿using FluentValidation;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
-using ygo.application.Commands.UpdateTips;
 using ygo.core.Models.Db;
+using ygo.core.Services;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateTrivia
 {
     public class UpdateTriviaCommandHandler : IRequestHandler<UpdateTriviaCommand, CommandResult>
     {
-        private readonly ICardTriviaRepository _cardTriviaRepository;
+        private readonly ICardTriviaService _cardTriviaService;
         private readonly IValidator<UpdateTriviaCommand> _validator;
 
-        public UpdateTriviaCommandHandler(ICardTriviaRepository cardTriviaRepository, IValidator<UpdateTriviaCommand> validator)
+        public UpdateTriviaCommandHandler(ICardTriviaService cardTriviaService, IValidator<UpdateTriviaCommand> validator)
         {
-            _cardTriviaRepository = cardTriviaRepository;
+            _cardTriviaService = cardTriviaService;
             _validator = validator;
         }
 
@@ -30,7 +30,7 @@ namespace ygo.application.Commands.UpdateTrivia
 
             if (validatorResults.IsValid)
             {
-                await _cardTriviaRepository.DeleteByCardId(request.CardId);
+                await _cardTriviaService.DeleteByCardId(request.CardId);
 
                 var newTriviaSectionList = new List<TriviaSection>();
 
@@ -60,7 +60,7 @@ namespace ygo.application.Commands.UpdateTrivia
 
                 if (newTriviaSectionList.Any())
                 {
-                    await _cardTriviaRepository.Update(newTriviaSectionList);
+                    await _cardTriviaService.Update(newTriviaSectionList);
                     
                     commandResult.IsSuccessful = true;
                 }
