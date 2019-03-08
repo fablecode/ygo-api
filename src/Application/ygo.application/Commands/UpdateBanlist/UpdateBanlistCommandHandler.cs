@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
 using ygo.core.Services;
-using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateBanlist
 {
