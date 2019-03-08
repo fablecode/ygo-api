@@ -2,30 +2,31 @@
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
 using ygo.core.Services;
+using ygo.domain.Repository;
 
 namespace ygo.domain.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryService(ICategoryService categoryService)
+        public CategoryService(ICategoryRepository categoryRepository)
         {
-            _categoryService = categoryService;
+            _categoryRepository = categoryRepository;
         }
         public Task<List<Category>> AllCategories()
         {
-            return _categoryService.AllCategories();
+            return _categoryRepository.AllCategories();
         }
 
         public Task<Category> CategoryById(int id)
         {
-            return _categoryService.CategoryById(id);
+            return _categoryRepository.CategoryById(id);
         }
 
         public Task<Category> Add(Category category)
         {
-            return _categoryService.Add(category);
+            return _categoryRepository.Add(category);
         }
     }
 }
