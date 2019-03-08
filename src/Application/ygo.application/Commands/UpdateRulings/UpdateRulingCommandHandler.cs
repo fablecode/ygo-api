@@ -1,23 +1,23 @@
-﻿using System;
+﻿using FluentValidation;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateRulings
 {
     public class UpdateRulingCommandHandler : IRequestHandler<UpdateRulingCommand, CommandResult>
     {
-        private readonly ICardRulingRepository _cardRulingRepository;
+        private readonly ICardRulingService _cardRulingService;
         private readonly IValidator<UpdateRulingCommand> _validator;
 
-        public UpdateRulingCommandHandler(ICardRulingRepository cardRulingRepository, IValidator<UpdateRulingCommand> validator)
+        public UpdateRulingCommandHandler(ICardRulingService cardRulingService, IValidator<UpdateRulingCommand> validator)
         {
-            _cardRulingRepository = cardRulingRepository;
+            _cardRulingService = cardRulingService;
             _validator = validator;
         }
 
@@ -29,7 +29,7 @@ namespace ygo.application.Commands.UpdateRulings
 
             if (validatorResults.IsValid)
             {
-                await _cardRulingRepository.DeleteByCardId(request.CardId);
+                await _cardRulingService.DeleteByCardId(request.CardId);
 
                 var newRulingSectionList = new List<RulingSection>();
 
@@ -59,7 +59,7 @@ namespace ygo.application.Commands.UpdateRulings
 
                 if (newRulingSectionList.Any())
                 {
-                    await _cardRulingRepository.Update(newRulingSectionList);
+                    await _cardRulingService.Update(newRulingSectionList);
                     
                     commandResult.IsSuccessful = true;
                 }
