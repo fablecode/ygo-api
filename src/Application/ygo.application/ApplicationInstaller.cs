@@ -98,6 +98,7 @@ namespace ygo.application
             services.AddTransient<IArchetypeCardsService, ArchetypeCardsService>();
             services.AddTransient<IArchetypeSupportCardsService, ArchetypeSupportCardsService>();
             services.AddTransient<IAttributeService, AttributeService>();
+            services.AddTransient<ILimitService, LimitService>();
 
             return services;
         }
