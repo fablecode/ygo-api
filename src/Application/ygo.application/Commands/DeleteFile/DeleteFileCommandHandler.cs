@@ -7,12 +7,12 @@ using ygo.domain.SystemIO;
 
 namespace ygo.application.Commands.DeleteFile
 {
-    public class DeleteFileCommandValidator : IRequestHandler<DeleteFileCommand, CommandResult>
+    public class DeleteFileCommandHandler : IRequestHandler<DeleteFileCommand, CommandResult>
     {
         private readonly IFileSystem _fileSystem;
         private readonly IValidator<DeleteFileCommand> _validator;
 
-        public DeleteFileCommandValidator(IFileSystem fileSystem, IValidator<DeleteFileCommand> validator)
+        public DeleteFileCommandHandler(IFileSystem fileSystem, IValidator<DeleteFileCommand> validator)
         {
             _fileSystem = fileSystem;
             _validator = validator;

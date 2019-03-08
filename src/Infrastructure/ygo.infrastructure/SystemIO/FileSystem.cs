@@ -39,7 +39,7 @@ namespace ygo.infrastructure.SystemIO
 
         public void Delete(string localFileFullPath)
         {
-            int timeout = 30000;
+            const int timeout = 30000;
 
             using (var fw = new FileSystemWatcher(Path.GetDirectoryName(localFileFullPath), Path.GetFileName(localFileFullPath)))
             using (var mre = new ManualResetEventSlim())
@@ -53,7 +53,6 @@ namespace ygo.infrastructure.SystemIO
                 File.Delete(localFileFullPath);
                 mre.Wait(timeout);
             }
-
         }
 
         public void Rename(string oldNameFullPath, string newNameFullPath)
