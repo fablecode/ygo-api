@@ -97,6 +97,7 @@ namespace ygo.application
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IArchetypeCardsService, ArchetypeCardsService>();
             services.AddTransient<IArchetypeSupportCardsService, ArchetypeSupportCardsService>();
+            services.AddTransient<IAttributeService, AttributeService>();
 
             return services;
         }
