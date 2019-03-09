@@ -1,21 +1,20 @@
-﻿using System.Threading;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.application.Queries.ArchetypeImageById;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.ArchetypeByName
 {
     public class ArchetypeByNameQueryHandler : IRequestHandler<ArchetypeByNameQuery, ArchetypeDto>
     {
-        private readonly IArchetypeRepository _repository;
+        private readonly IArchetypeService _archetypeService;
         private readonly IValidator<ArchetypeByNameQuery> _validator;
 
-        public ArchetypeByNameQueryHandler(IArchetypeRepository repository, IValidator<ArchetypeByNameQuery> validator)
+        public ArchetypeByNameQueryHandler(IArchetypeService archetypeService, IValidator<ArchetypeByNameQuery> validator)
         {
-            _repository = repository;
+            _archetypeService = archetypeService;
             _validator = validator;
         }
 
@@ -25,7 +24,7 @@ namespace ygo.application.Queries.ArchetypeByName
 
             if (validationResults.IsValid)
             {
-                var result = await _repository.ArchetypeByName(request.Name);
+                var result = await _archetypeService.ArchetypeByName(request.Name);
 
                 return result.MapToArchetypeDto();
             }

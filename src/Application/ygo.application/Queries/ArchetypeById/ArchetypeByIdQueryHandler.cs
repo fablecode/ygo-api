@@ -1,23 +1,23 @@
-﻿using System.Threading;
-using MediatR;
+﻿using MediatR;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.ArchetypeById
 {
     public class ArchetypeByIdQueryHandler : IRequestHandler<ArchetypeByIdQuery, ArchetypeDto>
     {
-        private readonly IArchetypeRepository _repository;
+        private readonly IArchetypeService _archetypeService;
 
-        public ArchetypeByIdQueryHandler(IArchetypeRepository repository)
+        public ArchetypeByIdQueryHandler(IArchetypeService archetypeService)
         {
-            _repository = repository;
+            _archetypeService = archetypeService;
         }
 
         public async Task<ArchetypeDto> Handle(ArchetypeByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repository.ArchetypeById(request.Id);
+            var result = await _archetypeService.ArchetypeById(request.Id);
 
             return result.MapToArchetypeDto();
         }

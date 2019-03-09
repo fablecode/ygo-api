@@ -26,6 +26,7 @@ using ygo.core.Services;
 using ygo.core.Strategies;
 using ygo.domain.Services;
 using ygo.domain.Strategies;
+using ygo.domain.SystemIO;
 
 namespace ygo.application
 {
@@ -102,6 +103,7 @@ namespace ygo.application
             services.AddTransient<ILinkArrowService, LinkArrowService>();
             services.AddTransient<ISubCategoryService, SubCategoryService>();
             services.AddTransient<ITypeService, TypeService>();
+            services.AddTransient<IFileSystemService, FileSystemService>();
 
             return services;
         }
