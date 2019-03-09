@@ -104,6 +104,7 @@ namespace ygo.application
             services.AddTransient<ISubCategoryService, SubCategoryService>();
             services.AddTransient<ITypeService, TypeService>();
             services.AddTransient<IFileSystemService, FileSystemService>();
+            services.AddTransient<IFormatService, FormatService>();
 
             return services;
         }
