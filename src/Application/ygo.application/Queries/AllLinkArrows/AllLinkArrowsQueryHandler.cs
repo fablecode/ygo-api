@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.AllLinkArrows
 {
     public class AllLinkArrowsQueryHandler : IRequestHandler<AllLinkArrowsQuery, IEnumerable<LinkArrowDto>>
     {
-        private readonly ILinkArrowRepository _repository;
+        private readonly ILinkArrowService _linkArrowService;
 
-        public AllLinkArrowsQueryHandler(ILinkArrowRepository repository)
+        public AllLinkArrowsQueryHandler(ILinkArrowService linkArrowService)
         {
-            _repository = repository;
+            _linkArrowService = linkArrowService;
         }
 
         public async Task<IEnumerable<LinkArrowDto>> Handle(AllLinkArrowsQuery request, CancellationToken cancellationToken)
         {
-            var linkArrows = await _repository.AllLinkArrows();
+            var linkArrows = await _linkArrowService.AllLinkArrows();
 
             return Mapper.Map<IEnumerable<LinkArrowDto>>(linkArrows);
         }
