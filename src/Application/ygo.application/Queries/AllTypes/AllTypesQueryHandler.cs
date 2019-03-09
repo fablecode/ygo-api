@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.AllTypes
 {
     public class AllTypesQueryHandler : IRequestHandler<AllTypesQuery, IEnumerable<TypeDto>>
     {
-        private readonly ITypeRepository _repository;
+        private readonly ITypeService _typeService;
 
-        public AllTypesQueryHandler(ITypeRepository repository)
+        public AllTypesQueryHandler(ITypeService typeService)
         {
-            _repository = repository;
+            _typeService = typeService;
         }
 
         public async Task<IEnumerable<TypeDto>> Handle(AllTypesQuery request, CancellationToken cancellationToken)
         {
-            var types = await _repository.AllTypes();
+            var types = await _typeService.AllTypes();
 
             return Mapper.Map<IEnumerable<TypeDto>>(types);
         }

@@ -101,6 +101,7 @@ namespace ygo.application
             services.AddTransient<ILimitService, LimitService>();
             services.AddTransient<ILinkArrowService, LinkArrowService>();
             services.AddTransient<ISubCategoryService, SubCategoryService>();
+            services.AddTransient<ITypeService, TypeService>();
 
             return services;
         }

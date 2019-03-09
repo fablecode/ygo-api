@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Type = ygo.core.Models.Db.Type;
+using ygo.core.Models.Db;
 
-namespace ygo.domain.Repository
+namespace ygo.core.Services
 {
-    public interface ITypeRepository
+    public interface ITypeService
     {
         Task<List<Type>> AllTypes();
     }
