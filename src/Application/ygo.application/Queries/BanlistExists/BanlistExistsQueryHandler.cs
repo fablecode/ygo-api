@@ -1,8 +1,7 @@
-﻿using System.Threading;
+﻿using MediatR;
+using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using ygo.core.Services;
-using ygo.domain.Repository;
 
 namespace ygo.application.Queries.BanlistExists
 {
