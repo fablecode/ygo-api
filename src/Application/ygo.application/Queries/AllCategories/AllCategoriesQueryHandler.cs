@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.AllCategories
 {
     public class AllCategoriesQueryHandler : IRequestHandler<AllCategoriesQuery, IEnumerable<CategoryDto>>
     {
-        private readonly ICategoryRepository _repository;
+        private readonly ICategoryService _categoryService;
 
-        public AllCategoriesQueryHandler(ICategoryRepository repository)
+        public AllCategoriesQueryHandler(ICategoryService categoryService)
         {
-            _repository = repository;
+            _categoryService = categoryService;
         }
 
         public async Task<IEnumerable<CategoryDto>> Handle(AllCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var allCategories = await _repository.AllCategories();
+            var allCategories = await _categoryService.AllCategories();
 
             return Mapper.Map<IEnumerable<CategoryDto>>(allCategories);
         }

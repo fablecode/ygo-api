@@ -1,22 +1,22 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
 using ygo.application.Dto;
 using ygo.application.Paging;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.ArchetypeSearch
 {
     public class ArchetypeSearchQueryHandler : IRequestHandler<ArchetypeSearchQuery, QueryResult>
     {
-        private readonly IArchetypeRepository _archetypeRepository;
+        private readonly IArchetypeService _archetypeService;
         private readonly IValidator<ArchetypeSearchQuery> _validator;
 
-        public ArchetypeSearchQueryHandler(IArchetypeRepository archetypeRepository, IValidator<ArchetypeSearchQuery> validator)
+        public ArchetypeSearchQueryHandler(IArchetypeService archetypeService, IValidator<ArchetypeSearchQuery> validator)
         {
-            _archetypeRepository = archetypeRepository;
+            _archetypeService = archetypeService;
             _validator = validator;
         }
 
@@ -28,7 +28,7 @@ namespace ygo.application.Queries.ArchetypeSearch
 
             if (validationResult.IsValid)
             {
-                var searchResult = await _archetypeRepository.Search(request.SearchTerm, request.PageNumber, request.PageSize);
+                var searchResult = await _archetypeService.Search(request.SearchTerm, request.PageNumber, request.PageSize);
 
                 var archetypeList = searchResult.Items.Select(a => a.MapToArchetypeDto()).ToList();
 

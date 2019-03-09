@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Queries.CardById;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
@@ -15,14 +15,14 @@ namespace ygo.application.unit.tests.QueriesTests
     public class CardByIdQueryHandlerTests
     {
         private CardByIdQueryHandler _sut;
-        private ICardRepository _cardRepository;
+        private ICardService _cardService;
 
         [SetUp]
         public void SetUp()
         {
-            _cardRepository = Substitute.For<ICardRepository>();
+            _cardService = Substitute.For<ICardService>();
 
-            _sut = new CardByIdQueryHandler(_cardRepository, new CardByIdQueryValidator());
+            _sut = new CardByIdQueryHandler(_cardService, new CardByIdQueryValidator());
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace ygo.application.unit.tests.QueriesTests
         public async Task Given_An_Valid_Query_Should_Execute_CardById()
         {
             // Arrange
-            _cardRepository
+            _cardService
                 .CardById(Arg.Any<long>())
                 .Returns(new Card());
 
@@ -52,7 +52,7 @@ namespace ygo.application.unit.tests.QueriesTests
             await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            await _cardRepository.Received(1).CardById(Arg.Any<long>());
+            await _cardService.Received(1).CardById(Arg.Any<long>());
         }
     }
 }

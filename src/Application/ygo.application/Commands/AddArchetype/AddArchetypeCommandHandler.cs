@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.AddArchetype
 {
@@ -14,20 +14,20 @@ namespace ygo.application.Commands.AddArchetype
     {
         private readonly IMediator _mediator;
         private readonly IValidator<AddArchetypeCommand> _validator;
-        private readonly IArchetypeRepository _archetypeRepository;
+        private readonly IArchetypeService _archetypeService;
         private readonly IOptions<ApplicationSettings> _settings;
 
         public AddArchetypeCommandHandler
         (
             IMediator mediator, 
             IValidator<AddArchetypeCommand> validator, 
-            IArchetypeRepository archetypeRepository, 
+            IArchetypeService archetypeService, 
             IOptions<ApplicationSettings> settings
         )
         {
             _mediator = mediator;
             _validator = validator;
-            _archetypeRepository = archetypeRepository;
+            _archetypeService = archetypeService;
             _settings = settings;
         }
 
@@ -39,7 +39,7 @@ namespace ygo.application.Commands.AddArchetype
 
             if (validationResult.IsValid)
             {
-                var newArchetype = await _archetypeRepository.Add(new Archetype
+                var newArchetype = await _archetypeService.Add(new Archetype
                 {
                     Id = request.ArchetypeNumber,
                     Name = request.Name,

@@ -1,23 +1,23 @@
-﻿using System;
+﻿using FluentValidation;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateTips
 {
     public class UpdateTipsCommandHandler : IRequestHandler<UpdateTipsCommand, CommandResult>
     {
-        private readonly ICardTipRepository _cardTipRepository;
+        private readonly ICardTipService _cardTipService;
         private readonly IValidator<UpdateTipsCommand> _validator;
 
-        public UpdateTipsCommandHandler(ICardTipRepository cardTipRepository, IValidator<UpdateTipsCommand> validator)
+        public UpdateTipsCommandHandler(ICardTipService cardTipService, IValidator<UpdateTipsCommand> validator)
         {
-            _cardTipRepository = cardTipRepository;
+            _cardTipService = cardTipService;
             _validator = validator;
         }
 
@@ -29,8 +29,7 @@ namespace ygo.application.Commands.UpdateTips
 
             if (validatorResults.IsValid)
             {
-                //var card = await _cardRepository.CardById(request.CardId);
-                await _cardTipRepository.DeleteByCardId(request.CardId);
+                await _cardTipService.DeleteByCardId(request.CardId);
 
                 var newTipSectionList = new List<TipSection>();
 
@@ -60,7 +59,7 @@ namespace ygo.application.Commands.UpdateTips
 
                 if (newTipSectionList.Any())
                 {
-                    await _cardTipRepository.Update(newTipSectionList);
+                    await _cardTipService.Update(newTipSectionList);
                     
                     commandResult.IsSuccessful = true;
                 }

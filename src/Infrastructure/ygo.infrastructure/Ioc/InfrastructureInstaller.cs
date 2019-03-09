@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ygo.domain.Repository;
-using ygo.domain.Service;
+using ygo.domain.SystemIO;
 using ygo.infrastructure.Database;
 using ygo.infrastructure.Repository;
-using ygo.infrastructure.Service;
+using ygo.infrastructure.SystemIO;
 
 namespace ygo.infrastructure.Ioc
 {
@@ -12,7 +12,7 @@ namespace ygo.infrastructure.Ioc
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString)
         {
-            services.AddTransient<IFileSystemService, FileSystemService>();
+            services.AddTransient<IFileSystem, FileSystem>();
 
             services.AddYgoDatabase(connectionString);
             services.AddRepositories();

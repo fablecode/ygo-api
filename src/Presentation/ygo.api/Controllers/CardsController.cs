@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.UpdateCard;
+using ygo.application.Models.Cards.Input;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
 using ygo.application.Queries.CardExists;
@@ -61,7 +62,7 @@ namespace ygo.api.Controllers
         /// <summary>
         ///     Add new card
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="inputModel"></param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
@@ -69,12 +70,14 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int) HttpStatusCode.Conflict)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> Post([FromBody] AddCardCommand command)
+        public async Task<IActionResult> Post([FromBody] CardInputModel inputModel)
         {
-            var existingCard = await _mediator.Send(new CardByNameQuery {Name = command.Name});
+            var existingCard = await _mediator.Send(new CardByNameQuery {Name = inputModel.Name});
 
             if (existingCard == null)
             {
+                var command = new AddCardCommand{ Card = inputModel };
+
                 var result = await _mediator.Send(command);
 
                 if (result.IsSuccessful) return CreatedAtRoute("CardById", new {id = result.Data}, result.Data);
@@ -88,7 +91,7 @@ namespace ygo.api.Controllers
         /// <summary>
         ///     Update existing card
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="inputModel"></param>
         /// <returns></returns>
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
@@ -96,12 +99,14 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> Put([FromBody] UpdateCardCommand command)
+        public async Task<IActionResult> Put([FromBody] CardInputModel inputModel)
         {
-            var cardExists = await _mediator.Send(new CardExistsQuery {Id = command.Id});
+            var cardExists = await _mediator.Send(new CardExistsQuery {Id = inputModel.Id});
 
             if (cardExists)
             {
+                var command = new UpdateCardCommand{ Card = inputModel};
+
                 var result = await _mediator.Send(command);
 
                 if (result.IsSuccessful)
@@ -110,7 +115,7 @@ namespace ygo.api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return NotFound(command.Id);
+            return NotFound(inputModel.Id);
         }
     }
 }

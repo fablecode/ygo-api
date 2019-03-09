@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
-using System.Threading.Tasks;
 using NUnit.Framework;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.application.Queries.CardImageByName;
-using ygo.domain.Service;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
@@ -47,7 +47,7 @@ namespace ygo.application.unit.tests.QueriesTests
             // Arrange
             var query = new CardImageByNameQuery { Name = "kuriboh"};
 
-            _settings.Value.Returns(new ApplicationSettings { CardImageFolderPath = "D:SomeWierdDirectory" });
+            _settings.Value.Returns(new ApplicationSettings { CardImageFolderPath = "D:SomeWeirdDirectory" });
 
             // Act
             var result =  await _sut.Handle(query, CancellationToken.None);

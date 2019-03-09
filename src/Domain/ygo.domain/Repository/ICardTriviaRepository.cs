@@ -8,6 +8,6 @@ namespace ygo.domain.Repository
     {
         Task<List<TriviaSection>> TriviaSectionsByCardId(long cardId);
         Task DeleteByCardId(long cardId);
-        Task Update(List<TriviaSection> tipSections);
+        Task Update(List<TriviaSection> triviaSections);
     }
 }

@@ -1,21 +1,21 @@
-﻿using System.Threading;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.CardById
 {
     public class CardByIdQueryHandler : IRequestHandler<CardByIdQuery, CardDto>
     {
-        private readonly ICardRepository _repository;
+        private readonly ICardService _cardService;
         private readonly IValidator<CardByIdQuery> _validator;
 
-        public CardByIdQueryHandler(ICardRepository repository, IValidator<CardByIdQuery> validator)
+        public CardByIdQueryHandler(ICardService cardService, IValidator<CardByIdQuery> validator)
         {
-            _repository = repository;
+            _cardService = cardService;
             _validator = validator;
         }
 
@@ -25,7 +25,7 @@ namespace ygo.application.Queries.CardById
 
             if (validationResults.IsValid)
             {
-                var result = await _repository.CardById(request.Id);
+                var result = await _cardService.CardById(request.Id);
 
                 return result.MapToCardDto();
             }

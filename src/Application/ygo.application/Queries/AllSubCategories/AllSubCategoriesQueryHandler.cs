@@ -4,22 +4,23 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
+using ygo.core.Services;
 using ygo.domain.Repository;
 
 namespace ygo.application.Queries.AllSubCategories
 {
     public class AllSubCategoriesQueryHandler : IRequestHandler<AllSubCategoriesQuery, IEnumerable<SubCategoryDto>>
     {
-        private readonly ISubCategoryRepository _repository;
+        private readonly ISubCategoryService _subCategoryService;
 
-        public AllSubCategoriesQueryHandler(ISubCategoryRepository repository)
+        public AllSubCategoriesQueryHandler(ISubCategoryService subCategoryService)
         {
-            _repository = repository;
+            _subCategoryService = subCategoryService;
         }
 
         public async Task<IEnumerable<SubCategoryDto>> Handle(AllSubCategoriesQuery request, CancellationToken cancellationToken)
         {
-            var subCategories = await _repository.AllSubCategories();
+            var subCategories = await _subCategoryService.AllSubCategories();
 
             return Mapper.Map<IEnumerable<SubCategoryDto>>(subCategories);
         }

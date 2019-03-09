@@ -1,8 +1,9 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
 using System;
-using ygo.application.Commands.AddCard;
-using ygo.core.Enums;
+using ygo.application.Enums;
+using ygo.application.Models.Cards.Input;
+using ygo.application.Validations.Cards;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.ValidatorsTests.Commands
@@ -11,12 +12,12 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
     [Category(TestType.Unit)]
     public class AddCardCommandValidatorTests
     {
-        private AddCardCommandValidator _sut;
+        private CardValidator _sut;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new AddCardCommandValidator();
+            _sut = new CardValidator();
         }
 
 
@@ -25,10 +26,10 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_An_Invalid_CardType_Validation_Should_Fail(YgoCardType cardType)
         {
             // Arrange
-            var command = new AddCardCommand{ CardType = cardType};
+            var cardInputModel = new CardInputModel { CardType = cardType };
 
             // Act
-            Action act = () => _sut.ShouldHaveValidationErrorFor(c => c.CardType, command);
+            Action act = () => _sut.ShouldHaveValidationErrorFor(c => c.CardType, cardInputModel);
 
             // Assert
             act.Invoke();
@@ -38,10 +39,10 @@ namespace ygo.application.unit.tests.ValidatorsTests.Commands
         public void Given_A_Null_CardType_Validation_Should_Fail()
         {
             // Arrange
-            var command = new AddCardCommand();
+            var cardInputModel = new CardInputModel();
 
             // Act
-            Action act = () => _sut.ShouldHaveValidationErrorFor(c => c.CardType, command);
+            Action act = () => _sut.ShouldHaveValidationErrorFor(c => c.CardType, cardInputModel);
 
             // Assert
             act.Invoke();

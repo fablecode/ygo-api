@@ -45,9 +45,9 @@ namespace ygo.infrastructure.Repository
             }
         }
 
-        public async Task Update(List<TriviaSection> tipSections)
+        public async Task Update(List<TriviaSection> triviaSections)
         {
-            _context.TriviaSection.UpdateRange(tipSections);
+            _context.TriviaSection.UpdateRange(triviaSections);
             await _context.SaveChangesAsync();
         }
     }

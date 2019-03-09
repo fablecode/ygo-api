@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateArchetype
 {
@@ -14,20 +14,20 @@ namespace ygo.application.Commands.UpdateArchetype
     {
         private readonly IMediator _mediator;
         private readonly IValidator<UpdateArchetypeCommand> _validator;
-        private readonly IArchetypeRepository _archetypeRepository;
+        private readonly IArchetypeService _archetypeService;
         private readonly IOptions<ApplicationSettings> _settings;
 
         public UpdateArchetypeCommandHandler
         (
             IMediator mediator,
             IValidator<UpdateArchetypeCommand> validator,
-            IArchetypeRepository archetypeRepository,
+            IArchetypeService archetypeService,
             IOptions<ApplicationSettings> settings
         )
         {
             _mediator = mediator;
             _validator = validator;
-            _archetypeRepository = archetypeRepository;
+            _archetypeService = archetypeService;
             _settings = settings;
         }
 
@@ -39,7 +39,7 @@ namespace ygo.application.Commands.UpdateArchetype
 
             if (validationResult.IsValid)
             {
-                var archetypeToUpdate = await _archetypeRepository.ArchetypeById(request.Id);
+                var archetypeToUpdate = await _archetypeService.ArchetypeById(request.Id);
 
                 if (archetypeToUpdate != null)
                 {
@@ -47,7 +47,7 @@ namespace ygo.application.Commands.UpdateArchetype
                     archetypeToUpdate.Url = request.ProfileUrl;
                     archetypeToUpdate.Updated = DateTime.UtcNow;
 
-                    commandResult.Data = await _archetypeRepository.Update(archetypeToUpdate);
+                    commandResult.Data = await _archetypeService.Update(archetypeToUpdate);
 
                     if (!string.IsNullOrWhiteSpace(request.ImageUrl))
                     {

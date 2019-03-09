@@ -5,18 +5,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
+using ygo.core.Services;
 using ygo.domain.Repository;
 
 namespace ygo.application.Commands.AddCategory
 {
     public class AddCategoryCommandHandler : IRequestHandler<AddCategoryCommand, CommandResult>
     {
-        private readonly ICategoryRepository _repository;
+        private readonly ICategoryService _categoryService;
         private readonly IValidator<AddCategoryCommand> _validator;
 
-        public AddCategoryCommandHandler(ICategoryRepository repository, IValidator<AddCategoryCommand> validator)
+        public AddCategoryCommandHandler(ICategoryService categoryService, IValidator<AddCategoryCommand> validator)
         {
-            _repository = repository;
+            _categoryService = categoryService;
             _validator = validator;
         }
 
@@ -28,7 +29,7 @@ namespace ygo.application.Commands.AddCategory
 
             if (validationResults.IsValid)
             {
-                var responseData = await _repository.Add(new Category
+                var responseData = await _categoryService.Add(new Category
                 {
                     Name = request.Name,
                     Created = DateTime.UtcNow,

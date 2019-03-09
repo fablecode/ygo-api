@@ -1,25 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using MediatR;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.AllAttributes
 {
     public class AllAttributesQueryHandler : IRequestHandler<AllAttributesQuery, IEnumerable<AttributeDto>>
     {
-        private readonly IAttributeRepository _repository;
+        private readonly IAttributeService _attributeService;
 
-        public AllAttributesQueryHandler(IAttributeRepository repository)
+        public AllAttributesQueryHandler(IAttributeService attributeService)
         {
-            _repository = repository;
+            _attributeService = attributeService;
         }
 
         public async Task<IEnumerable<AttributeDto>> Handle(AllAttributesQuery request, CancellationToken cancellationToken)
         {
-            var allAttributes = await _repository.AllAttributes();
+            var allAttributes = await _attributeService.AllAttributes();
 
             return Mapper.Map<IEnumerable<AttributeDto>>(allAttributes);
         }

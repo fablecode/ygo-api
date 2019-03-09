@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.AddCategory;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
@@ -15,14 +15,14 @@ namespace ygo.application.unit.tests.Commands
     public class AddCategoryCommandHandlerTests
     {
         private AddCategoryCommandHandler _sut;
-        private ICategoryRepository _categoryRepository;
+        private ICategoryService _categoryService;
 
         [SetUp]
         public void SetUp()
         {
-            _categoryRepository = Substitute.For<ICategoryRepository>();
+            _categoryService = Substitute.For<ICategoryService>();
 
-            _sut = new AddCategoryCommandHandler(_categoryRepository, new AddCategoryCommandValidator());
+            _sut = new AddCategoryCommandHandler(_categoryService, new AddCategoryCommandValidator());
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace ygo.application.unit.tests.Commands
         public async Task Given_An_Invalid_AddCategoryCommand_Should_Not_Execute_Repository_AddCategory_Method()
         {
             // Arrange
-            _categoryRepository
+            _categoryService
                 .Add(Arg.Any<Category>())
                 .Returns(new Category());
 
@@ -65,14 +65,14 @@ namespace ygo.application.unit.tests.Commands
             await  _sut.Handle(command, CancellationToken.None);
 
             // Assert
-            await _categoryRepository.DidNotReceive().Add(Arg.Any<Category>());
+            await _categoryService.DidNotReceive().Add(Arg.Any<Category>());
         }
 
         [Test]
         public async Task Given_A_Valid_AddCategoryCommand_The_Command_Execution_Should_Be_Successfully()
         {
             // Arrange
-            _categoryRepository
+            _categoryService
                 .Add(Arg.Any<Category>())
                 .Returns(new Category());
 

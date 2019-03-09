@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Queries.ArchetypeByName;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
@@ -15,14 +15,14 @@ namespace ygo.application.unit.tests.QueriesTests
     public class ArchetypeByNameQueryHandlerTests
     {
         private ArchetypeByNameQueryHandler _sut;
-        private IArchetypeRepository _archetypeRepository;
+        private IArchetypeService _archetypeService;
 
         [SetUp]
         public void SetUp()
         {
-            _archetypeRepository = Substitute.For<IArchetypeRepository>();
+            _archetypeService = Substitute.For<IArchetypeService>();
 
-            _sut = new ArchetypeByNameQueryHandler(_archetypeRepository, new ArchetypeByNameQueryValidator());
+            _sut = new ArchetypeByNameQueryHandler(_archetypeService, new ArchetypeByNameQueryValidator());
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace ygo.application.unit.tests.QueriesTests
         public async Task Given_An_Valid_Query_Should_Execute_ArchetypeByName()
         {
             // Arrange
-            _archetypeRepository
+            _archetypeService
                 .ArchetypeByName(Arg.Any<string>())
                 .Returns(new Archetype());
 
@@ -52,7 +52,7 @@ namespace ygo.application.unit.tests.QueriesTests
             await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            await _archetypeRepository.Received(1).ArchetypeByName(Arg.Any<string>());
+            await _archetypeService.Received(1).ArchetypeByName(Arg.Any<string>());
         }
 
     }

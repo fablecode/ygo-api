@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.AllLimits
 {
     public class AllLimitsQueryHandler : IRequestHandler<AllLimitsQuery, IEnumerable<LimitDto>>
     {
-        private readonly ILimitRepository _repository;
+        private readonly ILimitService _limitService;
 
-        public AllLimitsQueryHandler(ILimitRepository repository)
+        public AllLimitsQueryHandler(ILimitService limitService)
         {
-            _repository = repository;
+            _limitService = limitService;
         }
 
         public async Task<IEnumerable<LimitDto>> Handle(AllLimitsQuery request, CancellationToken cancellationToken)
         {
-            var allLimits = await _repository.AllLimits();
+            var allLimits = await _limitService.AllLimits();
 
             return Mapper.Map<IEnumerable<LimitDto>>(allLimits);
         }
