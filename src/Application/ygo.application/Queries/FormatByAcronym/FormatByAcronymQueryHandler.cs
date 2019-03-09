@@ -1,25 +1,24 @@
-﻿using System.Threading;
-using AutoMapper;
-using FluentValidation;
+﻿using AutoMapper;
 using MediatR;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.FormatByAcronym
 {
     public class FormatByAcronymQueryHandler : IRequestHandler<FormatByAcronymQuery, FormatDto>
     {
-        private readonly IFormatRepository _repository;
+        private readonly IFormatService _formatService;
 
-        public FormatByAcronymQueryHandler(IFormatRepository repository)
+        public FormatByAcronymQueryHandler(IFormatService formatService)
         {
-            _repository = repository;
+            _formatService = formatService;
         }
 
         public async Task<FormatDto> Handle(FormatByAcronymQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repository.FormatByAcronym(request.Acronym.ToString());
+            var result = await _formatService.FormatByAcronym(request.Acronym.ToString());
 
             return result != null ? Mapper.Map<FormatDto>(result) : null;
         }

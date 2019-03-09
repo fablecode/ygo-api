@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Services;
-using ygo.domain.SystemIO;
 
 namespace ygo.application.Queries.ArchetypeImageById
 {

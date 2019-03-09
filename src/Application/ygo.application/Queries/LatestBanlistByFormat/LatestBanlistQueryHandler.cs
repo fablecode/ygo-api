@@ -2,22 +2,22 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.LatestBanlistByFormat
 {
     public class LatestBanlistQueryHandler : IRequestHandler<LatestBanlistQuery, LatestBanlistDto>
     {
-        private readonly IBanlistRepository _banlistRepository;
+        private readonly IBanlistService _banlistService;
 
-        public LatestBanlistQueryHandler(IBanlistRepository banlistRepository)
+        public LatestBanlistQueryHandler(IBanlistService banlistService)
         {
-            _banlistRepository = banlistRepository;
+            _banlistService = banlistService;
         }
 
         public async Task<LatestBanlistDto> Handle(LatestBanlistQuery request, CancellationToken cancellationToken)
         {
-            var banlist = await _banlistRepository.GetBanlistByFormatAcronym(request.Acronym.ToString());
+            var banlist = await _banlistService.GetBanlistByFormatAcronym(request.Acronym.ToString());
 
             return banlist?.MapToLatestBanlist();
         }

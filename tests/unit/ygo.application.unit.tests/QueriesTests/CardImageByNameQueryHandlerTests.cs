@@ -5,7 +5,7 @@ using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Queries.CardImageByName;
-using ygo.domain.SystemIO;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
@@ -20,7 +20,7 @@ namespace ygo.application.unit.tests.QueriesTests
         [SetUp]
         public void Setup()
         {
-            var fileSystemService = Substitute.For<IFileSystem>();
+            var fileSystemService = Substitute.For<IFileSystemService>();
             _settings = Substitute.For<IOptions<ApplicationSettings>>();
 
             _sut = new CardImageByNameQueryHandler(fileSystemService, _settings);
@@ -47,7 +47,7 @@ namespace ygo.application.unit.tests.QueriesTests
             // Arrange
             var query = new CardImageByNameQuery { Name = "kuriboh"};
 
-            _settings.Value.Returns(new ApplicationSettings { CardImageFolderPath = "D:SomeWierdDirectory" });
+            _settings.Value.Returns(new ApplicationSettings { CardImageFolderPath = "D:SomeWeirdDirectory" });
 
             // Act
             var result =  await _sut.Handle(query, CancellationToken.None);

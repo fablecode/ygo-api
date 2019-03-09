@@ -37,5 +37,15 @@ namespace ygo.domain.Services
         {
             return _cardRepository.CardById(cardId);
         }
+
+        public Task<Card> CardByName(string name)
+        {
+            return _cardRepository.CardByName(name);
+        }
+
+        public Task<bool> CardExists(long id)
+        {
+            return _cardRepository.CardExists(id);
+        }
     }
 }

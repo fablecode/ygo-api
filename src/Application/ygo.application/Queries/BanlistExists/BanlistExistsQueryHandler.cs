@@ -1,22 +1,23 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using ygo.core.Services;
 using ygo.domain.Repository;
 
 namespace ygo.application.Queries.BanlistExists
 {
     public class BanlistExistsQueryHandler : IRequestHandler<BanlistExistsQuery, bool>
     {
-        private readonly IBanlistRepository _banlistRepository;
+        private readonly IBanlistService _banlistService;
 
-        public BanlistExistsQueryHandler(IBanlistRepository banlistRepository)
+        public BanlistExistsQueryHandler(IBanlistService banlistService)
         {
-            _banlistRepository = banlistRepository;
+            _banlistService = banlistService;
         }
 
         public Task<bool> Handle(BanlistExistsQuery request, CancellationToken cancellationToken)
         {
-            return _banlistRepository.BanlistExist(request.Id);
+            return _banlistService.BanlistExist(request.Id);
         }
     }
 }

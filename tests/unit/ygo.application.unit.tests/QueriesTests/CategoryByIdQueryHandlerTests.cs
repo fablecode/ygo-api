@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Queries.CategoryById;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 using ygo.tests.core;
 
 namespace ygo.application.unit.tests.QueriesTests
@@ -15,14 +15,14 @@ namespace ygo.application.unit.tests.QueriesTests
     public class CategoryByIdQueryHandlerTests
     {
         private CategoryByIdQueryHandler _sut;
-        private ICategoryRepository _categoryRepository;
+        private ICategoryService _categoryService;
 
         [SetUp]
         public void SetUp()
         {
-            _categoryRepository = Substitute.For<ICategoryRepository>();
+            _categoryService = Substitute.For<ICategoryService>();
 
-            _sut = new CategoryByIdQueryHandler(_categoryRepository, new CategoryByIdQueryValidator());
+            _sut = new CategoryByIdQueryHandler(_categoryService, new CategoryByIdQueryValidator());
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace ygo.application.unit.tests.QueriesTests
         public async Task Given_A_Valid_Query_Should_Execute_CategoryById()
         {
             // Arrange
-            _categoryRepository
+            _categoryService
                 .CategoryById(Arg.Any<int>())
                 .Returns(new Category());
 
@@ -52,7 +52,7 @@ namespace ygo.application.unit.tests.QueriesTests
             await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            await _categoryRepository.Received(1).CategoryById(Arg.Any<int>());
+            await _categoryService.Received(1).CategoryById(Arg.Any<int>());
         }
 
     }

@@ -1,24 +1,24 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.application.Dto;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Queries.BanlistById
 {
     public class BanlistByIdQueryHandler : IRequestHandler<BanlistByIdQuery, BanlistDto>
     {
-        private readonly IBanlistRepository _banlistRepository;
+        private readonly IBanlistService _banlistService;
 
-        public BanlistByIdQueryHandler(IBanlistRepository banlistRepository)
+        public BanlistByIdQueryHandler(IBanlistService banlistService)
         {
-            _banlistRepository = banlistRepository;
+            _banlistService = banlistService;
         }
 
         public async Task<BanlistDto> Handle(BanlistByIdQuery request, CancellationToken cancellationToken)
         {
-            var banlist = await _banlistRepository.GetBanlistById(request.Id);
+            var banlist = await _banlistService.GetBanlistById(request.Id);
 
             if (banlist != null)
             {
