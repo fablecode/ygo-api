@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Options;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
@@ -33,7 +34,7 @@ namespace ygo.application.Commands.AddArchetype
 
         public async Task<CommandResult> Handle(AddArchetypeCommand request, CancellationToken cancellationToken)
         {
-            var response = new CommandResult();
+            var commandResult = new CommandResult();
 
             var validationResult = _validator.Validate(request);
 
@@ -60,11 +61,15 @@ namespace ygo.application.Commands.AddArchetype
                     await _mediator.Send(downloadImageCommand, cancellationToken);
                 }
 
-                response.Data = newArchetype.Id;
-                response.IsSuccessful = true;
+                commandResult.Data = newArchetype.Id;
+                commandResult.IsSuccessful = true;
+            }
+            else
+            {
+                commandResult.Errors = validationResult.Errors.Select(err => err.ErrorMessage).ToList();
             }
 
-            return response;
+            return commandResult;
         }
     }
 }
