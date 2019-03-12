@@ -20,19 +20,22 @@ namespace ygo.application.Commands.AddCard
         private readonly IValidator<CardInputModel> _validator;
         private readonly ICardService _cardService;
         private readonly IOptions<ApplicationSettings> _settings;
+        private readonly IMapper _mapper;
 
         public AddCardCommandHandler
         (
             IMediator mediator, 
             IValidator<CardInputModel> validator,
             ICardService cardService,
-            IOptions<ApplicationSettings> settings
+            IOptions<ApplicationSettings> settings,
+            IMapper mapper
         )
         {
             _mediator = mediator;
             _validator = validator;
             _cardService = cardService;
             _settings = settings;
+            _mapper = mapper;
         }
 
         public async Task<CommandResult> Handle(AddCardCommand request, CancellationToken cancellationToken)
@@ -45,9 +48,9 @@ namespace ygo.application.Commands.AddCard
 
                 if (validationResults.IsValid)
                 {
-                    var cardModel = Mapper.Map<CardModel>(request.Card);
+                    var cardModel = _mapper.Map<CardModel>(request.Card);
 
-                    var result = _cardService.Add(cardModel);
+                    var result = await _cardService.Add(cardModel);
 
                     if (result != null)
                     {

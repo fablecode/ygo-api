@@ -26,7 +26,6 @@ using ygo.core.Services;
 using ygo.core.Strategies;
 using ygo.domain.Services;
 using ygo.domain.Strategies;
-using ygo.domain.SystemIO;
 
 namespace ygo.application
 {
@@ -39,6 +38,9 @@ namespace ygo.application
             services.AddAutoMapper();
             services.DomainServices();
             services.AddStrategies();
+
+            services.AddAutoMapper();
+
 
             return services;
         }
