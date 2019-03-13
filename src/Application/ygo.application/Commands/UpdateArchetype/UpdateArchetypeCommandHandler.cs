@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
@@ -68,6 +69,10 @@ namespace ygo.application.Commands.UpdateArchetype
                     commandResult.Errors = new List<string> { "Critical error: Card not found." };
                 }
 
+            }
+            else
+            {
+                commandResult.Errors = validationResult.Errors.Select(err => err.ErrorMessage).ToList();
             }
 
             return commandResult;
