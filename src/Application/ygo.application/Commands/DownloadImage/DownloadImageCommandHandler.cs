@@ -5,18 +5,18 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ygo.domain.SystemIO;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.DownloadImage
 {
     public class DownloadImageCommandHandler : IRequestHandler<DownloadImageCommand, CommandResult>
     {
-        private readonly IFileSystem _fileSystem;
+        private readonly IFileSystemService _fileSystemService;
         private readonly IValidator<DownloadImageCommand> _validator;
 
-        public DownloadImageCommandHandler(IFileSystem fileSystem, IValidator<DownloadImageCommand> validator)
+        public DownloadImageCommandHandler(IFileSystemService fileSystemService, IValidator<DownloadImageCommand> validator)
         {
-            _fileSystem = fileSystem;
+            _fileSystemService = fileSystemService;
             _validator = validator;
         }
 
@@ -30,14 +30,14 @@ namespace ygo.application.Commands.DownloadImage
             {
                 var imageFileFullPathWithoutExtension = Path.Combine(request.ImageFolderPath, Path.GetFileNameWithoutExtension(request.ImageFileName));
 
-                var downloadedFileResult = await _fileSystem.Download(request.RemoteImageUrl, imageFileFullPathWithoutExtension);
+                var downloadedFileResult = await _fileSystemService.Download(request.RemoteImageUrl, imageFileFullPathWithoutExtension);
 
                 var imageFileFullPathWithExtension = string.Concat(imageFileFullPathWithoutExtension, GetDefaultExtension(downloadedFileResult.ContentType));
 
-                if (_fileSystem.Exists(imageFileFullPathWithExtension))
-                    _fileSystem.Delete(imageFileFullPathWithExtension);
+                if (_fileSystemService.Exists(imageFileFullPathWithExtension))
+                    _fileSystemService.Delete(imageFileFullPathWithExtension);
 
-                _fileSystem.Rename(imageFileFullPathWithoutExtension, imageFileFullPathWithExtension);
+                _fileSystemService.Rename(imageFileFullPathWithoutExtension, imageFileFullPathWithExtension);
 
                 commandResult.Data = downloadedFileResult;
                 commandResult.IsSuccessful = true;
