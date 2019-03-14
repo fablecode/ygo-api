@@ -24,19 +24,22 @@ namespace ygo.application.Commands.UpdateCard
         private readonly IValidator<CardInputModel> _validator;
         private readonly ICardService _cardService;
         private readonly IOptions<ApplicationSettings> _settings;
+        private readonly IMapper _mapper;
 
         public UpdateCardCommandHandler
         (
             IMediator mediator, 
             IValidator<CardInputModel> validator,
             ICardService cardService,
-            IOptions<ApplicationSettings> settings
+            IOptions<ApplicationSettings> settings,
+            IMapper mapper
         )
         {
             _mediator = mediator;
             _validator = validator;
             _cardService = cardService;
             _settings = settings;
+            _mapper = mapper;
         }
 
         public async Task<CommandResult> Handle(UpdateCardCommand request, CancellationToken cancellationToken)
@@ -47,7 +50,7 @@ namespace ygo.application.Commands.UpdateCard
 
             if (validationResults.IsValid)
             {
-                var cardModel = Mapper.Map<CardModel>(request.Card);
+                var cardModel = _mapper.Map<CardModel>(request.Card);
 
                 var cardUpdated = await _cardService.Update(cardModel);
 
@@ -65,7 +68,7 @@ namespace ygo.application.Commands.UpdateCard
                         await _mediator.Send(downloadImageCommand, cancellationToken);
                     }
 
-                    commandResult.Data = MapCardByCardType(request.Card.CardType.GetValueOrDefault(), cardUpdated);
+                    commandResult.Data = CommandMapperHelper.MapCardByCardType(request.Card.CardType.GetValueOrDefault(), cardUpdated);
                     commandResult.IsSuccessful = true;
                 }
                 else
@@ -81,19 +84,5 @@ namespace ygo.application.Commands.UpdateCard
             return commandResult;
         }
 
-        private object MapCardByCardType(YgoCardType cardCardType, Card cardUpdated)
-        {
-            switch (cardCardType)
-            {
-                case YgoCardType.Monster:
-                    return Mapper.Map<MonsterCardDto>(cardUpdated);
-                case YgoCardType.Spell:
-                    return Mapper.Map<SpellCardDto>(cardUpdated);
-                case YgoCardType.Trap:
-                    return Mapper.Map<TrapCardDto>(cardUpdated);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(cardCardType), cardCardType, null);
-            }
-        }
     }
 }

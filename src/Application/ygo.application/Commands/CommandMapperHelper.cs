@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using ygo.application.Commands.UpdateBanlist;
 using ygo.application.Dto;
+using ygo.application.Enums;
 using ygo.core.Models.Db;
 
 namespace ygo.application.Commands
@@ -73,5 +74,21 @@ namespace ygo.application.Commands
             banlist.ReleaseDate = command.ReleaseDate.GetValueOrDefault();
             banlist.Updated = DateTime.UtcNow;
         }
+
+        public static object MapCardByCardType(YgoCardType cardCardType, Card cardUpdated)
+        {
+            switch (cardCardType)
+            {
+                case YgoCardType.Monster:
+                    return Mapper.Map<MonsterCardDto>(cardUpdated);
+                case YgoCardType.Spell:
+                    return Mapper.Map<SpellCardDto>(cardUpdated);
+                case YgoCardType.Trap:
+                    return Mapper.Map<TrapCardDto>(cardUpdated);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cardCardType), cardCardType, null);
+            }
+        }
+
     }
 }
