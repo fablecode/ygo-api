@@ -4,18 +4,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
-using ygo.domain.Repository;
+using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateBanlistCards
 {
     public class UpdateBanlistCardsCommandHandler : IRequestHandler<UpdateBanlistCardsCommand, CommandResult>
     {
-        private readonly IBanlistCardsRepository _banlistCardsRepository;
+        private readonly IBanlistCardsService _banlistCardsService;
         private readonly IValidator<UpdateBanlistCardsCommand> _validator;
 
-        public UpdateBanlistCardsCommandHandler(IBanlistCardsRepository banlistCardsRepository, IValidator<UpdateBanlistCardsCommand> validator)
+        public UpdateBanlistCardsCommandHandler(IBanlistCardsService banlistCardsService, IValidator<UpdateBanlistCardsCommand> validator)
         {
-            _banlistCardsRepository = banlistCardsRepository;
+            _banlistCardsService = banlistCardsService;
             _validator = validator;
         }
 
@@ -32,7 +32,7 @@ namespace ygo.application.Commands.UpdateBanlistCards
                     .Select(bl => new BanlistCard { BanlistId = bl.BanlistId, CardId = bl.CardId, LimitId = bl.LimitId })
                     .ToArray();
 
-                await _banlistCardsRepository.Update(request.BanlistId, banlistCards);
+                await _banlistCardsService.Update(request.BanlistId, banlistCards);
 
                 commandResult.Data = request.BanlistCards;
                 commandResult.IsSuccessful = true;

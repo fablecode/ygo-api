@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ygo.application.Commands.UpdateBanlist;
@@ -73,48 +72,6 @@ namespace ygo.application.Commands
             banlist.Name = command.Name;
             banlist.ReleaseDate = command.ReleaseDate.GetValueOrDefault();
             banlist.Updated = DateTime.UtcNow;
-        }
-
-        public static Card MapToSpellOrTrapCard(long? cardNumber, string name, string description, IList<int> subCategoryIds)
-        {
-            return MapToSpellOrTrapCard(0, cardNumber, name, description, subCategoryIds);
-        }
-
-        public static Card MapToSpellOrTrapCard(long id, long? cardNumber, string name, string description, IList<int> subCategoryIds)
-        {
-            var newCard = new Card
-            {
-                Id = id,
-                Name = name,
-                CardNumber = cardNumber,
-                Description = description,
-                Created = DateTime.UtcNow,
-                Updated = DateTime.UtcNow
-            };
-
-            if (subCategoryIds.Any())
-            {
-                foreach (var scId in subCategoryIds)
-                    newCard.CardSubCategory.Add(new CardSubCategory { SubCategoryId = scId });
-            }
-
-            return newCard;
-        }
-
-        public static void MapToSpellOrTrapCard(this Card card, long? cardNumber, string name, string description, IList<int> subCategoryIds)
-        {
-            card.Name = name;
-            card.CardNumber = cardNumber;
-            card.Description = description;
-            card.Updated = DateTime.UtcNow;
-
-            subCategoryIds.Clear();
-
-            if (subCategoryIds.Any())
-            {
-                foreach (var scId in subCategoryIds)
-                    card.CardSubCategory.Add(new CardSubCategory { SubCategoryId = scId });
-            }
         }
     }
 }

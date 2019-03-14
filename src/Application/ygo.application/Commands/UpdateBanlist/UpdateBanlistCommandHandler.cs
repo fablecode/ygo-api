@@ -13,11 +13,13 @@ namespace ygo.application.Commands.UpdateBanlist
     {
         private readonly IBanlistService _banlistService;
         private readonly IValidator<UpdateBanlistCommand> _validator;
+        private readonly IMapper _mapper;
 
-        public UpdateBanlistCommandHandler(IBanlistService banlistService, IValidator<UpdateBanlistCommand> validator)
+        public UpdateBanlistCommandHandler(IBanlistService banlistService, IValidator<UpdateBanlistCommand> validator, IMapper mapper)
         {
             _banlistService = banlistService;
             _validator = validator;
+            _mapper = mapper;
         }
 
         public async Task<CommandResult> Handle(UpdateBanlistCommand request, CancellationToken cancellationToken)
@@ -34,7 +36,7 @@ namespace ygo.application.Commands.UpdateBanlist
                 {
                     banlistToupdate.UpdateBanlistWith(request);
 
-                    commandResult.Data = Mapper.Map<BanlistDto>(await _banlistService.Update(banlistToupdate));
+                    commandResult.Data = _mapper.Map<BanlistDto>(await _banlistService.Update(banlistToupdate));
                     commandResult.IsSuccessful = true;
                 }
             }
