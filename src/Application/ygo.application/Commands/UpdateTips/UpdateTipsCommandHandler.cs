@@ -64,6 +64,10 @@ namespace ygo.application.Commands.UpdateTips
                     commandResult.IsSuccessful = true;
                 }
             }
+            else
+            {
+                commandResult.Errors = validatorResults.Errors.Select(err => err.ErrorMessage).ToList();
+            }
 
             return commandResult;
         }

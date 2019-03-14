@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Models.Db;
 using ygo.core.Services;
-using ygo.domain.Repository;
 
 namespace ygo.application.Commands.UpdateTrivia
 {
@@ -64,6 +63,10 @@ namespace ygo.application.Commands.UpdateTrivia
                     
                     commandResult.IsSuccessful = true;
                 }
+            }
+            else
+            {
+                commandResult.Errors = validatorResults.Errors.Select(err => err.ErrorMessage).ToList();
             }
 
             return commandResult;
