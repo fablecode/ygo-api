@@ -22,9 +22,10 @@ To provide access to the latest [Yu-Gi-Oh](http://www.yugioh-card.com/uk/)  banl
 3. Run
 
 ## Built With
-* [Onion Architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/) and [CQRS](https://martinfowler.com/bliki/CQRS.html).
 * [Visual Studio 2017](https://www.visualstudio.com/downloads/)
 * [.NET Core 2.2](https://www.microsoft.com/net/download/core)
+* [Onion Architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/) and [CQRS](https://martinfowler.com/bliki/CQRS.html).
+* [Strategy Pattern](https://en.wikipedia.org/wiki/Strategy_pattern)
 * [Swagger](https://swagger.io/)
 * [Mediatr](https://www.nuget.org/packages/MediatR/) for CQRS and the Mediator Design Pattern. Mediator design pattern defines how a set of objects interact with each other. You can think of a Mediator object as a kind of traffic-coordinator, it directs traffic to appropriate parties.
 * [Entity Framework Core 2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/)
