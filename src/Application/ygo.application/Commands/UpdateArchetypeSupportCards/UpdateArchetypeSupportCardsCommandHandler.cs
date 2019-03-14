@@ -37,6 +37,10 @@ namespace ygo.application.Commands.UpdateArchetypeSupportCards
 
                 commandResult.IsSuccessful = true;
             }
+            else
+            {
+                commandResult.Errors = validationResult.Errors.Select(err => err.ErrorMessage).ToList();
+            }
 
             return commandResult;
         }
