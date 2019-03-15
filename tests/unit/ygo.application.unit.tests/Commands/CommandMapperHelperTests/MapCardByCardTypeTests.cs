@@ -73,7 +73,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
         public void Given_A_Monster_CardType_Should_Return_Object_Of_Type_TrapCardDto()
         {
             // Arrange
-            const YgoCardType cardType = YgoCardType.Trap;
+            const YgoCardType cardType = YgoCardType.Monster;
 
             var card = new Card { Id = 23424};
 
@@ -81,7 +81,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             var result = CommandMapperHelper.MapCardByCardType(cardType, card);
 
             // Assert
-            result.Should().BeOfType<TrapCardDto>();
+            result.Should().BeOfType<MonsterCardDto>();
         }
     }
 }

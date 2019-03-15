@@ -11,17 +11,19 @@ namespace ygo.application.Queries.AllAttributes
     public class AllAttributesQueryHandler : IRequestHandler<AllAttributesQuery, IEnumerable<AttributeDto>>
     {
         private readonly IAttributeService _attributeService;
+        private readonly IMapper _mapper;
 
-        public AllAttributesQueryHandler(IAttributeService attributeService)
+        public AllAttributesQueryHandler(IAttributeService attributeService, IMapper mapper)
         {
             _attributeService = attributeService;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<AttributeDto>> Handle(AllAttributesQuery request, CancellationToken cancellationToken)
         {
             var allAttributes = await _attributeService.AllAttributes();
 
-            return Mapper.Map<IEnumerable<AttributeDto>>(allAttributes);
+            return _mapper.Map<IEnumerable<AttributeDto>>(allAttributes);
         }
     }
 }
