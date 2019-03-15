@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using ygo.application.Mappings.Profiles;
 using ygo.application.Queries.AllAttributes;
-using ygo.application.Queries.AllCategories;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 using ygo.tests.core;
