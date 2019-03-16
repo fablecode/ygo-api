@@ -19,7 +19,7 @@ namespace ygo.application.Queries.LatestBanlistByFormat
         {
             var banlist = await _banlistService.GetBanlistByFormatAcronym(request.Acronym.ToString());
 
-            return banlist?.MapToLatestBanlist();
+            return QueryMapperHelper.MapToLatestBanlist(banlist);
         }
     }
 }

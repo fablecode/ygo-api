@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using ygo.application.Dto;
+using ygo.core.Constants;
 using ygo.core.Models.Db;
 
 namespace ygo.application.Queries
 {
     public static class QueryMapperHelper
     {
-        public static LatestBanlistDto MapToLatestBanlist(this Banlist banlist)
+        public static LatestBanlistDto MapToLatestBanlist(Banlist banlist)
         {
             var latestBanlist = new LatestBanlistDto();
 
@@ -18,13 +19,13 @@ namespace ygo.application.Queries
 
             var groupedCards = banlistCards as IGrouping<string, BanlistCard>[] ?? banlistCards.ToArray();
 
-            var forbiddenCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals("Forbidden", StringComparison.OrdinalIgnoreCase));
-            var limnitCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals("Limited", StringComparison.OrdinalIgnoreCase));
-            var semiLimitedCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals("Semi-Limited", StringComparison.OrdinalIgnoreCase));
-            var unlimitedCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals("Unlimited", StringComparison.OrdinalIgnoreCase));
+            var forbiddenCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals(BanlistConstants.Forbidden, StringComparison.OrdinalIgnoreCase));
+            var limnitCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals(BanlistConstants.Limited, StringComparison.OrdinalIgnoreCase));
+            var semiLimitedCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals(BanlistConstants.SemiLimited, StringComparison.OrdinalIgnoreCase));
+            var unlimitedCards = groupedCards.SingleOrDefault(grp => grp.Key.Equals(BanlistConstants.Unlimited, StringComparison.OrdinalIgnoreCase));
 
             latestBanlist.Format = banlist.Format.Acronym.ToUpper();
-            latestBanlist.ReleaseDate = banlist.ReleaseDate.ToString("MMMM dd, yyyy");
+            latestBanlist.ReleaseDate = banlist.ReleaseDate.ToString(BanlistConstants.ReleaseDateFormat);
 
             if (forbiddenCards != null)
                 latestBanlist.Forbidden = forbiddenCards.Select(MapToLatestBanlistCard).ToList();
