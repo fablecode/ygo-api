@@ -18,11 +18,11 @@ namespace ygo.application.Queries.CategoryById
             _queryValidator = queryValidator;
         }
 
-        public Task<Category> Handle(CategoryByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Category> Handle(CategoryByIdQuery request, CancellationToken cancellationToken)
         {
             var validationResult = _queryValidator.Validate(request);
 
-            return validationResult.IsValid ? _categoryService.CategoryById(request.Id) : null;
+            return validationResult.IsValid ? await _categoryService.CategoryById(request.Id) : null;
         }
     }
 }

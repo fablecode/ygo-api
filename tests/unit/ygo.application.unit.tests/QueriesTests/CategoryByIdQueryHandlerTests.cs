@@ -26,13 +26,16 @@ namespace ygo.application.unit.tests.QueriesTests
         }
 
         [Test]
-        public void Given_An_Invalid_Query_Should_Return_Null()
+        public async Task Given_An_Invalid_Query_Should_Return_Null()
         {
             // Arrange
-            var query = new CategoryByIdQuery();
+            var query = new CategoryByIdQuery
+            {
+                Id = -1
+            };
 
             // Act
-            var result = _sut.Handle(query, CancellationToken.None);
+            var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
             result.Should().BeNull();
