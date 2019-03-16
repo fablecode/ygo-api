@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.core.Services;
 using ygo.domain.Helpers;
-using ygo.domain.SystemIO;
 
 namespace ygo.application.Queries.CardImageByName
 {

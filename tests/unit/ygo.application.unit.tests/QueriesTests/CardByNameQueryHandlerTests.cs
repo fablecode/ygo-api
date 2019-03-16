@@ -39,7 +39,7 @@ namespace ygo.application.unit.tests.QueriesTests
         }
 
         [Test]
-        public async Task Given_An_Valid_Query_Should_Execute_CardByName()
+        public async Task Given_An_Valid_Query_Should_Execute_CardByName_Once()
         {
             // Arrange
             _cardService
