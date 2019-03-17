@@ -209,7 +209,6 @@ namespace ygo.api.unit.tests.ControllerTests.AccountsControllerTests
             _userManager.GetClaimsAsync(Arg.Any<ApplicationUser>()).Returns(new List<Claim>());
             _userManager.GetRolesAsync(Arg.Any<ApplicationUser>()).Returns(new List<string>());
 
-            _userManager.GenerateEmailConfirmationTokenAsync(Arg.Any<ApplicationUser>()).Returns(@"H!Y7/Q}9I%J61aIn|Z.ouTvY.*@thu}qx)@h0-kI9%$](^l~xuFK>TL,%$EI_|7?");
             _userManager.AddToRoleAsync(Arg.Any<ApplicationUser>(), Arg.Any<string>()).Returns(IdentityResult.Success);
 
             // Act

@@ -109,12 +109,25 @@ namespace ygo.api.Controllers
 
                         return Ok(new {token = new JwtSecurityTokenHandler().WriteToken(token)});
                     }
+
+                    if (result.IsLockedOut)
+                    {
+                        return BadRequest("User is locked out.");
+                    }
+
+                    if (result.IsNotAllowed)
+                    {
+                        return BadRequest("User is not allowed.");
+                    }
+
+                    return BadRequest();
+
                 }
 
                 return NotFound();
             }
 
-            return BadRequest(ModelState);
+            return BadRequest(ModelState.Errors());
         }
     }
 }
