@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Configuration;
 using ygo.application.Dto;
 using ygo.application.Enums;
 using ygo.application.Models.Cards.Input;

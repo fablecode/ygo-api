@@ -7,6 +7,7 @@ using NSubstitute;
 using NUnit.Framework;
 using ygo.application.Commands.AddArchetype;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Configuration;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 using ygo.tests.core;

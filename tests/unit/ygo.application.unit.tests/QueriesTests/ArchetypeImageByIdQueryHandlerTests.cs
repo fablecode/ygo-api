@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
+using ygo.application.Configuration;
 using ygo.application.Queries.ArchetypeImageById;
 using ygo.core.Services;
 using ygo.tests.core;

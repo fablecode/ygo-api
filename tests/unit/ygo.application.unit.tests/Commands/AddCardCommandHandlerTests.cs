@@ -9,6 +9,7 @@ using AutoMapper;
 using NUnit.Framework;
 using ygo.application.Commands.AddCard;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Configuration;
 using ygo.application.Enums;
 using ygo.application.Mappings.Profiles;
 using ygo.application.Models.Cards.Input;

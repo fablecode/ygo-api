@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using ygo.api.Auth;
 using ygo.api.Auth.Swagger;
 using ygo.application;
+using ygo.application.Configuration;
 using ygo.infrastructure.Ioc;
 
 namespace ygo.api
@@ -63,6 +64,11 @@ namespace ygo.api
                 var fileName = GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
             });
+
+            // IOptions<> configuration
+            services.Configure<ApplicationSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+
 
             services.AddTokenAuthenticationServices(Configuration);
             services.AddInfrastructureServices(Configuration.GetConnectionString(AuthConfig.YgoDatabase));

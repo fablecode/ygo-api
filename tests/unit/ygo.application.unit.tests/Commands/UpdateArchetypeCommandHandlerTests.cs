@@ -8,6 +8,7 @@ using NUnit.Framework;
 using ygo.application.Commands;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateArchetype;
+using ygo.application.Configuration;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 using ygo.tests.core;

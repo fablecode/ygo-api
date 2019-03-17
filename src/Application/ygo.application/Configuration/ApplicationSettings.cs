@@ -1,4 +1,4 @@
-﻿namespace ygo.application
+﻿namespace ygo.application.Configuration
 {
     public class ApplicationSettings
     {

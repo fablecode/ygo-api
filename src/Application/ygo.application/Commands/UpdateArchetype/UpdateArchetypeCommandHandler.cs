@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Configuration;
 using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateArchetype

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateCard;
+using ygo.application.Configuration;
 using ygo.application.Enums;
 using ygo.application.Mappings.Profiles;
 using ygo.application.Models.Cards.Input;

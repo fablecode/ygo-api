@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -12,26 +12,28 @@ using System.Text;
 using System.Threading.Tasks;
 using ygo.api.Auth;
 using ygo.api.Auth.Models;
+using ygo.api.ServiceExtensions;
+using ygo.application.Configuration;
 
 namespace ygo.api.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class AccountsController : Controller
     {
-        private readonly IConfiguration _config;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IOptions<JwtSettings> _jwtSettings;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AccountsController
         (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IConfiguration config
+            IOptions<JwtSettings> jwtSettings
         )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _config = config;
+            _jwtSettings = jwtSettings;
         }
 
         /// <summary>
@@ -55,13 +57,13 @@ namespace ygo.api.Controllers
                     if(roleResult.Succeeded)
                         return Ok();
 
-                    return BadRequest(roleResult.Errors);
+                    return BadRequest(roleResult.Errors.Descriptions());
                 }
 
-                return BadRequest(userResult.Errors);
+                return BadRequest(userResult.Errors.Descriptions());
             }
 
-            return BadRequest(ModelState);
+            return BadRequest(ModelState.Errors());
         }
 
         /// <summary>
@@ -96,11 +98,11 @@ namespace ygo.api.Controllers
                         claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
                         // Token generation
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Value.Key));
                         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                        var token = new JwtSecurityToken(_config["Tokens:Issuer"],
-                            _config["Tokens:Issuer"],
+                        var token = new JwtSecurityToken(_jwtSettings.Value.Issuer,
+                            _jwtSettings.Value.Issuer,
                             claims.ToArray(),
                             expires: DateTime.Now.AddDays(30),
                             signingCredentials: creds);

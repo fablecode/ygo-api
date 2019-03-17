@@ -29,7 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{99A0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.core", "src\Core\ygo.core\ygo.core.csproj", "{E561B90A-8E34-4EF2-A0BE-9289F948C805}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.tests.core", "tests\ygo.tests.core\ygo.tests.core.csproj", "{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.tests.core", "tests\ygo.tests.core\ygo.tests.core.csproj", "{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.api.unit.tests", "tests\unit\ygo.api.unit.tests\ygo.api.unit.tests.csproj", "{DF5A4171-45D6-452C-A802-F01BBD15E6FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{C541E1B5-2A9D-4A8F-939B-38A9CDAC8E4A} = {74C56C18-0F90-4EF4-B044-B8A564F2CF27}
 		{E561B90A-8E34-4EF2-A0BE-9289F948C805} = {99A0A8D2-118E-41AB-AE01-4576FBC9499D}
 		{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977} = {A8FD6C9C-49C1-4093-BE22-94552E6A443E}
+		{DF5A4171-45D6-452C-A802-F01BBD15E6FF} = {74C56C18-0F90-4EF4-B044-B8A564F2CF27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C664D76D-586F-4F48-9AF7-0436F764967A}

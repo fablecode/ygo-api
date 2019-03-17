@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ygo.application.Configuration;
 using ygo.core.Services;
 using ygo.domain.Helpers;
 

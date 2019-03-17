@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
+using ygo.application.Configuration;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 
