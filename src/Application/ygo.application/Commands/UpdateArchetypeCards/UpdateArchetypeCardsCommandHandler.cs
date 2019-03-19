@@ -1,8 +1,11 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using ygo.application.Dto;
 using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateArchetypeCards
@@ -11,11 +14,13 @@ namespace ygo.application.Commands.UpdateArchetypeCards
     {
         private readonly IValidator<UpdateArchetypeCardsCommand> _validator;
         private readonly IArchetypeCardsService _archetypeCardsService;
+        private readonly IMapper _mapper;
 
-        public UpdateArchetypeCardsCommandHandler(IValidator<UpdateArchetypeCardsCommand> validator, IArchetypeCardsService archetypeCardsService)
+        public UpdateArchetypeCardsCommandHandler(IValidator<UpdateArchetypeCardsCommand> validator, IArchetypeCardsService archetypeCardsService, IMapper mapper)
         {
             _validator = validator;
             _archetypeCardsService = archetypeCardsService;
+            _mapper = mapper;
         }
         public async Task<CommandResult> Handle(UpdateArchetypeCardsCommand request, CancellationToken cancellationToken)
         {
@@ -29,7 +34,7 @@ namespace ygo.application.Commands.UpdateArchetypeCards
                 {
                     var result = await _archetypeCardsService.Update(request.ArchetypeId, request.Cards.Distinct());
 
-                    commandResult.Data = result;
+                    commandResult.Data = _mapper.Map<IEnumerable<ArchetypeCardDto>>(result);
                 }
 
                 commandResult.IsSuccessful = true;

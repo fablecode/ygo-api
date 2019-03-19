@@ -4,7 +4,9 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ygo.application.Commands.UpdateArchetypeCards;
+using ygo.application.Mappings.Profiles;
 using ygo.core.Services;
 
 namespace ygo.application.unit.tests.Commands
@@ -19,7 +21,15 @@ namespace ygo.application.unit.tests.Commands
         {
             _archetypeCardsService = Substitute.For<IArchetypeCardsService>();
 
-            _sut = new UpdateArchetypeCardsCommandHandler(new UpdateArchetypeCardsCommandValidator(), _archetypeCardsService);
+            var config = new MapperConfiguration
+            (
+                cfg => { cfg.AddProfile(new ArchetypeProfile()); }
+            );
+
+            var mapper = config.CreateMapper();
+
+
+            _sut = new UpdateArchetypeCardsCommandHandler(new UpdateArchetypeCardsCommandValidator(), _archetypeCardsService, mapper);
         }
 
         [Test]

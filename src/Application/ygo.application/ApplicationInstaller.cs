@@ -35,7 +35,6 @@ namespace ygo.application
         {
             services.AddCqrs();
             services.AddValidators();
-            services.AddAutoMapper();
             services.DomainServices();
             services.AddStrategies();
 
