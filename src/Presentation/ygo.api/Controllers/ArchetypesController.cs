@@ -22,6 +22,7 @@ namespace ygo.api.Controllers
     public class ArchetypesController : Controller
     {
         private const string ArchetypeSearchRouteName = "ArchetypeSearch";
+        public const string XPagination = "X-Pagination";
         private readonly IMediator _mediator;
 
         public ArchetypesController(IMediator mediator)
@@ -102,7 +103,7 @@ namespace ygo.api.Controllers
             {
                 var searchResults = (PagedList<ArchetypeDto>) result.Data;
 
-                Response.Headers.Add("X-Pagination", searchResults.GetHeader().ToJson());
+                Response.Headers.Add(XPagination, searchResults.GetHeader().ToJson());
 
                 if (searchResults.List.Any())
                     return Ok(new
@@ -136,7 +137,8 @@ namespace ygo.api.Controllers
             {
                 var result = await _mediator.Send(command);
 
-                if (result.IsSuccessful) return CreatedAtRoute("ArchetypeById", new {id = result.Data}, result.Data);
+                if (result.IsSuccessful)
+                    return CreatedAtRoute("ArchetypeById", new {id = result.Data}, result.Data);
 
                 return BadRequest(result.Errors);
             }
@@ -159,7 +161,8 @@ namespace ygo.api.Controllers
         {
             var result = await _mediator.Send(command);
 
-            if (result.IsSuccessful) return Ok(result.Data);
+            if (result.IsSuccessful)
+                return Ok(result.Data);
 
             return BadRequest(result.Errors);
         }
