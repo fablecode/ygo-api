@@ -116,7 +116,7 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
             // Arrange
             var query = new ArchetypeSearchQuery{ SearchTerm = "toons"};
 
-            _mediator.Send(Arg.Any<ArchetypeSearchQuery>()).Returns(new QueryResult{ IsSuccessful = true, Data = new PagedList<ArchetypeDto>(new List<ArchetypeDto>
+            var pagedList = new PagedList<ArchetypeDto>(new List<ArchetypeDto>
             {
                 new ArchetypeDto
                 {
@@ -124,7 +124,9 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
                     Name = "toons",
                     Url = "http://localhost/toons"
                 }
-            }, 0, 1, 10)});
+            }, 40, 2, 10);
+
+            _mediator.Send(Arg.Any<ArchetypeSearchQuery>()).Returns(new QueryResult{ IsSuccessful = true, Data = pagedList});
             _sut.ControllerContext = new ControllerContext {HttpContext = new DefaultHttpContext()};
 
             var urlHelper = Substitute.For<IUrlHelper>();
@@ -146,15 +148,19 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
             // Arrange
             var query = new ArchetypeSearchQuery{ SearchTerm = "toons"};
 
-            _mediator.Send(Arg.Any<ArchetypeSearchQuery>()).Returns(new QueryResult{ IsSuccessful = true, Data = new PagedList<ArchetypeDto>(new List<ArchetypeDto>
+            _mediator.Send(Arg.Any<ArchetypeSearchQuery>()).Returns(new QueryResult
             {
-                new ArchetypeDto
+                IsSuccessful = true,
+                Data = new PagedList<ArchetypeDto>(new List<ArchetypeDto>
                 {
-                    Id = 2342,
-                    Name = "toons",
-                    Url = "http://localhost/toons"
-                }
-            }, 0, 1, 10)});
+                    new ArchetypeDto
+                    {
+                        Id = 2342,
+                        Name = "toons",
+                        Url = "http://localhost/toons"
+                    }
+                }, 0, 1, 10)
+            });
             _sut.ControllerContext = new ControllerContext {HttpContext = new DefaultHttpContext()};
 
             var urlHelper = Substitute.For<IUrlHelper>();
