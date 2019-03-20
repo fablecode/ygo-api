@@ -30,7 +30,7 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
         public async Task Given_An_Archetype_Filter_If_Archetypes_Are_Not_Found_Should_Return_NotFoundResult()
         {
             // Arrange
-            var filter = "toons";
+            const string filter = "toons";
 
             _mediator.Send(Arg.Any<ArchetypeAutosuggestQuery>()).Returns((IEnumerable<string>) null);
 
@@ -45,7 +45,7 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
         public async Task Given_An_Archetype_Filter_If_Archetypes_Are_Found_Should_Return_OkObjectResult()
         {
             // Arrange
-            var filter = "toons";
+            const string filter = "toons";
 
             _mediator.Send(Arg.Any<ArchetypeAutosuggestQuery>()).Returns(new List<string>());
 
@@ -60,8 +60,8 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
         public async Task Given_An_Archetype_Filter_If_Archetypes_Are_Found_Should_Invoke_Command_Once()
         {
             // Arrange
-            var expected = 1;
-            var archetypeName = "archetype";
+            const int expected = 1;
+            const string archetypeName = "archetype";
 
             _mediator.Send(Arg.Any<ArchetypeAutosuggestQuery>()).Returns(new List<string>());
 

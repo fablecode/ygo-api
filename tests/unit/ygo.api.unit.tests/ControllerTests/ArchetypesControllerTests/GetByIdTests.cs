@@ -30,7 +30,7 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
         public async Task Given_A_ArchetypeId_If_Not_Found_Should_Return_NotFoundResult()
         {
             // Arrange
-            var archetypeId = 2342;
+            const int archetypeId = 2342;
 
             // Act
             var result = await _sut.GetById(archetypeId);
@@ -43,7 +43,7 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
         public async Task Given_A_ArchetypeId_If_Found_Should_Return_OkObjectResult()
         {
             // Arrange
-            var archetypeId = 2342;
+            const int archetypeId = 2342;
 
             _mediator.Send(Arg.Any<ArchetypeByIdQuery>()).Returns(new ArchetypeDto());
 
@@ -59,8 +59,8 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
         public async Task Given_A_ArchetypeId_If_Found_Should_Invoke_Command_Once()
         {
             // Arrange
-            var expected = 1;
-            var archetypeId = 2342;
+            const int expected = 1;
+            const int archetypeId = 2342;
 
             _mediator.Send(Arg.Any<ArchetypeByIdQuery>()).Returns(new ArchetypeDto());
 
