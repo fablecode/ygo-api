@@ -80,7 +80,8 @@ namespace ygo.api.Controllers
             {
                 var result = await _mediator.Send(command);
 
-                if (result.IsSuccessful) return CreatedAtRoute("BanlistById", new {id = result.Data}, result.Data);
+                if (result.IsSuccessful)
+                    return CreatedAtRoute("BanlistById", new {id = result.Data}, result.Data);
 
                 return BadRequest(result.Errors);
             }
