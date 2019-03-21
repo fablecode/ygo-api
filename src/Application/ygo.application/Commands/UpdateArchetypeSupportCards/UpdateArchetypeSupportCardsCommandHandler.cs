@@ -1,22 +1,32 @@
-﻿using FluentValidation;
+﻿using System.Collections;
+using System.Collections.Generic;
+using FluentValidation;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using ygo.application.Dto;
 using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateArchetypeSupportCards
 {
-    public class
-        UpdateArchetypeSupportCardsCommandHandler : IRequestHandler<UpdateArchetypeSupportCardsCommand, CommandResult>
+    public class UpdateArchetypeSupportCardsCommandHandler : IRequestHandler<UpdateArchetypeSupportCardsCommand, CommandResult>
     {
         private readonly IValidator<UpdateArchetypeSupportCardsCommand> _validator;
         private readonly IArchetypeSupportCardsService _archetypeSupportCardsService;
+        private readonly IMapper _mapper;
 
-        public UpdateArchetypeSupportCardsCommandHandler(IValidator<UpdateArchetypeSupportCardsCommand> validator, IArchetypeSupportCardsService archetypeSupportCardsService)
+        public UpdateArchetypeSupportCardsCommandHandler
+        (
+            IValidator<UpdateArchetypeSupportCardsCommand> validator, 
+            IArchetypeSupportCardsService archetypeSupportCardsService,
+            IMapper mapper
+        )
         {
             _validator = validator;
             _archetypeSupportCardsService = archetypeSupportCardsService;
+            _mapper = mapper;
         }
 
         public async Task<CommandResult> Handle(UpdateArchetypeSupportCardsCommand request,
@@ -32,7 +42,7 @@ namespace ygo.application.Commands.UpdateArchetypeSupportCards
                 {
                     var result = await _archetypeSupportCardsService.Update(request.ArchetypeId, request.Cards.Distinct());
 
-                    commandResult.Data = result;
+                    commandResult.Data = _mapper.Map<IEnumerable<ArchetypeDto>>(result);
                 }
 
                 commandResult.IsSuccessful = true;
