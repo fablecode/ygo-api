@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Configuration;
+using ygo.application.Dto;
 using ygo.core.Services;
 
 namespace ygo.application.Commands.UpdateArchetype
@@ -18,19 +20,22 @@ namespace ygo.application.Commands.UpdateArchetype
         private readonly IValidator<UpdateArchetypeCommand> _validator;
         private readonly IArchetypeService _archetypeService;
         private readonly IOptions<ApplicationSettings> _settings;
+        private readonly IMapper _mapper;
 
         public UpdateArchetypeCommandHandler
         (
             IMediator mediator,
             IValidator<UpdateArchetypeCommand> validator,
             IArchetypeService archetypeService,
-            IOptions<ApplicationSettings> settings
+            IOptions<ApplicationSettings> settings,
+            IMapper mapper
         )
         {
             _mediator = mediator;
             _validator = validator;
             _archetypeService = archetypeService;
             _settings = settings;
+            _mapper = mapper;
         }
 
         public async Task<CommandResult> Handle(UpdateArchetypeCommand request, CancellationToken cancellationToken)
@@ -49,7 +54,7 @@ namespace ygo.application.Commands.UpdateArchetype
                     archetypeToUpdate.Url = request.ProfileUrl;
                     archetypeToUpdate.Updated = DateTime.UtcNow;
 
-                    commandResult.Data = await _archetypeService.Update(archetypeToUpdate);
+                    commandResult.Data = _mapper.Map<ArchetypeDto>(await _archetypeService.Update(archetypeToUpdate));
 
                     if (!string.IsNullOrWhiteSpace(request.ImageUrl))
                     {

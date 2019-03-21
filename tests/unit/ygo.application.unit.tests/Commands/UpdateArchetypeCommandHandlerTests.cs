@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ using ygo.application.Commands;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Commands.UpdateArchetype;
 using ygo.application.Configuration;
+using ygo.application.Mappings.Profiles;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 using ygo.tests.core;
@@ -30,12 +32,22 @@ namespace ygo.application.unit.tests.Commands
             _mediator = Substitute.For<IMediator>();
             _archetypeService = Substitute.For<IArchetypeService>();
             _settings = Substitute.For<IOptions<ApplicationSettings>>();
+
+            var config = new MapperConfiguration
+            (
+                cfg => { cfg.AddProfile(new ArchetypeProfile()); }
+            );
+
+            var mapper = config.CreateMapper();
+
+
             _sut = new UpdateArchetypeCommandHandler
             (
                 _mediator,
                 new UpdateArchetypeCommandValidator(),
                 _archetypeService,
-                _settings
+                _settings,
+                mapper
             );
         }
 
