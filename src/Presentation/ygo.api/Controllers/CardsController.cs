@@ -56,7 +56,7 @@ namespace ygo.api.Controllers
             if (result != null)
                 return Ok(result);
 
-            return NotFound();
+            return NotFound(name);
         }
 
         /// <summary>
@@ -80,7 +80,8 @@ namespace ygo.api.Controllers
 
                 var result = await _mediator.Send(command);
 
-                if (result.IsSuccessful) return CreatedAtRoute("CardById", new {id = result.Data}, result.Data);
+                if (result.IsSuccessful)
+                    return CreatedAtRoute("CardById", new {id = result.Data}, result.Data);
 
                 return BadRequest(result.Errors);
             }
