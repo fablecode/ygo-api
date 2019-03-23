@@ -11,7 +11,7 @@ namespace ygo.application.Commands
 {
     public static class CommandMapperHelper
     {
-        public static CardDto MapToCardDto(this Card card)
+        public static CardDto MapToCardDto(IMapper mapper, Card card)
         {
             if (card == null)
                 return null;
@@ -33,7 +33,7 @@ namespace ygo.application.Commands
             response.Def = card.Def;
 
             if (card.CardAttribute != null && card.CardAttribute.Any())
-                response.Attribute = Mapper.Map<AttributeDto>(card.CardAttribute.First().Attribute);
+                response.Attribute = mapper.Map<AttributeDto>(card.CardAttribute.First().Attribute);
 
             if (card.CardLinkArrow != null && card.CardLinkArrow.Any())
                 response.Link = card.CardLinkArrow.Count();

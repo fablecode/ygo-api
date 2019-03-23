@@ -3,6 +3,8 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using ygo.application.Mappings.Profiles;
 using ygo.application.Queries.CardByName;
 using ygo.core.Models.Db;
 using ygo.core.Services;
@@ -22,7 +24,15 @@ namespace ygo.application.unit.tests.QueriesTests
         {
             _cardService = Substitute.For<ICardService>();
 
-            _sut = new CardByNameQueryHandler(_cardService, new CardByNameQueryValidator());
+            var config = new MapperConfiguration
+            (
+                cfg => { cfg.AddProfile(new CardProfile()); }
+            );
+
+            var mapper = config.CreateMapper();
+
+
+            _sut = new CardByNameQueryHandler(_cardService, new CardByNameQueryValidator(), mapper);
         }
 
         [Test]

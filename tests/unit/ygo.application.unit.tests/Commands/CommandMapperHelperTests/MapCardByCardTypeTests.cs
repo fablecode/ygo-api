@@ -1,7 +1,7 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
 using ygo.application.Commands;
 using ygo.application.Dto;
 using ygo.application.Enums;
