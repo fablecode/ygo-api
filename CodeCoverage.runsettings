@@ -10,10 +10,18 @@
             <ModulePaths>
               <Exclude>
                 <ModulePath>.*Tests.dll</ModulePath>
-				<ModulePath>.*Polly.dll</ModulePath>
-				<ModulePath>.*Moq.dll</ModulePath>
-				<ModulePath>.*FluentAssertions.dll</ModulePath>
-				<ModulePath>.*FluentAssertions.core.dll</ModulePath>
+				        <ModulePath>.*Polly.dll</ModulePath>
+				        <ModulePath>.*automapper.dll</ModulePath>
+				        <ModulePath>.*microsoft.identitymodel.jsonwebtokens.dll</ModulePath>
+				        <ModulePath>.*microsoft.identitymodel.logging.dll</ModulePath>
+				        <ModulePath>.*microsoft.identitymodel.tokens.dll</ModulePath>
+				        <ModulePath>.*newtonsoft.json.dll</ModulePath>
+				        <ModulePath>.*nunit.framework.dll</ModulePath>
+				        <ModulePath>.*nunit3.testadapter.dll</ModulePath>
+				        <ModulePath>.*system.identitymodel.tokens.jwt.dll</ModulePath>
+				        <ModulePath>.*Moq.dll</ModulePath>
+				        <ModulePath>.*FluentAssertions.dll</ModulePath>
+				        <ModulePath>.*FluentAssertions.core.dll</ModulePath>
               </Exclude>
             </ModulePaths>
 
