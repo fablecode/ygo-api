@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.core", "src\Core\ygo.co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.tests.core", "tests\ygo.tests.core\ygo.tests.core.csproj", "{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.api.unit.tests", "tests\unit\ygo.api.unit.tests\ygo.api.unit.tests.csproj", "{DF5A4171-45D6-452C-A802-F01BBD15E6FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ygo.api.unit.tests", "tests\unit\ygo.api.unit.tests\ygo.api.unit.tests.csproj", "{DF5A4171-45D6-452C-A802-F01BBD15E6FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ygo.domain.unit.tests", "tests\unit\ygo.domain.unit.tests\ygo.domain.unit.tests.csproj", "{87442D99-029E-4638-A780-A50616818466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF5A4171-45D6-452C-A802-F01BBD15E6FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87442D99-029E-4638-A780-A50616818466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87442D99-029E-4638-A780-A50616818466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87442D99-029E-4638-A780-A50616818466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87442D99-029E-4638-A780-A50616818466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{E561B90A-8E34-4EF2-A0BE-9289F948C805} = {99A0A8D2-118E-41AB-AE01-4576FBC9499D}
 		{94EDB928-FAD1-4A23-8D8E-50E5B6B9D977} = {A8FD6C9C-49C1-4093-BE22-94552E6A443E}
 		{DF5A4171-45D6-452C-A802-F01BBD15E6FF} = {74C56C18-0F90-4EF4-B044-B8A564F2CF27}
+		{87442D99-029E-4638-A780-A50616818466} = {74C56C18-0F90-4EF4-B044-B8A564F2CF27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C664D76D-586F-4F48-9AF7-0436F764967A}

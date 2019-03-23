@@ -8,9 +8,12 @@ using AutoMapper;
 using ygo.application.Commands.UpdateArchetypeSupportCards;
 using ygo.application.Mappings.Profiles;
 using ygo.core.Services;
+using ygo.tests.core;
 
 namespace ygo.application.unit.tests.Commands
 {
+    [TestFixture]
+    [Category(TestType.Unit)]
     public class UpdateArchetypeSupportCardsCommandHandlerTests
     {
         private IArchetypeSupportCardsService _archetypeSupportCardsService;

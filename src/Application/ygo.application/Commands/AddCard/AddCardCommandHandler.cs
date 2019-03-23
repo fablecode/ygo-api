@@ -60,7 +60,7 @@ namespace ygo.application.Commands.AddCard
                             var downloadImageCommand = new DownloadImageCommand
                             {
                                 RemoteImageUrl = request.Card.ImageUrl,
-                                ImageFileName = request.Card.Name.MakeValidFileName(),
+                                ImageFileName = request.Card.Name.SanitizeFileName(),
                                 ImageFolderPath = _settings.Value.CardImageFolderPath
                             };
 

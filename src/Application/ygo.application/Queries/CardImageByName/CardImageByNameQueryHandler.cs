@@ -29,7 +29,7 @@ namespace ygo.application.Queries.CardImageByName
 
             if (!string.IsNullOrWhiteSpace(request.Name))
             {
-                var imageFilePath = GetImagePath(request.Name.MakeValidFileName(), _settings.Value.CardImageFolderPath);
+                var imageFilePath = GetImagePath(request.Name.SanitizeFileName(), _settings.Value.CardImageFolderPath);
 
                 if (!string.IsNullOrWhiteSpace(imageFilePath) && _fileSystemService.Exists(imageFilePath))
                 {

@@ -4,7 +4,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ygo.application.Commands.UpdateTips;
 using ygo.application.Commands.UpdateTrivia;
 using ygo.application.Dto;
 using ygo.core.Models.Db;
