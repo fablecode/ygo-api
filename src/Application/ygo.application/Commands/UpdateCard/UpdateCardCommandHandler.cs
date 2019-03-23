@@ -2,18 +2,14 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ygo.application.Commands.DownloadImage;
 using ygo.application.Configuration;
-using ygo.application.Dto;
-using ygo.application.Enums;
 using ygo.application.Models.Cards.Input;
 using ygo.core.Models;
-using ygo.core.Models.Db;
 using ygo.core.Services;
 using ygo.domain.Helpers;
 
@@ -69,7 +65,7 @@ namespace ygo.application.Commands.UpdateCard
                         await _mediator.Send(downloadImageCommand, cancellationToken);
                     }
 
-                    commandResult.Data = CommandMapperHelper.MapCardByCardType(request.Card.CardType.GetValueOrDefault(), cardUpdated);
+                    commandResult.Data = CommandMapperHelper.MapCardByCardType(_mapper, request.Card.CardType.GetValueOrDefault(), cardUpdated);
                     commandResult.IsSuccessful = true;
                 }
                 else

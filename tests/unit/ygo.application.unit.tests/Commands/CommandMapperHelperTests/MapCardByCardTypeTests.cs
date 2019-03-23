@@ -15,12 +15,17 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
     [Category(TestType.Unit)]
     public class MapCardByCardTypeTests
     {
-        [OneTimeSetUp]
+        private IMapper _mapper;
+
+        [SetUp]
         public void SetUp()
         {
-            Mapper.Initialize(cfg => {
-                cfg.AddProfile<CardProfile>();
-            });
+            var config = new MapperConfiguration
+            (
+                cfg => { cfg.AddProfile(new CardProfile()); }
+            );
+
+            _mapper = config.CreateMapper();
         }
 
         [Test]
@@ -32,7 +37,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             var card = new Card {Id = 23424};
 
             // Act
-            Action act = () => CommandMapperHelper.MapCardByCardType(cardType, card);
+            Action act = () => CommandMapperHelper.MapCardByCardType(_mapper, cardType, card);
 
             // Assert
             act.Should().Throw<ArgumentOutOfRangeException>();
@@ -47,7 +52,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             var card = new Card { Id = 23424};
 
             // Act
-            var result = CommandMapperHelper.MapCardByCardType(cardType, card);
+            var result = CommandMapperHelper.MapCardByCardType(_mapper, cardType, card);
 
             // Assert
             result.Should().BeOfType<SpellCardDto>();
@@ -62,7 +67,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             var card = new Card { Id = 23424};
 
             // Act
-            var result = CommandMapperHelper.MapCardByCardType(cardType, card);
+            var result = CommandMapperHelper.MapCardByCardType(_mapper, cardType, card);
 
             // Assert
             result.Should().BeOfType<TrapCardDto>();
@@ -78,7 +83,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             var card = new Card { Id = 23424};
 
             // Act
-            var result = CommandMapperHelper.MapCardByCardType(cardType, card);
+            var result = CommandMapperHelper.MapCardByCardType(_mapper, cardType, card);
 
             // Assert
             result.Should().BeOfType<MonsterCardDto>();

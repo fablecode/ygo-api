@@ -75,16 +75,16 @@ namespace ygo.application.Commands
             banlist.Updated = DateTime.UtcNow;
         }
 
-        public static object MapCardByCardType(YgoCardType cardCardType, Card cardUpdated)
+        public static object MapCardByCardType(IMapper mapper, YgoCardType cardCardType, Card cardUpdated)
         {
             switch (cardCardType)
             {
                 case YgoCardType.Monster:
-                    return Mapper.Map<MonsterCardDto>(cardUpdated);
+                    return mapper.Map<MonsterCardDto>(cardUpdated);
                 case YgoCardType.Spell:
-                    return Mapper.Map<SpellCardDto>(cardUpdated);
+                    return mapper.Map<SpellCardDto>(cardUpdated);
                 case YgoCardType.Trap:
-                    return Mapper.Map<TrapCardDto>(cardUpdated);
+                    return mapper.Map<TrapCardDto>(cardUpdated);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(cardCardType), cardCardType, null);
             }
