@@ -1,14 +1,13 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Threading.Tasks;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCategory;
 using ygo.application.Dto;
 using ygo.application.Queries.AllCategories;
 using ygo.application.Queries.CategoryById;
-using ygo.core.Models.Db;
 
 namespace ygo.api.Controllers
 {
