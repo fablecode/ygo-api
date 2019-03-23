@@ -25,12 +25,12 @@
               </Exclude>
             </ModulePaths>
 
-			<Functions>
-				<Exclude>
-				  <Function>.*get_.*</Function>
-				  <Function>.*set_.*</Function>
-				</Exclude>
-			</Functions>
+			      <Functions>
+				      <Exclude>
+				        <Function>.*get_.*</Function>
+				        <Function>.*set_.*</Function>
+				      </Exclude>
+			      </Functions>
 			
             <!--We recommend you do not change the following values:-->
             <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
