@@ -19,7 +19,7 @@ namespace ygo.api.Controllers
 
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        public async Task<IActionResult> PutTrivia([FromBody] UpdateTriviaCommand command)
+        public async Task<IActionResult> Put([FromBody] UpdateTriviaCommand command)
         {
             var result = await _mediator.Send(command);
 

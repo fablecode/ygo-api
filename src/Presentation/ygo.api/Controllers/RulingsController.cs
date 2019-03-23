@@ -19,7 +19,7 @@ namespace ygo.api.Controllers
 
         [HttpPut]
         [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        public async Task<IActionResult> PutRulings([FromBody] UpdateRulingCommand command)
+        public async Task<IActionResult> Put([FromBody] UpdateRulingCommand command)
         {
             var result = await _mediator.Send(command);
 
