@@ -2,7 +2,7 @@
 
 namespace ygo.application.Queries.CardImageByName
 {
-    public class CardImageByNameQuery : IRequest<CardImageByNameResult>
+    public class CardImageByNameQuery : IRequest<ImageResult>
     {
         public string Name { get; set; }
     }

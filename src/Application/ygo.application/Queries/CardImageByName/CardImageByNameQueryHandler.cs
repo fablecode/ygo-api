@@ -12,7 +12,7 @@ using ygo.domain.Helpers;
 
 namespace ygo.application.Queries.CardImageByName
 {
-    public class CardImageByNameQueryHandler : IRequestHandler<CardImageByNameQuery, CardImageByNameResult>
+    public class CardImageByNameQueryHandler : IRequestHandler<CardImageByNameQuery, ImageResult>
     {
         private readonly IFileSystemService _fileSystemService;
         private readonly IOptions<ApplicationSettings> _settings;
@@ -23,9 +23,9 @@ namespace ygo.application.Queries.CardImageByName
             _settings = settings;
         }
 
-        public Task<CardImageByNameResult> Handle(CardImageByNameQuery request, CancellationToken cancellationToken)
+        public Task<ImageResult> Handle(CardImageByNameQuery request, CancellationToken cancellationToken)
         {
-            var response = new CardImageByNameResult();
+            var response = new ImageResult();
 
             if (!string.IsNullOrWhiteSpace(request.Name))
             {
