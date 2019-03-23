@@ -3,7 +3,9 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ygo.application.Commands.AddCategory;
+using ygo.application.Mappings.Profiles;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 using ygo.tests.core;
@@ -22,7 +24,15 @@ namespace ygo.application.unit.tests.Commands
         {
             _categoryService = Substitute.For<ICategoryService>();
 
-            _sut = new AddCategoryCommandHandler(_categoryService, new AddCategoryCommandValidator());
+            var config = new MapperConfiguration
+            (
+                cfg => { cfg.AddProfile(new CategoryProfile()); }
+            );
+
+            var mapper = config.CreateMapper();
+
+
+            _sut = new AddCategoryCommandHandler(_categoryService, new AddCategoryCommandValidator(), mapper);
         }
 
         [Test]

@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using ygo.application.Dto;
 using ygo.core.Models.Db;
 using ygo.core.Services;
 
@@ -13,11 +15,13 @@ namespace ygo.application.Commands.AddCategory
     {
         private readonly ICategoryService _categoryService;
         private readonly IValidator<AddCategoryCommand> _validator;
+        private readonly IMapper _mapper;
 
-        public AddCategoryCommandHandler(ICategoryService categoryService, IValidator<AddCategoryCommand> validator)
+        public AddCategoryCommandHandler(ICategoryService categoryService, IValidator<AddCategoryCommand> validator, IMapper mapper)
         {
             _categoryService = categoryService;
             _validator = validator;
+            _mapper = mapper;
         }
 
         public async Task<CommandResult> Handle(AddCategoryCommand request, CancellationToken cancellationToken)
@@ -35,7 +39,7 @@ namespace ygo.application.Commands.AddCategory
                     Updated = DateTime.UtcNow
                 });
 
-                response.Data = responseData;
+                response.Data = _mapper.Map<CategoryDto>(responseData);
                 response.IsSuccessful = true;
             }
             else

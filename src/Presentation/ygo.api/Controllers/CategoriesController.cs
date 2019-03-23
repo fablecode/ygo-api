@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.application.Commands.AddCategory;
+using ygo.application.Dto;
 using ygo.application.Queries.AllCategories;
 using ygo.application.Queries.CategoryById;
 using ygo.core.Models.Db;
@@ -67,7 +68,7 @@ namespace ygo.api.Controllers
             var result = await _mediator.Send(command);
 
             if (result.IsSuccessful)
-                return CreatedAtRoute("CategoryById", new {id = ((Category) result.Data).Id}, result.Data);
+                return CreatedAtRoute("CategoryById", new {id = ((CategoryDto) result.Data).Id}, result.Data);
 
             return BadRequest(result.Errors);
         }
