@@ -14,10 +14,6 @@ namespace ygo.domain.Services
         {
             _fileSystem = fileSystem;
         }
-        public Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath)
-        {
-            return _fileSystem.Download(remoteFileUrl, localFileFullPath);
-        }
 
         public Task<DownloadedFile> Download(Uri remoteFileUrl, string localFileFullPath)
         {

@@ -6,7 +6,6 @@ namespace ygo.core.Services
 {
     public interface IFileSystemService
     {
-        Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath);
         Task<DownloadedFile> Download(Uri remoteFileUrl, string localFileFullPath);
         void Delete(string localFileFullPath);
         void Rename(string oldNameFullPath, string newNameFullPath);

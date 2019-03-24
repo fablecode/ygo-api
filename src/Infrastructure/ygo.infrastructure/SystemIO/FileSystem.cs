@@ -14,11 +14,6 @@ namespace ygo.infrastructure.SystemIO
         private static readonly object GetFilesLocker = new object();
         private static readonly object ExistsLocker = new object();
 
-        public Task<DownloadedFile> Download(string remoteFileUrl, string localFileFullPath)
-        {
-            return Download(new Uri(remoteFileUrl), localFileFullPath);
-        }
-
         public async Task<DownloadedFile> Download(Uri remoteFileUrl, string localFileFullPath)
         {
             using (var webClient = new WebClient())
