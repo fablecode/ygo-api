@@ -10,6 +10,8 @@ namespace ygo.api.Controllers
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {
+        public const string ArchetypeImageRouteName = "ArchetypeImage";
+
         private readonly IMediator _mediator;
 
         public ImagesController(IMediator mediator)
@@ -40,7 +42,7 @@ namespace ygo.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("archetypes/{id}")]
+        [HttpGet("archetypes/{id}", Name = ArchetypeImageRouteName)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(long id)

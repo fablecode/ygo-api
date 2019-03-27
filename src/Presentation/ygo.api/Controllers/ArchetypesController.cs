@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using ygo.api.Auth;
 using ygo.api.Model;
 using ygo.application.Commands.AddArchetype;
@@ -106,11 +106,13 @@ namespace ygo.api.Controllers
                 Response.Headers.Add(XPagination, searchResults.GetHeader().ToJson());
 
                 if (searchResults.List.Any())
+                {
                     return Ok(new
                     {
                         Links = ArchetypeSearchLinks(searchResults, query.SearchTerm),
                         Items = searchResults.List
                     });
+                }
 
                 return NotFound();
             }

@@ -67,7 +67,7 @@ namespace ygo.api
 
             // IOptions<> configuration
             services.Configure<ApplicationSettings>(Configuration.GetSection("AppSettings"));
-            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            services.Configure<JwtSettings>(Configuration.GetSection("Tokens"));
 
 
             services.AddTokenAuthenticationServices(Configuration);
