@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing;
 using ygo.api.Auth;
 using ygo.api.Model;
 using ygo.application.Commands.AddArchetype;
@@ -107,10 +108,14 @@ namespace ygo.api.Controllers
 
                 if (searchResults.List.Any())
                 {
+                    var archetypeList = searchResults.List.ToList();
+
+                    GenerateArchetypeImageLinks(archetypeList);
+
                     return Ok(new
                     {
                         Links = ArchetypeSearchLinks(searchResults, query.SearchTerm),
-                        Items = searchResults.List
+                        Items = archetypeList
                     });
                 }
 
@@ -201,6 +206,11 @@ namespace ygo.api.Controllers
                 Rel = rel,
                 Method = method
             };
+        }
+
+        private void GenerateArchetypeImageLinks(List<ArchetypeDto> archetypeList)
+        {
+            archetypeList.ForEach(a => { a.ImageUrl = Url.Link(ImagesController.ArchetypeImageRouteName, new { a.Id }); });
         }
 
         #endregion
