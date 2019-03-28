@@ -210,7 +210,7 @@ namespace ygo.api.Controllers
 
         private void GenerateArchetypeImageLinks(List<ArchetypeDto> archetypeList)
         {
-            archetypeList.ForEach(a => { a.ImageUrl = Url.Link(ImagesController.ArchetypeImageRouteName, new { a.Id }); });
+            archetypeList?.ForEach(a => { a.ImageUrl = Url.Link(ImagesController.ArchetypeImageRouteName, new { a.Id }); });
         }
 
         #endregion
