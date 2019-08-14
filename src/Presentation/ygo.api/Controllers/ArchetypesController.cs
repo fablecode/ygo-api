@@ -1,15 +1,11 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing;
-using ygo.api.Auth;
 using ygo.api.Model;
-using ygo.application.Commands.AddArchetype;
-using ygo.application.Commands.UpdateArchetypeCards;
 using ygo.application.Dto;
 using ygo.application.Paging;
 using ygo.application.Queries.ArchetypeAutosuggest;
@@ -121,55 +117,6 @@ namespace ygo.api.Controllers
 
                 return NotFound();
             }
-
-            return BadRequest(result.Errors);
-        }
-
-        /// <summary>
-        ///     Add a new Archetype
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int) HttpStatusCode.Created)]
-        [ProducesResponseType((int) HttpStatusCode.Conflict)]
-        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> Post([FromBody] AddArchetypeCommand command)
-        {
-            var existingArchetype = await _mediator.Send(new ArchetypeByIdQuery {Id = command.ArchetypeNumber});
-
-            if (existingArchetype == null)
-            {
-                var result = await _mediator.Send(command);
-
-                if (result.IsSuccessful)
-                    return CreatedAtRoute("ArchetypeById", new {id = result.Data}, result.Data);
-
-                return BadRequest(result.Errors);
-            }
-
-            return StatusCode((int) HttpStatusCode.Conflict);
-        }
-
-        /// <summary>
-        ///     Update an existing Archetype
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        [HttpPut]
-        [Authorize(Policy = AuthConfig.SuperAdminsPolicy)]
-        [ProducesResponseType((int) HttpStatusCode.Created)]
-        [ProducesResponseType((int) HttpStatusCode.Conflict)]
-        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> Put([FromBody] UpdateArchetypeCardsCommand command)
-        {
-            var result = await _mediator.Send(command);
-
-            if (result.IsSuccessful)
-                return Ok(result.Data);
 
             return BadRequest(result.Errors);
         }
