@@ -17,6 +17,7 @@ using ygo.application.Configuration;
 
 namespace ygo.api.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]/[action]")]
     public class AccountsController : Controller
     {
