@@ -6,6 +6,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ygo.api.Constants;
 using ygo.api.Controllers;
 using ygo.application.Dto;
 using ygo.application.Paging;
@@ -172,7 +173,7 @@ namespace ygo.api.unit.tests.ControllerTests.ArchetypesControllerTests
             await _sut.GetArchetypeSearch(query);
 
             // Assert
-            _sut.Response.Headers.Should().ContainKey(ArchetypesController.XPagination);
+            _sut.Response.Headers.Should().ContainKey(HttpHeaderConstants.XPagination);
         }
     }
 }
