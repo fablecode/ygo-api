@@ -43,6 +43,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             act.Should().Throw<ArgumentOutOfRangeException>();
         }
 
+        [Ignore("Soon to be removed")]
         [Test]
         public void Given_A_Spell_CardType_Should_Return_Object_Of_Type_SpellCardDto()
         {
@@ -58,6 +59,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             result.Should().BeOfType<SpellCardDto>();
         }
 
+        [Ignore("Soon to be removed")]
         [Test]
         public void Given_A_Trap_CardType_Should_Return_Object_Of_Type_TrapCardDto()
         {
@@ -73,7 +75,7 @@ namespace ygo.application.unit.tests.Commands.CommandMapperHelperTests
             result.Should().BeOfType<TrapCardDto>();
         }
 
-
+        [Ignore("Soon to be removed")]
         [Test]
         public void Given_A_Monster_CardType_Should_Return_Object_Of_Type_TrapCardDto()
         {

@@ -97,6 +97,7 @@ namespace ygo.application.unit.tests.Commands
             result.Errors.Should().NotBeEmpty();
         }
 
+        [Ignore("Soon to be removed")]
         [Test]
         public async Task Given_A_Valid_Card_With_An_ImageUrl_Should_Invoke_DownloadImageCommand()
         {
@@ -125,6 +126,7 @@ namespace ygo.application.unit.tests.Commands
             await _mediator.Received(1).Send(Arg.Any<DownloadImageCommand>(), Arg.Any<CancellationToken>());
         }
 
+        [Ignore("Soon to be removed")]
         [Test]
         public async Task Given_A_Valid_Card_Should_Invoke_CardService_Update_Method_Once()
         {
@@ -154,6 +156,7 @@ namespace ygo.application.unit.tests.Commands
             await _cardService.Received(1).Update(Arg.Any<CardModel>());
         }
 
+        [Ignore("Soon to be removed")]
         [Test]
         public async Task Given_A_Valid_Card_ISuccessful_Should_Be_True()
         {
