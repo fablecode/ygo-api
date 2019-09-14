@@ -20,6 +20,7 @@ using ygo.application.Queries.ArchetypeByName;
 using ygo.application.Queries.ArchetypeSearch;
 using ygo.application.Queries.CardById;
 using ygo.application.Queries.CardByName;
+using ygo.application.Queries.CardSearch;
 using ygo.application.Queries.CategoryById;
 using ygo.application.Validations.Cards;
 using ygo.core.Services;
@@ -71,6 +72,8 @@ namespace ygo.application
             services.AddTransient<IValidator<UpdateTipsCommand>, UpdateTipsCommandValidator>();
             services.AddTransient<IValidator<UpdateTriviaCommand>, UpdateTriviaCommandValidator>();
             services.AddTransient<IValidator<UpdateRulingCommand>, UpdateRulingCommandValidator>();
+
+            services.AddTransient<IValidator<CardSearchQuery>, CardSearchQueryValidator>();
 
 
 

@@ -23,9 +23,19 @@ namespace ygo.api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder();
+
+            if (hostingEnvironment.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+                Configuration = builder.Build();
+            }
+            else
+            {
+                Configuration = configuration;
+            }
         }
 
         public IConfiguration Configuration { get; }

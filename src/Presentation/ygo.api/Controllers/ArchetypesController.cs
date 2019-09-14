@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using ygo.api.Constants;
 using ygo.api.Model;
 using ygo.application.Dto;
 using ygo.application.Paging;
@@ -19,7 +19,6 @@ namespace ygo.api.Controllers
     public class ArchetypesController : Controller
     {
         private const string ArchetypeSearchRouteName = "ArchetypeSearch";
-        public const string XPagination = "X-Pagination";
         private readonly IMediator _mediator;
 
         public ArchetypesController(IMediator mediator)
@@ -100,7 +99,7 @@ namespace ygo.api.Controllers
             {
                 var searchResults = (PagedList<ArchetypeDto>) result.Data;
 
-                Response.Headers.Add(XPagination, searchResults.GetHeader().ToJson());
+                Response.Headers.Add(HttpHeaderConstants.XPagination, searchResults.GetHeader().ToJson());
 
                 if (searchResults.List.Any())
                 {
@@ -132,7 +131,7 @@ namespace ygo.api.Controllers
                 links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PreviousPageNumber,
                     list.PageSize, "previous", "GET"));
 
-            links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PageNumber, list.PageSize,
+            links.Add(ArchetypeSearchCreateLink(ArchetypeSearchRouteName, searchTerm, list.PageIndex, list.PageSize,
                 "self", "GET"));
 
             if (list.HasNextPage)
