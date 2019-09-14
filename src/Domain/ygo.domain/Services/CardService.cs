@@ -47,5 +47,10 @@ namespace ygo.domain.Services
         {
             return _cardRepository.CardExists(id);
         }
+
+        public Task<SearchResult<Card>> Search(string searchTerm, int pageIndex, int pageSize)
+        {
+            return _cardRepository.Search(searchTerm, pageIndex, pageSize);
+        }
     }
 }
