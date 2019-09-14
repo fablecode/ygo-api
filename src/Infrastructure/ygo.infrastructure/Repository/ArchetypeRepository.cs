@@ -67,7 +67,7 @@ namespace ygo.infrastructure.Repository
                         .Archetype
                         .Select(a => a)
                             .Include(a => a.ArchetypeCard)
-                        .Where(a => EF.Functions.Like(a.Name, $"%{a.Name}%"))
+                        .Where(a => EF.Functions.Like(a.Name, $"%{searchTerm}%"))
                         .Skip(pageSize * (pageNumber - 1))
                         .Take(pageSize);
 
