@@ -3,6 +3,7 @@
     public class ApplicationSettings
     {
         public string CardImageFolderPath { get; set; }
+        public string CardImageEndpoint { get; set; }
         public string ArchetypeImageFolderPath { get; set; }
     }
 }
