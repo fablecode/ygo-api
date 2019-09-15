@@ -173,7 +173,6 @@ namespace ygo.api.unit.tests.ControllerTests.CardsControllerTests
 
             var controllerContext = new ControllerContext();
             var httpContext = new DefaultHttpContext();
-            var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 
             _sut.ControllerContext = controllerContext;
             _sut.ControllerContext.HttpContext = httpContext;
