@@ -6,7 +6,6 @@ using ygo.application.Mappings.Resolvers;
 using ygo.application.Models.Cards.Input;
 using ygo.core.Models;
 using ygo.core.Models.Db;
-using ygo.domain.Helpers;
 
 namespace ygo.application.Mappings.Profiles
 {
@@ -35,13 +34,13 @@ namespace ygo.application.Mappings.Profiles
                 .ForMember(dest => dest.CardRank, opt => opt.MapFrom(src => src.CardRank))
                 .ForMember(dest => dest.Atk, opt => opt.MapFrom(src => src.Atk))
                 .ForMember(dest => dest.Def, opt => opt.MapFrom(src => src.Def))
-                .ForMember(dest => dest.Attribute, opt => opt.MapFrom(delegate(Card card, CardDto cardDto)
-                {
-                    if (card.CardAttribute != null && card.CardAttribute.Any())
-                        return Mapper.Map<AttributeDto>(card.CardAttribute.First().Attribute);
+                .ForMember(dest => dest.Attribute, opt => opt.MapFrom(delegate(Card card, CardDto cardDto, AttributeDto attributeDto, ResolutionContext resolutionContext)
+                    {
+                        if (card.CardAttribute != null && card.CardAttribute.Any())
+                            attributeDto = resolutionContext.Mapper.Map<AttributeDto>(card.CardAttribute.First().Attribute);
 
-                    return null;
-                }))
+                        return attributeDto;
+                    }))
                 .ForMember(dest => dest.Link, opt => opt.MapFrom(delegate(Card card, CardDto cardDto)
                 {
                     if (card.CardLinkArrow != null && card.CardLinkArrow.Any())
