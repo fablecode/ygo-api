@@ -73,32 +73,28 @@ namespace ygo.api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get([FromQuery] CardSearchQuery query)
         {
-            if (ModelState.IsValid)
+            var result = await _mediator.Send(query);
+
+            if (result.IsSuccessful)
             {
-                var result = await _mediator.Send(query);
+                var searchResults = (PagedList<CardDto>)result.Data;
 
-                if (result.IsSuccessful)
+                Response.Headers.Add(HttpHeaderConstants.XPagination, searchResults.GetHeader().ToJson());
+
+                if (searchResults.List.Any())
                 {
-                    var searchResults = (PagedList<CardDto>)result.Data;
-
-                    Response.Headers.Add(HttpHeaderConstants.XPagination, searchResults.GetHeader().ToJson());
-
-                    if (searchResults.List.Any())
+                    return Ok(new
                     {
-                        return Ok(new
-                        {
-                            Links = CardSearchLinks(searchResults, query.SearchTerm),
-                            Items = searchResults.List
-                        });
-                    }
-
-                    return NotFound();
+                        Links = CardSearchLinks(searchResults, query.SearchTerm),
+                        Items = searchResults.List
+                    });
                 }
 
-                return BadRequest(result.Errors);
+                return NotFound();
             }
 
-            return BadRequest(ModelState.Errors());
+            return BadRequest(result.Errors);
+
         }
 
         #region private helpers
@@ -125,7 +121,7 @@ namespace ygo.api.Controllers
         private LinkInfo CardSearchCreateLink(string routeName, string searchTerm, int pageNumber, int pageSize,
             string rel, string method)
         {
-            var values = new { SearchTerm = searchTerm, PageNumber = pageNumber, PageSize = pageSize };
+            var values = new { SearchTerm = searchTerm, PageIndex = pageNumber, PageSize = pageSize };
 
             return new LinkInfo
             {
