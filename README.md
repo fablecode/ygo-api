@@ -6,9 +6,6 @@ A C# .NET Core 2.2 api for [Yu-Gi-Oh](http://www.yugioh-card.com/uk/) data such 
 ## Why?
 To provide access to the latest [Yu-Gi-Oh](http://www.yugioh-card.com/uk/)  banlist & card errata in a simple JSON format.
 
-## Api Url
-[http://www.ygo-api.com](http://www.ygo-api.com)
-
 ## Prerequisite
 1. Setup the [Ygo database](https://github.com/fablecode/ygo-database)
 2. For data, install the [ygo-scheduled-tasks](https://github.com/fablecode/ygo-database).
